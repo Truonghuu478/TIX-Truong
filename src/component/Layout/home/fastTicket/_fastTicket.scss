@@ -1,0 +1,63 @@
+.FastTicket{
+    @include max(1024px){
+        display:none;
+    }
+    position: absolute;
+    left: 50%;
+  
+    transform: translateX(-50%);
+    z-index: 99;
+    height: 100px;
+    display:block;
+    margin:-10rem auto 0 auto;
+
+    width:80%;
+    background:white;
+    box-shadow: 0px 0px 10px  rgba(0,0,0,.3);
+    border-radius: 8px;
+    &__content{    
+    display: grid;
+    height: 100%;
+    grid-template-columns: repeat(5,1fr);
+    width:96%;
+    margin : 0 20px;
+    justify-content: center;
+    align-items: center;
+    // .MuiFormControl-root{
+    //     width:19% ;
+    // }
+    // .MuiMenu-paper{
+    //     height: calc(100% - 227px);
+    // } 
+    // .makeStyles-formControl-610, .makeStyles-formControl-4,.MuiFormControl-root{
+        
+    //     min-width: 175px;
+    // }
+    // .MuiInputBase-root{
+    //     .MuiSelect-selectMenu{
+    //         height: 18px;
+    //     }
+    // }
+    .MuiFormControl-root{
+        .MuiInputBase-root{
+            .MuiSelect-root{
+                max-height: 19px;
+                overflow: hidden;
+            }
+        }
+    }
+    .fast--button{
+        // width:26%;
+        button{
+
+            width:100%;
+            .MuiFormLabel-root{
+                font-weight: 700;
+                font-size: 1rem;
+            }
+           
+        }
+    }
+       
+    }
+}

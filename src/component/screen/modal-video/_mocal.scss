@@ -1,0 +1,38 @@
+.modal-content{
+    margin-top: 110px;
+    border: 7px solid #0d0d0d;
+   height: 500px;
+    .modal-header{
+        height: 100%;
+        padding: 0;
+        width: 100%;
+        
+        .close{
+            // margin: -2rem -2rem 0rem -1rem;
+            padding: 0;
+            width:45px;
+            height: 45px;
+            // border-radius: 50%;
+            // color: white;
+            // border: 2px solid white;
+            color:white;
+            cursor: pointer;
+            position: absolute;
+            right: -6px;
+            top: -5px;
+            opacity: 1;
+            z-index: 999;
+            img{
+                width:100%;
+            }
+            &:focus{
+                outline:none;
+            }
+        }
+    }
+   
+
+.modal-open{
+    overflow: auto;
+}
+}

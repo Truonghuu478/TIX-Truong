@@ -1,0 +1,61 @@
+[
+
+  
+  {
+    "maPhim": 1404,
+    "tenPhim": "Gia đình chân to",
+    "biDanh": "gia dinh chan to",
+    "trailer": "https://www.youtube.com/embed/VAvF3VBxOac",
+    "hinhAnh": "https://s3img.vcdn.vn/123phim/2020/10/gia-dinh-chan-to-phieu-luu-ky-bigfoot-family-p-16021269560594.png",
+    "moTa": "Trứng rán cần mỡ, bắp cần bơ, yêu không cần cớ, cần cậu cơ <3",
+    "maNhom": "GP01",
+    "ngayKhoiChieu": "2019-07-29T00:00:00",
+    "danhGia": 9
+  },
+
+  {
+    "maPhim": 1404,
+    "tenPhim": "Ròm",
+    "biDanh": "ROM",
+    "trailer": "https://www.youtube.com/embed/XRm1P7oGpMQ",
+    "hinhAnh": "./img/carousel/cal2.png",
+    "moTa": "Trứng rán cần mỡ, bắp cần bơ, yêu không cần cớ, cần cậu cơ <3",
+    "maNhom": "GP01",
+    "ngayKhoiChieu": "2019-07-29T00:00:00",
+    "danhGia": 9
+  },{
+        "maPhim": 1404,
+        "tenPhim": "Tenet",
+        "biDanh": "te-net",
+        "trailer": "https://www.youtube.com/embed/L3pk_TBkihU",
+        "hinhAnh": "./img/carousel/cal3.png",
+        "moTa": "Trứng rán cần mỡ, bắp cần bơ, yêu không cần cớ, cần cậu cơ <3",
+        "maNhom": "GP01",
+        "ngayKhoiChieu": "2019-07-29T00:00:00",
+        "danhGia": 9
+      },
+     {
+        "maPhim": 2803,
+        "tenPhim": "Wonder woman 1984",
+        "biDanh": "wonder-woman-1984",
+        "trailer": "https://www.youtube.com/embed/AQymj9nSUJU",
+        "hinhAnh": "./img/carousel/cal4.png",
+        "moTa": "Lấy bối cảnh thời kỳ Chiến tranh Lạnh, Wonder Woman 1984 sẽ xoay quanh cuộc đối đầu giữa Nữ thần Chiến binh và Yêu nữ Báo đốm Cheetah.",
+        "maNhom": "GP01",
+        "ngayKhoiChieu": "2020-08-14T00:00:00",
+        "danhGia": 8
+      },
+      {
+        "maPhim": 1404,
+        "tenPhim": "Mắt biếc",
+        "biDanh": "mat-biec",
+        "trailer": "https://www.youtube.com/embed/jdW7c06rf_8",
+        "hinhAnh": "./img/carousel/cal5.png",
+        "moTa": "Trứng rán cần mỡ, bắp cần bơ, yêu không cần cớ, cần cậu cơ <3",
+        "maNhom": "GP01",
+        "ngayKhoiChieu": "2019-07-29T00:00:00",
+        "danhGia": 9
+      }
+     
+    
+]

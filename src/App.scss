@@ -1,0 +1,24 @@
+// @import 'node_modules/react-modal-video/scss/modal-video.scss';
+@import "./style/helper/vairiable";
+@import "./style/helper/mixin.scss";
+@import "./style/basic/reset";
+
+@import './component/screen/modal-video/mocal';
+@import './component/Router/Login/login';
+@import './component/Router/Login/_register';
+@import './themes/Snow/snow';
+@import 'component/Layout/Loading/_loading';
+@import './component/Router/DetailUser/detailUser';
+@import "./component/Page/Header/header";
+@import './component/Layout/home/pack/pack';
+@import "./component/Router/ListDatVe/bookingTicket";
+@import "./component/Router/Cinema/Cinema";
+@import "./component/Layout/home/Carousel/carousel";
+@import "./component/Layout/home/fastTicket/fastTicket";
+@import "./component/Layout/home/Newin/Newin";
+@import "./component/Layout/home/ShowIn/ShowIn";
+@import "./component/Layout/home/News/news";
+@import "./component/Layout/home/about/about";
+
+@import "./component/Layout/booking/showTicket/showTicket";
+@import "./component/Page/Footer/Footer";

@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,WAAW,CAAA;EACH,KAAK,EAAE,IAAI;EACX,UAAU,EAAE,kDAA0D;EACtE,UAAU,EAAE,kBAAkB;EAC9B,MAAM,EAAG,KAAK;CAOrB;;AAXD,AAOgB,WAPL,CAMH,kBAAkB,CACV,aAAa,CAAA;EACL,KAAK,EAAC,IAAI;CACjB",
+    "sources": [
+        "showTicket.scss"
+    ],
+    "names": [],
+    "file": "showTicket.css"
+}

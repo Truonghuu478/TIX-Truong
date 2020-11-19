@@ -1,0 +1,90 @@
+@mixin respond-to($breakpoint) {
+    @if map-has-key($map: $breakpoints, $key: $breakpoint) {
+      $value: map-get(
+        $map: $breakpoints,
+        $key: $breakpoint,
+      );
+      @media screen and (max-width: $value) {
+        @content;
+      }
+    } @else {
+      @warn "$breakpoint không tồn tại trong $breakpoints";
+    }
+  }
+
+
+
+  @mixin bg-play (){
+    background: linear-gradient(to top, rgb(10, 32, 41), transparent 100%);
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+
+  // responsive 
+
+
+
+  /* Mixin */
+/* Set các giá trị với màn hình tương ứng */
+$mobile-width: 480px; 
+$tablet-width: 768px; 
+$desktop-width: 1024px;  
+
+
+
+
+@mixin tablet() {
+  @media screen and (min-width:$tablet-width ) and (max-width: #{$desktop-width - 1px}){
+    @content;
+  }
+}
+
+@mixin desktop() {
+  @media screen and (min-width:$desktop-width ){
+    @content;
+  }
+}
+
+
+@mixin max ($breakpoint){
+  @media screen and (max-width:$breakpoint ){
+    @content;
+  }
+}
+
+
+@mixin min ($breakpoint){
+  @media screen and (min-width:$breakpoint){
+    @content;
+  }
+}
+
+
+@mixin addRes ($min,$max){
+  @media screen and (min-width:$min - 1px) and (max-width:$max - 1px){
+    @content;
+  }
+}
+@mixin mobile() {
+  @media screen and (max-width:$mobile-width ){
+    @content;
+  }
+}
+
+
+@mixin overPlay (){
+  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  opacity: 0;
+                  transition: all .4s;
+                  transform: translate(-50%,-50%);
+
+                  
+}
+

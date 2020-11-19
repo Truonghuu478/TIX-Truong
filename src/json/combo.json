@@ -1,0 +1,37 @@
+[
+    {
+        "img":"https://s3img.vcdn.vn/123phim/2019/01/dd6ec7a77e8b6b02a48db1f1f669be2e.png",
+        "nameCombo": "SHARE Combo",
+        "noteCombo":"2 Ly nước vừa, 1 Bắp lớn",
+        "gia":"87.000 ",
+        "type":"tong"
+    },
+    {"img":"https://s3img.vcdn.vn/123phim/2019/01/dd6ec7a77e8b6b02a48db1f1f669be2e.png",
+        "nameCombo":"BIG SHARE Combo",
+        "noteCombo":"2 Ly nước lớn, 1 Bắp lớn",
+        "gia":"97.000 ",
+        "type":"tong"
+
+    },
+    {"img":"https://s3img.vcdn.vn/123phim/2016/07/fefe6cff3469abe62a48b1d976e7cc88.jpg",
+        "nameCombo":"Sweet Popcorn 44oz",
+        "noteCombo":"Bắp Ngọt lớn",
+        "gia":"55.000 ",
+        "type":"Bắp"
+
+    },
+    {"img":"https://s3img.vcdn.vn/123phim/2019/11/028da9b5ccfd9bfedca34b2c1614f324.png",
+        "nameCombo":"Chocolate Coconut ",
+        "noteCombo":"Bắp Socola dừa lớn",
+        "gia":"55.000 ",
+        "type":"Bắp"
+
+    },
+    {"img":"https://s3img.vcdn.vn/123phim/2018/10/62f4cd7d18a9279ead9dfbc02569bb8e.png",
+        "nameCombo":"Beverage 32oz   ",
+        "noteCombo":"Ly nước lớn (Pepsi/ 7Up/ Mirinda Sarsi/ Mirinda Cam)",
+        "gia":"36.000 ",
+        "type":"water"
+
+    }
+]

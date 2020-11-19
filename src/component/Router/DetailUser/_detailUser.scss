@@ -1,0 +1,151 @@
+.detail-user{
+    background : url('/img/bg/bg2.jpg') repeat center ;
+    background-size: contain;
+    background-attachment: fixed;
+    height: 100%;
+    width:100%;
+    color:white;
+    &--Out{
+        width:95%;
+        margin:0 auto;
+        text-align: right;
+        color: $blue-1;
+        font-weight: 500;
+
+        padding:10px 0;
+
+        span{
+            font-size: 16px;
+        }
+        a{
+color: white;
+            font-size: 1.6rem;
+        }
+    }
+    &__content{
+        
+        width: 85%;
+        margin: 0 auto ;
+
+        padding: 2em 0 40px 0;
+        &--item{
+            .item--bg{
+                border-radius: 5px;
+                background-image: linear-gradient(to bottom, rgba(20, 50, 93, 0.9), rgba(8, 22, 48, 0.9));
+                box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.45);
+                background-attachment: fixed;
+                -webkit-border-radius: 5px;
+                -moz-border-radius: 5px;
+                -ms-border-radius: 5px;
+                -o-border-radius: 5px;
+}
+            .item__intro{
+                padding: 1rem;
+                margin-bottom: 1rem;
+                span{
+                    color:$blue-1;
+                    font-weight: 500;
+
+                }
+            }
+            .item__Avatar{
+                padding: 1rem;
+
+                display:flex;
+                
+                &--infoA{
+                    padding-left: 20px;
+                   
+                    .infoA{
+                        color:$blue-1;
+                        font-weight: 500;
+                    }
+                    .infoA__active{
+                        display:grid;
+                        grid-template-columns: repeat(3,1fr);
+                    }
+                }
+            }
+            .item__form{
+            margin-bottom: 1rem;
+            height: 55px;
+            width:100%;
+            .MuiFormControl-root{
+                width:100%;
+                .MuiOutlinedInput-root{
+                    width:100%;
+                }
+            }
+            
+            &--button{
+                margin-top:1rem;
+                &:focus{
+                    outline:none;
+                }
+            }
+            }
+            .item__btn{
+                margin: 0 auto 2rem;
+                width:100%;
+                &:focus{
+                    outline:none;
+                }
+          }
+           
+                
+        }
+        .detail__form{
+            display:grid;
+            gap: 20px;
+            grid-template-columns:repeat(2,1fr);
+        }
+        .user__transaction{
+            div{
+                background-image: linear-gradient(to bottom, rgba(20, 50, 93, 0.9), rgba(8, 22, 48, 0.9));
+                box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.45);
+                background-attachment: fixed;
+                table{
+                    thead{
+                        tr{
+                            th{
+                                color:#fff;
+                                font-weight: bold;
+                                font-size: 20px;
+                            }
+                        }
+                    }
+                    tbody{
+                        tr{
+                            td,th{
+
+                                color:$blue-1;
+                                font-size: 14px;
+                            }
+                            th{
+                                font-weight: bold;
+
+                            }
+                            td{
+                                .MuiButtonBase-root {
+                                    color:#fff;
+                                    width:50px;
+                                    height: 50px;
+                                    &:focus{
+                                        outline:none;
+                                    }
+                                    span{
+                                        svg{
+                                            font-size: 2.5rem;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+            }
+            padding-top: 4rem;
+        }
+    }
+}

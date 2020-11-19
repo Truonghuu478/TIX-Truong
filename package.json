@@ -1,0 +1,73 @@
+{
+  "name": "movie-start",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.11.0",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "4.0.0-alpha.46",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
+    "chartist": "0.10.1",
+    "classnames": "^2.2.6",
+    "dateformat": "^4.0.0",
+    "history": "4.10.1",
+    "jquery": "^3.4.1",
+    "material-icons": "^0.3.1",
+    "material-ui-icons": "^1.0.0-beta.36",
+    "node-sass": "^4.14.1",
+    "perfect-scrollbar": "1.5.0",
+    "popper.js": "^1.16.1",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.0.0",
+    "react-chartist": "0.14.3",
+    "react-classes": "^1.1.1",
+    "react-dom": "^16.13.1",
+    "react-google-maps": "9.4.5",
+    "react-modal-video": "^1.2.3",
+    "react-perfect-scrollbar": "^1.5.8",
+    "react-redux": "^7.2.0",
+    "react-responsive": "^8.1.0",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "react-scroll": "^1.8.1",
+    "react-spinners": "^0.8.3",
+    "react-swipeable-views": "^0.13.9",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "sweetalert2": "^9.14.3",
+    "swiper": "^6.2.0",
+    "webpack": "^4.42.0"
+  },
+  "scripts": {
+    "predeploy": "npm run build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d dist"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^4.1.2",
+    "gh-pages": "^2.2.0"
+  }
+}

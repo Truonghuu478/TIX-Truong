@@ -1,0 +1,94 @@
+.about {
+  padding:4rem 0;
+  background-attachment: fixed;
+  background-image: url("https://tix.vn/app/assets/img/icons/backapp.jpg");
+  width: 100%;
+  
+
+  display: flex;
+  margin-top:2rem;
+  align-items: center;
+.MuiContainer-root {
+  .MuiGrid-container{
+
+    .MuiGrid-item{
+        .MuiPaper-root{
+          
+          @include max(768px){
+            text-align: center;
+            h2{
+        
+              font-size: 1.8rem;
+            }
+  
+            Button{
+              span{
+                font-size: medium;
+              }
+            }
+          }
+        }
+    }
+  }
+}
+  .right{
+    
+    .about__right {
+      width: 56%;
+      position: relative;
+      height: 100%;
+      margin:0 auto;
+    
+      
+      text-align: center;
+    
+      &--phone{
+        
+        overflow: hidden ;
+        img {
+          
+          width: 100%;
+          // overflow: hidden ;
+          object-fit: cover;
+          height: 100%;
+        
+          
+        }
+      }
+      
+      &--slider {
+        @include min (576){
+          margin: 0px 0px 11px 3px;
+
+        }
+        height: 96%;
+        position: absolute;
+        top: 11px;
+        left: 6px;
+        width: 94%;
+        overflow: hidden;
+       .swiper-slide{
+
+         img{
+         
+         // vertical-align: middle;
+         width:100%;
+         height: 100%;
+         object-fit: cover;
+        
+      } 
+       }
+      // @include max(768px){
+          
+      //     border-radius: 30px;
+      //   }
+        border-radius: 20px;
+        -webkit-border-radius: 20px;
+        -moz-border-radius: 20px;
+        -ms-border-radius: 20px;
+        -o-border-radius: 20px;
+}
+  
+  }
+}
+}

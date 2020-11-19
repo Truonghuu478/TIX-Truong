@@ -1,0 +1,106 @@
+.newIn{
+    @include desktop(){
+        width:80%;
+        margin:0 auto;
+
+    }
+        @include max(1024px){
+            margin-top:59px;
+        }
+    @include max(768px){
+        width:100%;
+    
+        
+    }
+    .MuiPaper-root{
+            box-shadow: none;
+    }
+    .MuiBox-root {
+        @include max(1024px){
+            padding: 24px 0;
+        }
+        .MuiTypography-root{
+            .swiper-container {
+                .swiper-button-prev,.swiper-button-next{
+                    color:#c7c7c7;
+                    transform: scale(1.5);
+                    font-weight: 300;
+
+                }
+                .swiper-wrapper {
+                    .swiper-slide{
+                        
+                            .MuiGrid-container{
+
+                                .MuiGrid-item{
+                                    @include max(768px){
+                                        max-height: 200px;
+                                      
+                                        padding:  10px 0; 
+                                    }
+                                   @include addRes(556px,768px){
+                                    max-height: 300px;
+                                   }
+                                    
+                                    .MuiCard-root{
+                                        .MuiBox-root{
+                                            padding:0;
+                                        }
+                                        overflow: hidden;
+                                        @include max(768px){
+                                        width:100%;
+                                        height:100%;
+                                         border-radius: 4px;
+                                        -webkit-border-radius: 4px;
+                                        -moz-border-radius: 4px;
+                                        -ms-border-radius: 4px;
+                                        -o-border-radius: 4px;
+                                        .MuiButtonBase-root{
+                                            height: 100%;
+                                        }
+                                       }
+                                    }
+                                
+                            
+                                }	
+                            
+                            }
+                        
+                    }
+                }
+            }
+        }
+    }
+    .MuiAppBar-colorPrimary {
+        background:transparent;
+        color: black;
+        .MuiTabs-root{
+            .MuiTabs-scroller {
+                .MuiTabs-flexContainer{
+                    justify-content: center;
+                    .MuiButtonBase-root{
+                        &:focus{
+                            outline:none
+                        }
+                        
+                        .MuiTab-wrapper{
+                            transition:all 0.6s;                        ;
+                            -webkit-transition:all 0.6s  ;                      ;
+                            -moz-transition:all 0.6s  ;                      ;
+                            -ms-transition:all 0.6s   ;                     ;
+                            -o-transition:all 0.6s   ;
+                            font-weight: bold;   
+                            font-size: 20px;
+                            height: 24px;
+                            font-family: 'SF Medium';
+                                       
+}
+                        .MuiTouchRipple-root{
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

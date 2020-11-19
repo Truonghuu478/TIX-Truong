@@ -1,0 +1,22 @@
+.booking {
+
+    position: relative;
+    // background-color: ;
+    color: black;
+
+    @import "../../Layout/booking/showStep/showStep";
+
+    &__content {
+        position: relative;
+        height: 100%;    
+        @include max(768px){
+            margin-top:60px;
+        }
+        @import "../../Layout/booking/backHome/backHome";
+        @import "../../Layout/booking/startBooking/startBooking";
+        @import "../../Layout/booking/showChair/showChair";
+        @import "../../Layout/booking/countTicket/countTicket";
+    }
+
+    
+}

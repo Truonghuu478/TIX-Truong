@@ -1,0 +1,59 @@
+.showStep {
+    height: 80px;
+    // background-color: orange;
+    // padding: 0 20px;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 2px 10px 0px gray;
+
+    &__content {
+        height: 100%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        font-size: 14px;
+        color: rgb(41, 37, 37);
+        span {
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .showStep__one,
+        .showStep__two,
+        .showStep__three {
+            height: 100%;
+            font-size: 15px;
+        }
+
+
+    }
+
+    .user {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        
+        &--logo{
+            margin: 0;
+            text-align: center;
+            width: 30px;
+            height: 30px;
+            background:#bdbdbd;
+            font-size: 20px;
+            text-transform: uppercase;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -ms-border-radius: 50%;
+            -o-border-radius: 50%;
+            color: white;
+             line-height: 30px;
+             
+            }
+        span {
+            font-weight: 500;
+            color: gray;
+            white-space: nowrap;
+        }
+    }
+}

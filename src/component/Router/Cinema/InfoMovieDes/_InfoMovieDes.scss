@@ -1,0 +1,14 @@
+.InfoMovie{
+    color: white;
+    &__item{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width:100%;
+        // padding-left: 30px;
+
+        & p{
+        width:50%;
+        }
+    }
+}

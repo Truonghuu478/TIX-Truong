@@ -1,0 +1,23 @@
+
+.Login{
+    &__background{
+        @include max(813px){
+        
+          .Login__close{
+              top: 0;right: 0;
+          } 
+        
+        form{
+
+            
+                 width: 98%;
+            
+                 .form__body{
+                    &--BoxInput{
+                        flex-direction: column;
+                    }
+                }
+            }
+        }
+    }
+}
