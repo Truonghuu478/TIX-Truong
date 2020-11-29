@@ -7,7 +7,8 @@ import {Accordion} from "@material-ui/core";
 import {AccordionSummary}  from "@material-ui/core";
 import {AccordionDetails}  from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-
+// LinearProgress
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import { connect } from "react-redux";
 import data from "../../../../json/nameMovie.json";
@@ -104,7 +105,7 @@ function GroupSystemMovie(props) {
           arrTheater.push(cinema);
         }
       });
-    }
+    
     // end
 
     if (arrTheater.length > 0) {
@@ -177,7 +178,10 @@ function GroupSystemMovie(props) {
       });
     } else {
       return <div className={classes.notChieu}>Không có lịch Chiếu</div>;
-    }
+    }}else return (<Fragment>
+       <LinearProgress  />
+     
+    </Fragment>)
   },[props.maHeThongRap]);
   return <Fragment>{_renderHTML()}</Fragment>;
 }

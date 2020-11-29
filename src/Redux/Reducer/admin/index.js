@@ -1,72 +1,84 @@
-import *as tyAction from "../../constanst";
-let initialState ={
-    globalSearch :'',
-    statusAdmin :null,
-    listUsers :[],
-    indexSpinner :false,
-    listMovies:[]
+import * as tyAction from "../../constanst";
+let initialState = {
+  globalSearch: "",
+  statusAdmin: null,
+  listUsers: [],
+  indexSpinner: false,
+  listMovies: [],
+  defaultListUser :[],
+  defaultListMovie:[]
+};
 
-}
+const AdminReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case tyAction.POST_VALUE_SEARCH: {
+      let {  listUsers ,defaultListUser,listMovies,defaultListMovie} = state;
+      let {payload,statusAdmin} = action;
+        
+  
+        switch (statusAdmin) {
+          case "/admin/user": {
+              let newRows =[];
+            if (payload ) {
+              const postArray = listUsers.length > 0 ?listUsers :defaultListUser;
+              
+               newRows = postArray.filter(
+                (item) =>
+                  item.taiKhoan
+                    .toLowerCase()
+                    .indexOf(payload.toLowerCase()) > -1 ||
+                  item.hoTen.toLowerCase().indexOf(payload.toLowerCase()) >
+                    -1
+              );
 
-const AdminReducer = (state = initialState, action) =>{
-
-    switch (action.type) {
-        case tyAction.POST_VALUE_SEARCH:{
-            
-            if(state.statusAdmin !== action.statusAdmin){
-                state.statusAdmin = action.statusAdmin
             }
+            // let ;
+
+        return {...state, globalSearch: payload,listUsers: newRows };
+          }
+          case "/admin/movie-theater":{
+            let newMovie = [];
+            if(payload){
+              const postMovie = listMovies.length > 0?listMovies:defaultListMovie;
+            newMovie=  postMovie.filter(movie=>
+              movie.tenPhim.toLowerCase().indexOf(payload.toLowerCase())>-1 ||movie.moTa.toLowerCase().indexOf(payload.toLowerCase())>-1)
             
-       
-            return {...state,globalSearch:action.payload}
+           
+          }
+          return {...state, globalSearch: payload,listMovies: newMovie }
+
         }
-            case tyAction.GET_LIST_USERS:{
-                    let {globalSearch} = state;
-                    let newRows  = action.payload;
-                    if(globalSearch){
-                        newRows= newRows.filter(
-                            (item) =>
-                              item.taiKhoan.toLowerCase().indexOf(globalSearch.toLowerCase()) >
-                                -1 ||
-                              item.hoTen.toLowerCase().indexOf(globalSearch.toLowerCase()) > -1
-                          )
-                    }
-                    if(state.indexSpinner){
-                        state.indexSpinner = false;
-                    }
-                        
-                return {...state,listUsers:newRows}
-            }
-            case tyAction.CHANGE_STATUS_USERS:{
-                return {...state,listUsers:action.payload}
-
-            }
-            case tyAction.CHANGE_STATUS_INDEX:{
-                    return {...state,indexSpinner:action.statusIndex}
-            }
-            case tyAction.GET_LIST_MOVIES:{
-                return {...state,listMovies:action.payload}
-
-            }
-            case tyAction.CHANGE_STATUS_MOVIES:{
-                let {globalSearch} = state;
-                    let newRows  = action.payload;
-                    if(globalSearch){
-                        newRows= newRows.filter(
-                            (item) =>
-                            item.tenPhim.toLowerCase().indexOf(globalSearch.toLowerCase()) >
-                            -1 ||
-                          item.moTa.toLowerCase().indexOf(globalSearch.toLowerCase()) > -1
-                          )
-                    }
-                    if(state.indexSpinner){
-                        state.indexSpinner = false;
-                    }
-                        
-                return {...state,listMovies:newRows}
-            }
-        default:
-            return {...state};
+        
+       
+       default :return { ...state,globalSearch: payload};
+      }
     }
-}
+    case tyAction.GET_LIST_USERS: {
+     
+      
+    
+
+      return { ...state, listUsers: action.payload,defaultListUser:action.payload };
+    }
+    case tyAction.CHANGE_STATUS_LOCATION:{
+        return{...state,statusAdmin: action.payload}
+    }
+    case tyAction.CHANGE_STATUS_USERS: {
+      return { ...state, listUsers: action.payload };
+    }
+    case tyAction.CHANGE_STATUS_INDEX: {
+      return { ...state, indexSpinner: action.statusIndex };
+    }
+    case tyAction.GET_LIST_MOVIES: {
+      return { ...state, listMovies: action.payload };
+    }
+    case tyAction.CHANGE_STATUS_MOVIES: {
+    
+
+      return { ...state, listMovies: action.payload,defaultListMovie:action.payload };
+    }
+    default:
+      return { ...state };
+  }
+};
 export default AdminReducer;

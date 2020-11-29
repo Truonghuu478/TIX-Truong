@@ -8,7 +8,7 @@ import *as tyAction from "../../../Redux/constanst";
 import { validateMovie } from "../../../vender/validate";
 import Swal from "sweetalert2";
 import *as actionMovie from "../../../Redux/action/moive";
-import formatDate from "dateformat";
+import dateFormat from "dateformat";
 import {
   Button,
   Box,
@@ -74,6 +74,7 @@ const override = css`
 `;
 function ModalAdmin(props) {
   const { maNhom } = useSelector((state) => state.MovieManaGerment);
+  const formatD = React.useCallback((date)=>  dateFormat(new Date(date),"dd/mm/yyyy h:MM:ss"))
   const { indexSpinner } = useSelector((state) => state.AdminReducer);
   const { type, onHide, detailMovie,listTheater } = props;
   const dispatch = useDispatch();
@@ -110,7 +111,9 @@ useEffect(() => {
 }, []);
   const handleChangeInput = (e) => {
     let { name, value } = e.target;
-    let newData = { ...state1.data, [name]:name !== "ngayChieuGioChieu"? parseInt(value):value+":00" };
+
+    let newData = { ...state1.data,
+       [name]:name !== "ngayChieuGioChieu"? parseInt(value):formatD(value) };
     let newError = {
       ...state1.error,
       [name]: validateMovie(name, value) ? validateMovie(name, value) : "",
@@ -127,6 +130,7 @@ useEffect(() => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(state1.data)
+    
     if (type === "Add-ShowTimes") {
 
       let isValid = false;
@@ -149,7 +153,8 @@ useEffect(() => {
 
           // timer: 2000,
         });
-      } else dispatch(action.createShowTime(state1.data))
+      } else dispatch(action.createShowTime(state1.data));
+      setState1({...state1,data:{maPhim: "", ngayChieuGioChieu: formatD("2019-01-01T12:00:00"), maRap: "", giaVe: "" },error:{maPhim: "", ngayChieuGioChieu: "", maRap: "", giaVe: "" }})
     } else {
       let formData = new FormData();
       for (let key in state) {
@@ -162,6 +167,15 @@ useEffect(() => {
         statusIndex: true
       })
       dispatch(!detailMovie ? action.addMovie(formData) : action.editMovie(formData));
+
+      setState({...state,
+        tenPhim: "",
+        hinhAnh: {},
+        maPhim: "",
+        moTa: "",
+        maNhom,
+        trailer: "",
+      })
     }
 
 
@@ -178,8 +192,19 @@ useEffect(() => {
       className={classes.root}
     >
       <Modal.Header className={classes.headerModal}>
-        <Box onClick={onHide} className="close">
-          {" "}
+        <Box onClick={()=>{onHide() ;
+        if(type === "Add-Movies"){
+          setState({...state,
+            tenPhim: "",
+            hinhAnh: {},
+            maPhim: "",
+            moTa: "",
+            maNhom,
+            trailer: "",
+          })
+        }
+       }} className="close">
+          
           <img src="\img/close/closeFocus.png" alt="close" />
         </Box>
 

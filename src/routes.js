@@ -1,22 +1,24 @@
 // import Dashboard from "./pages/admin/dashboard";
-
-import Home from  "./component/Router/Home";
-import DetailMovie from    "./component/Router/Cinema";
-import Logins from  "./component/Router/Login";
+import React,{lazy} from "react";
+// import Home from  "./component/Router/Home";
+// import DetailMovie from    "./component/Router/Cinema";
+// import Logins from  "./component/Router/Login";
 import   "./App.css";
-import BookingTicket from'./component/Router/ListDatVe';
-import DetailUser from "./component/Router/DetailUser";
+// import BookingTicket from'./component/Router/ListDatVe';
+// import DetailUser from "./component/Router/DetailUser";
 //admin 
-import Dashboard from "./component/Router/Admin";
+// import Dashboard from "./component/Router/Admin";
 // import LoginAdmin from "./pages/LoginAdmin";
 // import React from "react";
-// const  Home = React.lazy(()=>"./component/Router/Home")  ;
-// const DetailMovie =  React.lazy(()=>"./component/Router/Cinema")    ;
-// const Logins  = React.lazy(()=>"./component/Router/Login")  ;
+const  Home = lazy(()=>import("./component/Router/Home"))  ;
+const DetailMovie =  lazy(()=>import("./component/Router/Cinema") )   ;
+const Logins  = lazy(()=>import("./component/Router/Login"))  ;
 
-// const BookingTicket =  React.lazy(()=>'./component/Router/ListDatVe');
-// //admin 
-// const Dashboard =  React.lazy(()=>"./component/Router/Admin");
+const BookingTicket =  lazy(()=>import('./component/Router/ListDatVe'));
+//admin 
+const Dashboard =  lazy(()=>import("./component/Router/Admin"));
+const DetailUser = lazy(()=>import("./component/Router/DetailUser"));
+
 const routesHome = [
   {
     path: "/",

@@ -4,7 +4,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import {
   Fab,TableBody, TableCell, TableContainer, TableFooter, TablePagination
-  , TableRow, Paper, IconButton, TableHead,LinearProgress,Tooltip,
+  , TableRow, Paper, IconButton, TableHead,Tooltip,
 } from '@material-ui/core';
 import DeleteIcon from "@material-ui/icons/Delete";
 import AddIcon from '@material-ui/icons/Add';
@@ -15,7 +15,9 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
-
+import ScaleLoader from "react-spinners/ScaleLoader";
+// *css loading 
+import loadingStyle  from "../../../assets/jss/components/LoadingStyle";
 // action
 import * as action from "../../../../Redux/action/admin";
 // constant 
@@ -89,23 +91,10 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-// const rows = [
-//   createData('Cupcake', 305, 3.7),
-//   createData('Donut', 452, 25.0),
-//   createData('Eclair', 262, 16.0),
-//   createData('Frozen yoghurt', 159, 6.0),
-//   createData('Gingerbread', 356, 16.0),
-//   createData('Honeycomb', 408, 3.2),
-//   createData('Ice cream sandwich', 237, 9.0),
-//   createData('Jelly Bean', 375, 0.0),
-//   createData('KitKat', 518, 26.0),
-//   createData('Lollipop', 392, 0.2),
-//   createData('Marshmallow', 318, 0),
-//   createData('Nougat', 360, 19.0),
-//   createData('Oreo', 437, 18.0),
-// ].sort((a, b) => (a.calories < b.calories ? -1 : 1));
+
 
 const useStyles2 = makeStyles({
+ 
   table: {
     minWidth: 500,
     borderCollapse: "collapse"
@@ -123,23 +112,24 @@ const useStyles2 = makeStyles({
   }
 });
 
+
 export default function ManagerMovie() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { listMovies } = useSelector((state) => state.AdminReducer);
   const classes = useStyles2();
+  const classesLoading = loadingStyle();
   const [detailMovie,setDetailMovie] = useState(null)
   const [page, setPage] = useState(0);
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { indexSpinner,globalSearch } = useSelector((state) => state.AdminReducer);
+  const { indexSpinner,globalSearch,listMovies} = useSelector((state) => state.AdminReducer);
 const [showModal,setShowModal] = useState(false);
 const [typeModal,setTypeModal] = useState(null);
   const [emptyRows,setEmptyRows] = useState(0);
   useEffect(()=>{
     setEmptyRows( rowsPerPage - Math.min(rowsPerPage, listMovies.length - page * rowsPerPage))
   },[listMovies])
-
+    
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -150,21 +140,13 @@ const [typeModal,setTypeModal] = useState(null);
   };
   useEffect(() => {
     if (location.pathname === "/admin/movie-theater") {
-      if (listMovies.length > 0 && globalSearch ) {
-        // || item.hoTen.toLowerCase.indexOf(globalSearch.toLowerCase() ) >-1
-        // .toLowerCase.indexOf(globalSearch.toLowerCase()) >-1
-    
-        
-        dispatch({type:tyAction.CHANGE_STATUS_MOVIES,payload:listMovies})
-      } else if (!globalSearch) {
+       if (globalSearch === "") {
         dispatch(action.getListMovies());
         
       }
     }
-    // return () => {
-    //   cleanup
-    // }
-  }, [globalSearch, listMovies.length > 0]);
+  
+  }, [globalSearch]);
 
   
   useEffect(() => {
@@ -216,6 +198,7 @@ const [typeModal,setTypeModal] = useState(null);
       setShowModal(true);
 
   } 
+
   const renderHTML = React.useCallback( () => {
      
     if (listMovies.length > 0) {
@@ -292,7 +275,7 @@ const [typeModal,setTypeModal] = useState(null);
   </TableCell>
     </TableRow>
   })
-  return (
+  return ( 
     <>
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="custom pagination table">
@@ -371,7 +354,7 @@ const [typeModal,setTypeModal] = useState(null);
     onHide={()=>setShowModal(false)}
 
     />
-    </>
+    </> 
   );
 
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Suspense} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import 'jquery/dist/jquery.min.js';
@@ -7,12 +7,12 @@ import 'popper.js/dist/umd/popper.min.js';
 import ThemeSnow from "./themes/Snow";
 import {BrowserRouter,Route,Switch} from "react-router-dom";
 import './App.scss';
-import {routesHome,routesAdmin} from "./routes"
-
-import PageNotFound from "./pages/pageNotFound";
+import {routesHome,routesAdmin} from "./routes";
+import TiXLoading from "./component/Layout/Loading";
 import HomeTemplate from "./templates/home-template";
 import AdminTemplate from "./templates/admin-template";
-import LoginAdmin from "./pages/LoginAdmin";
+const PageNotFound = React.lazy(()=>import("./pages/pageNotFound"));
+const LoginAdmin = React.lazy(()=>import ("./pages/LoginAdmin"));
 // favicon.ico
 const showMenuHome = routes => {
   if (routes && routes.length > 0) {
@@ -49,6 +49,7 @@ function App() {
     <BrowserRouter>
       <div>
         <ThemeSnow/>
+         <Suspense fallback={<TiXLoading/>}>
         <Switch>
           {showMenuHome(routesHome)}
           {showMenuAdmin(routesAdmin)}
@@ -57,6 +58,8 @@ function App() {
             {/* <Route path=""/> */}
             <Route exact={false} path="" component={PageNotFound} />
         </Switch>
+
+         </Suspense>
       </div>
     </BrowserRouter>
   )

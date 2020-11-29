@@ -1,4 +1,4 @@
-import React, {Component ,Fragment,Suspense  } from "react";
+import React, {Component ,Fragment  } from "react";
 import { Route } from "react-router-dom";
 
 
@@ -17,12 +17,13 @@ export default function HomeTemplate({ Component, ...props }) {
     <Route
       {...props}
       render={propsComponent => (
-        <HomeLayout>
-        
+       
 
+        <HomeLayout>
           <Component {...propsComponent} />
       
         </HomeLayout>
+     
       )}
     />
   );

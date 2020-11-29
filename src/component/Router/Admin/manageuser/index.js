@@ -32,8 +32,12 @@ import EditRoundedIcon from "@material-ui/icons/EditRounded";
 import * as action from "../../../../Redux/action/admin";
 // constant 
 import *as tyAction from "../../../../Redux/constanst";
-//redux
+
+
+
 import { useSelector ,useDispatch} from "react-redux";
+// *css loading 
+import loadingStyle  from "../../../assets/jss/components/LoadingStyle";
 // react router dom
 import { useLocation } from "react-router-dom";
 import classes1 from "classnames";
@@ -139,6 +143,8 @@ const useStyles2 = makeStyles({
 
 export default function ManagerUser() {
   const location = useLocation();
+  const classesLoading = loadingStyle();
+
   const dispatch = useDispatch();
   const { maNhom } = useSelector((state) => state.MovieManaGerment);
   const { indexSpinner,globalSearch,listUsers } = useSelector((state) => state.AdminReducer);
@@ -187,41 +193,38 @@ export default function ManagerUser() {
   useEffect(() => {
     if (location.pathname === "/admin/user") {
      
-      if (listUsers.length > 0 && globalSearch) {
-        // || item.hoTen.toLowerCase.indexOf(globalSearch.toLowerCase() ) >-1
-        // .toLowerCase.indexOf(globalSearch.toLowerCase()) >-1
-        let newRows = listUsers.filter(
-          (item) =>
-            item.taiKhoan.toLowerCase().indexOf(globalSearch.toLowerCase()) >
-              -1 ||
-            item.hoTen.toLowerCase().indexOf(globalSearch.toLowerCase()) > -1
-        );
-      dispatch({type:tyAction.CHANGE_STATUS_USERS,
-      payload:newRows.length > 0 ?newRows:[]})   ;
-      } else if (!globalSearch) {
+     if (globalSearch === "") {
         dispatch(action.getListUsers());
         
-      }
+      } 
     }
     // return () => {
     //   cleanup
     // }
-  }, [globalSearch, listUsers.length > 0]);
-
+  }, [globalSearch]);
+useEffect(() => {
+  dispatch({
+    type:tyAction.CHANGE_STATUS_LOCATION,
+    payload :location.pathname
+  })
+  
+}, [])
   //
   const renderHTML = () => {
-if(indexSpinner){
-  return  <TableRow>
-      <TableCell
-      colSpan="9"
-    style={{ color: "red", textAlign: "center" }}
+// if(indexSpinner){
+//   return  <TableRow>
+//       <TableCell
+//       colSpan="9"
+//     style={{ color: "red", textAlign: "center" }}
     
-  >
-    <LinearProgress />
-  </TableCell>
-    </TableRow>
+//   >
+//     <LinearProgress />
+//   </TableCell>
+//     </TableRow>
   
-}else { if(listUsers.length > 0) {
+// }else  
+
+if(listUsers.length > 0) {
     return (<TableBody>{(rowsPerPage > 0
             ? listUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             : listUsers
@@ -373,7 +376,7 @@ Can't find the users!
 </TableCell>
 </TableRow>
 );
-}
+
    
   };
   // handle Change formUser 

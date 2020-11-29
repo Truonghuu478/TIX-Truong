@@ -60,27 +60,15 @@ function Home(props) {
    
   },[])
   useEffect(() => {
-    
+    let a =null;
     props.getHostAPIMovieTheater(0);
       if (props.listMovieTheater ) {
-        setTimeout(()=>{
+        a = setTimeout(()=>{
           setLoading(false);
         },1500)
       }
       window.scrollTo({top: "500px", behavior: 'smooth'});
-  //  window.scroll({
-  //    top:500,
-  //    left:0
-  //  })
-  // console.log(location.hash);
-  // document.querySelector("#lich-chieu").scrollIntoView({
-  //       behavior: 'smooth'
-
-  // });
-  // window.scroll({
-  //   top: 100,
-  //   left: 100,
-  // });
+        return ()=>clearTimeout(a);
   }, []);
  
   return (

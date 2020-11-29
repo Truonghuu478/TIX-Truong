@@ -13,9 +13,9 @@ import classes1 from "classnames";
 import Poppers from "@material-ui/core/Popper";
 import Divider from "@material-ui/core/Divider";
 // @material-ui/icons
-import Person from "@material-ui/icons/Person";
+// import Person from "@material-ui/icons/Person";
 import Notifications from "@material-ui/icons/Notifications";
-import Dashboard from "@material-ui/icons/Dashboard";
+// import Dashboard from "@material-ui/icons/Dashboard";
 import Search from "@material-ui/icons/Search";
 // core components
 import CustomInput from "../CustomInput/CustomInput.js";
@@ -34,7 +34,7 @@ export default function AdminNavbarLinks(props) {
   const classes = useStyles();
 const location = useLocation();
   const dispatch = useDispatch();
-  const {globalSearch} = useSelector(state=>state.AdminReducer)
+  const {globalSearch,statusAdmin} = useSelector(state=>state.AdminReducer)
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
   const handleLocalStorage = React.useCallback(
@@ -76,6 +76,7 @@ const location = useLocation();
   }, [location])
   return (
     <div>
+    { statusAdmin !== "/admin/maps" &&
       <div className={classes.searchWrapper}>
         <CustomInput
         onChange={(e)=>dispatch({type:tyAction.POST_VALUE_SEARCH,
@@ -97,6 +98,7 @@ const location = useLocation();
           <Search />
         </Button>
       </div>
+    }
       {/* <Button
         color={window.innerWidth > 959 ? "transparent" : "white"}
         justIcon={window.innerWidth > 959}
@@ -227,22 +229,23 @@ const location = useLocation();
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
+                   
                     <MenuItem
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
-                      Profile
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Settings
-                    </MenuItem>
-                    <Divider light />
-                    <Link  className={classes.dropdownItem}to="/admin" onClick={()=>{
+                      <Link style={{width:"100%"}} to="/">
+
+                      Go to website
+                    </Link>
+                    </MenuItem >
+                    <MenuItem className={classes.dropdownItem} onClick={()=>{
                         localStorage.removeItem("userAdmin");
-                    setOpenProfile(null)}}> Logout</Link>
+                    setOpenProfile(null)}}>
+                    {/* <Divider light /> */}
+                    <Link  style={{width:"100%"}} to="/admin" > Logout</Link>
+                    
+                    </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

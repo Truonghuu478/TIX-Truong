@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 // import Grid from '@material-ui/core/Grid';
 import { validateMovie } from "../../../../vender/validate";
-import { Container, Grid, Box, Typography, IconButton, Tooltip,Accordion ,AccordionSummary ,AccordionDetails ,Button } from "@material-ui/core";
+import { Container,LinearProgress, Grid, Box, Typography, IconButton, Tooltip,Accordion ,AccordionSummary ,AccordionDetails ,Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import theme from "../../../../themes";
-import ScaleLoader from "react-spinners/ScaleLoader";
+// import ScaleLoader from "react-spinners/ScaleLoader";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 import *as action from "../../../../Redux/action/admin";
@@ -147,37 +147,12 @@ export default function ManagerShowtime() {
 
 
 
-    } else return <ScaleLoader />
+    } else return <LinearProgress  />
 
 
 
   })
-  // handleSubmit
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    let isValid = false;
-    for (let key in state.error) {
-
-      if (state.error[key] !== "") {
-        isValid = true;
-
-      }
-    }
-    if (isValid) {
-
-      Swal.fire({
-        icon: "error",
-        title: "successful showtimes failed",
-        text: "Not performed because of error",
-        // footer: '<a href>Why do I have this issue?</a>',
-        timerProgressBar: false,
-        showConfirmButton: true,
-
-        // timer: 2000,
-      });
-    } else dispatch(action.createShowTime(state.data))
-  };
   
   // fetch ds movie 
   useEffect(() => {

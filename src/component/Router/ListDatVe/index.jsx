@@ -23,18 +23,19 @@ function BookingTicket(props) {
   let screenWidth = React.useMemo(()=>window.innerWidth)
   // stop timeout  
   useEffect(() => {
-
+let a = null;
     let params = props.match.params.id;
     props.__creatShowtime(params);
     try {
 
-      setTimeout(() => {
+     a= setTimeout(() => {
         setLoading(false);
       }, 1000);
     } catch (err) {
       console.log(err);
 
     }
+    return ()=>clearTimeout(a)
   }, [])
 
  

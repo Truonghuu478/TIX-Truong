@@ -8,6 +8,7 @@ import dropdownStyle from "../dropdownStyle";
 // dropdownStyle.js
 const headerLinksStyle = theme => ({
   ...dropdownStyle(theme),
+ 
   search: {
     "& > div": {
       marginTop: "0"
