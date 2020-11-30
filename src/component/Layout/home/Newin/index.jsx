@@ -147,7 +147,7 @@ const renderSlideDangChieu = React.useCallback((arraySetups =dangChieuData )=>{
                        className={`${arraySetups === dangChieuData ? classes.cardDangChieu :classes.cardSapChieu}  ${classes.Card}`} >
                           <CardActionArea variant="contained"  >
                             <CardMedia
-                             onError={(e)=>{e.target.onerror = null; e.target.src="\img/default-film.webp"}}
+                             onError={(e)=>{e.target.onerror = null; e.target.src="./img/default-film.webp"}}
                             className={classes.imgCard}
                             style={{height :screenWidth  < 768 ?"100%":"70%"}}
                               component="img"

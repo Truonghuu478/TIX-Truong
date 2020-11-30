@@ -13,3 +13,8 @@ body{
     padding: 0 !important;
     overflow: auto !important;
 }
+
+
+input[type="file"]{
+    display:none;
+}

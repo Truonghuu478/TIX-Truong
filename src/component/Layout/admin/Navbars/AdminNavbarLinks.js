@@ -203,7 +203,7 @@ const location = useLocation();
           <Hidden mdUp implementation="css">
             <p className={classes.linkText}>Profile</p>
           </Hidden> */}
-           <Avatar>{handleLocalStorage().maLoaiNguoiDung === "QuanTri"?handleLocalStorage().hoTen.slice(0,1):handleLocalStorage("userAdmin")?.hoTen.slice(0,1)}</Avatar>
+           <Avatar>{handleLocalStorage()&&handleLocalStorage().maLoaiNguoiDung === "QuanTri"?handleLocalStorage().hoTen.slice(0,1):handleLocalStorage("userAdmin")?.hoTen.slice(0,1)}</Avatar>
 
         </Button>
         <Poppers

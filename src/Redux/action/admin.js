@@ -144,13 +144,18 @@ export const getListMovies = (maNhom) =>{
      type:TyAction.CHANGE_STATUS_MOVIES,
      payload:res.data
    })
-      })  
+      }).catch(err=>{
+        dispatch({ type:TyAction.CHANGE_STATUS_INDEX,statusIndex:false})
+      })
   
     }
 
 }
 
-
+// upHinh 
+export const uploadImage =(data) =>{
+  return request("POST","https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/UploadHinhAnhPhim",data,"userAdmin")
+}
 // delete movie 
 export const deleteMovie = (maPhim)=>{
   return request("DELETE","https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/XoaPhim?MaPhim="+maPhim,{},"userAdmin")
@@ -183,7 +188,7 @@ export const addMovie  = (data)=>{
 
       // timer: 2000,
     });
-    console.log(err)})
+    dispatch({ type:TyAction.CHANGE_STATUS_INDEX,statusIndex:false})})
   }
 }
 
@@ -262,7 +267,7 @@ export const fetchListDetailTheater = (maHeThongRap) => {
       Axios({
           method: "GET",
           url: `https://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}`
-      }).then(result => {
+      }).then(result => { 
       
           dispatch({
               type: TyAction.FETCH_LIST_DETAIL_THEATER,

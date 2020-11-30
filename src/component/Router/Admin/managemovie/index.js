@@ -15,13 +15,10 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
-import ScaleLoader from "react-spinners/ScaleLoader";
-// *css loading 
-import loadingStyle  from "../../../assets/jss/components/LoadingStyle";
+ // *css loading 
 // action
 import * as action from "../../../../Redux/action/admin";
 // constant 
-import *as tyAction from "../../../../Redux/constanst";
 // location 
 import { useLocation } from "react-router-dom";
 //redux
@@ -117,7 +114,6 @@ export default function ManagerMovie() {
   const location = useLocation();
   const dispatch = useDispatch();
   const classes = useStyles2();
-  const classesLoading = loadingStyle();
   const [detailMovie,setDetailMovie] = useState(null)
   const [page, setPage] = useState(0);
 
@@ -193,6 +189,7 @@ const [typeModal,setTypeModal] = useState(null);
   }
   //handeEdit Movie 
   const handleEditMovie =(movie) => {
+   
     setTypeModal("Edit-Movie")
     setDetailMovie(movie);
       setShowModal(true);

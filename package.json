@@ -26,6 +26,7 @@
     "react-chartist": "0.14.3",
     "react-classes": "^1.1.1",
     "react-dom": "^16.13.1",
+    "react-file-reader": "^1.1.4",
     "react-google-maps": "9.4.5",
     "react-modal-video": "^1.2.3",
     "react-perfect-scrollbar": "^1.5.8",

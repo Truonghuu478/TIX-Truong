@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React,{useState,useEffect,useCallback} from "react";
 import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import *as action from "../../../Redux/action/admin";
@@ -12,7 +12,7 @@ import dateFormat from "dateformat";
 import {
   Button,
   Box,
-  Grid,
+  
   TextField,
   TextareaAutosize,
   MenuItem,
@@ -21,7 +21,6 @@ import {
   InputBase,
   InputLabel  ,FormHelperText  
 } from "@material-ui/core";
-import theme from "../../../themes";
 import { withStyles } from "@material-ui/core/styles";
 // css
 import useStyles from "./modalAdminStyle";
@@ -74,14 +73,15 @@ const override = css`
 `;
 function ModalAdmin(props) {
   const { maNhom } = useSelector((state) => state.MovieManaGerment);
-  const formatD = React.useCallback((date)=>  dateFormat(new Date(date),"dd/mm/yyyy h:MM:ss"))
+  const formatD = useCallback((date)=>  dateFormat(new Date(date),"dd/mm/yyyy h:MM:ss"))
   const { indexSpinner } = useSelector((state) => state.AdminReducer);
   const { type, onHide, detailMovie,listTheater } = props;
   const dispatch = useDispatch();
   const [listMovie ,setListMovie] = useState([]);
+  const [upload ,setUpload] = useState("./img/no-image.png")
   const [state, setState] = useState({
     tenPhim: "",
-    hinhAnh: {},
+    hinhAnh: "https://tix.vn/app/assets/img/default-film.webp",
     maPhim: "",
     moTa: "",
     maNhom,
@@ -108,7 +108,7 @@ useEffect(() => {
    
     setListMovie(res.data);
   })
-}, []);
+},[]);
   const handleChangeInput = (e) => {
     let { name, value } = e.target;
 
@@ -124,12 +124,17 @@ useEffect(() => {
   };
   const handleChange = (e) => {
     let { name, value, files } = e.target;
-
+    // if(name ==="hinhAnh"){
+    //     let formData = new FormData();
+    //     formData.append("hinhAnh",files[0]);
+    //     action.uploadImage(formData)
+    //     .then(res=>console.log(res)).catch(err=>console.log(err))
+    // }
     setState({ ...state, [name]: name === "hinhAnh" ? files[0] : value });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(state1.data)
+    
     
     if (type === "Add-ShowTimes") {
 
@@ -170,19 +175,20 @@ useEffect(() => {
 
       setState({...state,
         tenPhim: "",
-        hinhAnh: {},
+        hinhAnh: "https://tix.vn/app/assets/img/default-film.webp",
         maPhim: "",
         moTa: "",
         maNhom,
         trailer: "",
       })
+    
     }
 
 
 
     if (!indexSpinner) props.onHide();
   };
-
+ 
   const renderHTML = () => {
     if (indexSpinner) { return <ScaleLoader color={"#36D7B7"} css={override} /> }
     return <Modal {...props}
@@ -193,22 +199,23 @@ useEffect(() => {
     >
       <Modal.Header className={classes.headerModal}>
         <Box onClick={()=>{onHide() ;
-        if(type === "Add-Movies"){
-          setState({...state,
+        if(type === "Add-Movies" || type === "Edit-Movie"){
+          setState({
             tenPhim: "",
-            hinhAnh: {},
+            hinhAnh: "https://tix.vn/app/assets/img/default-film.webp",
             maPhim: "",
             moTa: "",
             maNhom,
             trailer: "",
-          })
+          });
+          
         }
        }} className="close">
           
           <img src="\img/close/closeFocus.png" alt="close" />
         </Box>
 
-        <Modal.Title id="contained-modal-title-vcenter">{type}</Modal.Title>
+        <Modal.Title >{type}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
 
@@ -231,7 +238,7 @@ useEffect(() => {
     return (<> 
     
     <TextField
-      id="standard-multiline-flexible"
+      
       label="Movie's code"
       multiline
       name="maPhim"
@@ -242,7 +249,7 @@ useEffect(() => {
     />
     
       <TextField
-        id="standard-multiline-flexible"
+        
         label="Movie's name"
         multiline
         name="tenPhim"
@@ -276,7 +283,7 @@ useEffect(() => {
       </FormControl>
       <TextField
         style={{ gridColumn: "1 / span 2" }}
-        id="standard-multiline-flexible"
+        
         label="Trailer"
         multiline
         value={state.trailer}
@@ -285,21 +292,31 @@ useEffect(() => {
         name="trailer"
         onChange={handleChange}
       />
+      <div className={classes.groupImg}>
+          <img
+           src={state.hinhAnh}  
+          //  onError={(e)=>{e.target.onerror = null; e.target.src="./img/default-film.webp"}}
 
-      <TextField
-        id="standard-multiline-flexible"
-        label="Image"
+          name="upload-image" alt={`img-${state.tenPhim}`}/>
+        <TextField
+        
+        
         type="file"
         // rowsMax={4}
-
+        id="chooseFile"
         // value={state.hinhAnh}
         name="hinhAnh"
         onChange={handleChange}
-        accept={state.hinhAnh}
+        accept={"./img/*"}
+        
       />
+      <label htmlFor="chooseFile">Choose an image</label>
+      
+
+      </div>
 
       <TextareaAutosize
-        style={{ gridColumn: "1 / span 3", padding: 20 }}
+        style={{ gridColumn: "1 / span 2", padding: 20 }}
         rows={6}
         name="moTa"
         onChange={handleChange}
@@ -309,15 +326,6 @@ useEffect(() => {
   })
   const renderShowTimes = React.useCallback(() => {
     return (<>
-      {/* <TextField
-        className={classes.textField}
-        type="text"
-        name="maPhim"
-        value={state1.data.maPhim}
-        label="Movie's code"
-        onChange={handleChangeInput}
-        helperText={state1.error.maPhim}
-      /> */}
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-helper-label">Movie's code</InputLabel>
         <Select
