@@ -16,7 +16,7 @@ import {
   TableCell,
   TableBody,
 } from "@material-ui/core";
-
+import ScaleLoader from "react-spinners/ScaleLoader";
 import FirstPageIcon from "@material-ui/icons/FirstPage";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
@@ -143,7 +143,7 @@ const useStyles2 = makeStyles({
 
 export default function ManagerUser() {
   const location = useLocation();
-  const classesLoading = loadingStyle();
+
 
   const dispatch = useDispatch();
   const { maNhom } = useSelector((state) => state.MovieManaGerment);
@@ -428,7 +428,7 @@ Can't find the users!
     setCheckClose(!checkClose);
   };
 
-  return <TableContainer component={Paper}>
+  return indexSpinner?<ScaleLoader color={"#1769AA"} css={loadingStyle} /> :<TableContainer component={Paper}>
     
     <Table className={classes.table} aria-label="custom pagination table">
         <TableHead>

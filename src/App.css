@@ -1207,7 +1207,6 @@ input[type="file"] {
 #detail-movie .Section {
   position: relative;
   background: #0a2029;
-  margin-top: 59px;
   height: auto; }
   #detail-movie .Section__movie {
     position: relative;

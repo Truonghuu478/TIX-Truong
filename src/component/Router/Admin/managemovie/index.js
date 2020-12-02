@@ -15,6 +15,9 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
+import ScaleLoader from "react-spinners/ScaleLoader";
+// *css loading 
+import loadingStyle  from "../../../assets/jss/components/LoadingStyle";
  // *css loading 
 // action
 import * as action from "../../../../Redux/action/admin";
@@ -117,6 +120,7 @@ export default function ManagerMovie() {
   const [detailMovie,setDetailMovie] = useState(null)
   const [page, setPage] = useState(0);
 
+
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { indexSpinner,globalSearch,listMovies} = useSelector((state) => state.AdminReducer);
 const [showModal,setShowModal] = useState(false);
@@ -146,6 +150,7 @@ const [typeModal,setTypeModal] = useState(null);
 
   
   useEffect(() => {
+    
     dispatch(action.getListMovies());
       
   }, [])
@@ -273,6 +278,7 @@ const [typeModal,setTypeModal] = useState(null);
     </TableRow>
   })
   return ( 
+    indexSpinner?<ScaleLoader color={"#1769AA"} css={loadingStyle}/>:
     <>
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="custom pagination table">

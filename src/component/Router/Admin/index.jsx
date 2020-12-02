@@ -51,19 +51,19 @@ export default function Admin({ ...rest }) {
   const [color, setColor] = React.useState("blue");
   const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const handleImageClick = image => {
-    setImage(image);
-  };
-  const handleColorClick = color => {
-    setColor(color);
-  };
-  const handleFixedClick = () => {
-    if (fixedClasses === "dropdown") {
-      setFixedClasses("dropdown show");
-    } else {
-      setFixedClasses("dropdown");
-    }
-  };
+  // const handleImageClick = image => {
+  //   setImage(image);
+  // };
+  // const handleColorClick = color => {
+  //   setColor(color);
+  // };
+  // const handleFixedClick = () => {
+  //   if (fixedClasses === "dropdown") {
+  //     setFixedClasses("dropdown show");
+  //   } else {
+  //     setFixedClasses("dropdown");
+  //   }
+  // };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };

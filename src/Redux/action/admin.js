@@ -81,7 +81,8 @@ export const actLogin = (user, history) => {
 export const getListUsers = ()=>{
   return (dispatch,getState) =>{
     const {maNhom } = getState().MovieManaGerment;
-    
+        dispatch({ type:TyAction.CHANGE_STATUS_INDEX,statusIndex:true})
+
      request(
       "GET",
       "https://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=" +
@@ -94,7 +95,10 @@ export const getListUsers = ()=>{
         payload:res.data,
        
       })
-    })
+              dispatch({ type:TyAction.CHANGE_STATUS_INDEX,statusIndex:false})
+
+    }).catch((err)=>        dispatch({ type:TyAction.CHANGE_STATUS_INDEX,statusIndex:true})
+)
   }
 }
 export const handleUpdateUser =(data)=>{
@@ -138,12 +142,14 @@ export const handleUpdateUser =(data)=>{
 export const getListMovies = (maNhom) =>{
   return  (dispatch,getState) =>{
     const {maNhom }  = getState().MovieManaGerment;
+    dispatch({ type:TyAction.CHANGE_STATUS_INDEX,statusIndex:true})
       return  request("GET","https://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhim?maNhom="+maNhom,{},"userAdmin")
       .then(res=>{
    dispatch({
      type:TyAction.CHANGE_STATUS_MOVIES,
      payload:res.data
    })
+    dispatch({ type:TyAction.CHANGE_STATUS_INDEX,statusIndex:false})
       }).catch(err=>{
         dispatch({ type:TyAction.CHANGE_STATUS_INDEX,statusIndex:false})
       })
