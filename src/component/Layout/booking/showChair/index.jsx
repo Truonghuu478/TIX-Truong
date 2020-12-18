@@ -11,19 +11,19 @@ import UseStyles from "./style";
 function ShowChair(props) {
   const classes = UseStyles();
 
-  const { listTicketRoom, stt, step, listChairs,chooseChair ,sttNormal,sttVip} = useSelector(
+  const { listTicketRoom, stt, step, listChairs, chooseChair, sttNormal, sttVip } = useSelector(
     (state) => state.BookingReducer
   );
   const { listMovieTheater } = useSelector((state) => state.MovieManaGerment);
   const [movieTimes, setMovieTimes] = React.useState("5:00");
   let { danhSachGhe } = listTicketRoom;
   let times = React.useMemo(() => null);
-  let screenWidth = React.useMemo(()=>window.innerWidth)
+  let screenWidth = React.useMemo(() => window.innerWidth)
   // const {userLogin} =useSelector((state)=>state.UserReducer);
-let arrChair = [];
+  let arrChair = [];
   const dispatch = useDispatch();
 
-  const getDetailChair = (chair,name) => {  
+  const getDetailChair = (chair, name) => {
     if (!chair.daDat) {
       chair.daDat = true;
 
@@ -38,7 +38,7 @@ let arrChair = [];
       }
     }
 
-    dispatch(action.getDetailChair(chair,name));
+    dispatch(action.getDetailChair(chair, name));
 
     // else if(){
     //   document.getElementById(chair.maGhe).style.color = "none";
@@ -95,7 +95,7 @@ let arrChair = [];
           </div>
           <div className="theaterInfo__text">
             <p>
-              <span style={{ color: `${newTenCumRap.color}` ,fontWeight:"bold"}}>
+              <span style={{ color: `${newTenCumRap.color}`, fontWeight: "bold" }}>
                 {newTenCumRap.name}
               </span>
               -{thongTinPhim.tenCumRap.split("-")[1]}
@@ -108,7 +108,7 @@ let arrChair = [];
       );
     }
   }, []);
-  const __renderTimeOut = React.useCallback(() => { 
+  const __renderTimeOut = React.useCallback(() => {
     let minutes = 5;
     let seconds = 0;
 
@@ -137,7 +137,7 @@ let arrChair = [];
           imageHeight: 40,
           imageAlt: "timeout",
           color: "red",
-          allowOutsideClick:false,
+          allowOutsideClick: false,
           html:
             "<p>Đã hết thời gian giữ ghế. Vui lòng thực hiện đơn hàng trong thời hạn 5 phút.<a id='dat-lai' href= >đặt lại ngay</a>  !!!</p>",
           showConfirmButton: false,
@@ -151,45 +151,47 @@ let arrChair = [];
         // setMovieTimes("0" + minutes + ":" + "0" + seconds)
       } else stepTimes.innerHTML = "0" + minutes + ":" + seconds;
     }, 1000);
+
   }, [step]);
 
   // run times and clear time and reset arrChair
-  
+
   useEffect(() => {
     __renderTimeOut();
 
     return () => {
       clearInterval(times)
       danhSachGhe.forEach(item => {
-        item.daDat= false;
-      });};
+        item.daDat = false;
+      });
+    };
   }, []);
-  
-   // changeColor
+
+  // changeColor
   useEffect(() => {
     arrChair.forEach(item => {
-      item.arr.forEach(chair=>{
+      item.arr.forEach(chair => {
 
-        let index =    listChairs.findIndex(itemC=>itemC.stt === chair.stt);
-        if(index  === -1){
-           chair.daDat= false;
-           if(listChairs.length > 0  ){
-            if(chair.taiKhoanNguoiDat || chair.taiKhoanNguoiDat === "" ){
+        let index = listChairs.findIndex(itemC => itemC.stt === chair.stt);
+        if (index === -1) {
+          chair.daDat = false;
+          if (listChairs.length > 0) {
+            if (chair.taiKhoanNguoiDat || chair.taiKhoanNguoiDat === "") {
               document.getElementById(chair.maGhe).style.color = "#DFDFDF";
 
-            
-          }else if (chair.loaiGhe === "Vip"  && sttVip !== 0 ) {
-            document.getElementById(chair.maGhe).style.color = "#e08411";
-          } else if ( chair.loaiGhe === "Thuong" &&sttNormal !== 0){
-            document.getElementById(chair.maGhe).style.color = "#3e515d";
+
+            } else if (chair.loaiGhe === "Vip" && sttVip !== 0) {
+              document.getElementById(chair.maGhe).style.color = "#e08411";
+            } else if (chair.loaiGhe === "Thuong" && sttNormal !== 0) {
+              document.getElementById(chair.maGhe).style.color = "#3e515d";
+            }
+
           }
-         
         }
-        }
-    });
-    
-  },[stt,listChairs])
-})
+      });
+
+    }, [stt, listChairs])
+  })
   const __renderChairs = React.useCallback(() => {
 
     let arrChairsVip = danhSachGhe.filter((chair) => chair.loaiGhe === "Vip");
@@ -284,7 +286,7 @@ let arrChair = [];
       });
       return arr;
     };
-    let colH =()=>{
+    let colH = () => {
       let arr = [];
       arrChairsNormal.forEach((chairD, index) => {
         if (index >= totalChairRadom * 31 && index < totalChairRadom * 32) {
@@ -303,19 +305,19 @@ let arrChair = [];
       });
       return arr;
     }
-    
 
-     arrChair = [
+
+    arrChair = [
       { col: "A", arr: colA },
       { col: "B", arr: colB },
       { col: "C", arr: colD() },
       { col: "D", arr: colE() },
       { col: "E", arr: colF() },
       { col: "F", arr: colG() },
-      {col: "G", arr: colH()},
-      {col:"H",arr:colC},
+      { col: "G", arr: colH() },
+      { col: "H", arr: colC },
     ];
-  
+
     // style={{color:checkChair !== -1 ?"#44c020":"#3e515d",cursor: "pointer" }}
     return (
       <>
@@ -333,17 +335,17 @@ let arrChair = [];
                     component="div"
                   >
                     {/* index <= 1  */}
-                    <Box component="div"   style={{width:screenWidth > 1024? "13%":null}} className={classes.colListNext}>
-                    {renderColChair(col.arr,col.col,totalChair-(totalChair+1),totalChair-(totalChair-1)) }
+                    <Box component="div" style={{ width: screenWidth > 1024 ? "13%" : null }} className={classes.colListNext}>
+                      {renderColChair(col.arr, col.col, totalChair - (totalChair + 1), totalChair - (totalChair - 1))}
                     </Box>
-                  
-                    <Box component="div" style={{width:screenWidth > 1024? "74%":null}} className={classes.colListBetween}>
-                    {renderColChair(col.arr,col.col,totalChair-(totalChair-1),totalChair-3) }
+
+                    <Box component="div" style={{ width: screenWidth > 1024 ? "74%" : null }} className={classes.colListBetween}>
+                      {renderColChair(col.arr, col.col, totalChair - (totalChair - 1), totalChair - 3)}
                     </Box>
-                    <Box style={{textAlign:"right"}} component="div" style={{width:screenWidth > 786? "13%":null}} className={classes.colListNext}>
-                    {renderColChair(col.arr,col.col,totalChair-3,totalChair-1) }
+                    <Box style={{ textAlign: "right" }} component="div" style={{ width: screenWidth > 786 ? "13%" : null }} className={classes.colListNext}>
+                      {renderColChair(col.arr, col.col, totalChair - 3, totalChair - 1)}
                     </Box>
-                    
+
                   </Box>
                 </Box>
               );
@@ -352,91 +354,91 @@ let arrChair = [];
         </Box>
       </>
     );
-  }, [listChairs,stt]);
-  
+  }, [listChairs, stt]);
 
-  
+
+
   // renderHTML ROw a
-    const renderColChair = React.useCallback(
-      (arr,name,min,max)=>{
-      return  arr.map((chair, indexChair) => {
-          if (indexChair > min && indexChair <= max) { 
-            return !chair.taiKhoanNguoiDat && chair.taiKhoanNguoiDat!== "" ? 
-              chair.loaiGhe === "Vip" ? (
+  const renderColChair = React.useCallback(
+    (arr, name, min, max) => {
+      return arr.map((chair, indexChair) => {
+        if (indexChair > min && indexChair <= max) {
+          return !chair.taiKhoanNguoiDat && chair.taiKhoanNguoiDat !== "" ?
+            chair.loaiGhe === "Vip" ? (
               sttVip !== 0 ?
-              <WeekendIcon
-                id={chair.maGhe}
-                key={indexChair}
-                onClick={() => {
-                  getDetailChair(chair,name+(indexChair+1));
-                }}
-                style={{
-                  color: chair.daDat ?"#44c020" :"#e08411",
-                  cursor: "pointer",
-                  
-                }}
-              />:<WeekendIcon
+                <WeekendIcon
+                  id={chair.maGhe}
+                  key={indexChair}
+                  onClick={() => {
+                    getDetailChair(chair, name + (indexChair + 1));
+                  }}
+                  style={{
+                    color: chair.daDat ? "#44c020" : "#e08411",
+                    cursor: "pointer",
+
+                  }}
+                /> : <WeekendIcon
+                  id={chair.maGhe}
+                  key={indexChair}
+                  style={{
+                    color: "#DFDFDF",
+
+                  }}
+                />
+            ) : sttNormal !== 0 ?
+                <WeekendIcon
+                  id={chair.maGhe}
+                  key={indexChair}
+                  onClick={() => {
+                    getDetailChair(chair, name + (indexChair + 1));
+                  }}
+                  style={{
+                    color: chair.daDat ? "#44c020" : "#3e515d",
+                    cursor: "pointer",
+
+                  }}
+                /> : <WeekendIcon
+                  id={chair.maGhe}
+                  key={indexChair}
+                  style={{
+                    color: "#DFDFDF",
+
+                  }}
+                /> : <WeekendIcon
               id={chair.maGhe}
               key={indexChair}
               style={{
                 color: "#DFDFDF",
-                
+
               }}
             />
-            ) : sttNormal !== 0 ?
-              <WeekendIcon
-                id={chair.maGhe}
-                key={indexChair}
-                onClick={() => {
-                  getDetailChair(chair,name+(indexChair+1));
-                }}
-                style={{
-                  color: chair.daDat ?"#44c020" :"#3e515d",
-                  cursor: "pointer",
-                  
-                }}
-              />:<WeekendIcon
-              id={chair.maGhe}
-              key={indexChair}
-              style={{
-                color: "#DFDFDF",
-                
-              }}
-            /> : <WeekendIcon
-            id={chair.maGhe}
-            key={indexChair}
-            style={{
-              color: "#DFDFDF",
-              
-            }}
-          />
-         
-            
-          }return;
-        })
-      },[]
-    )
+
+
+        } return;
+      })
+    }, []
+  )
   // render content
   return (
     <div className=" showChair ">
       <div className="showChair__title ">
         <div className="showChair__title--info  ">{__renderTheater()}</div>
         <div className="showChair__title--chairs">
-        <span style={{fontWeight:"bold"}} className="countTicket__chair__count--red">Ghế :</span>
-            {listChairs.map((chair, index) => {
-              if (listChairs.length === index + 1) {
-                return (
-                  <span key={index} className="countTicket__chair__count--green">
-                    {chair.name}
-                  </span>
-                );
-              }
+          <span style={{ fontWeight: "bold" }} className="countTicket__chair__count--red">Ghế :</span>
+          {listChairs.map((chair, index) => {
+            if (listChairs.length === index + 1) {
               return (
-                <span className="countTicket__chair__count--green">
-                  {chair.name+ ", "}
+                <span key={index} className="countTicket__chair__count--green">
+                  {chair.name}
                 </span>
               );
-            })}
+            }
+            return (
+              <span className="countTicket__chair__count--green">
+                {chair.name + ", "}
+              </span>
+            );
+          })}
         </div>
         <div className={"showChair__title--timeOut "}>
           <p>Thời gian giữ vé </p>
@@ -447,7 +449,7 @@ let arrChair = [];
       <div className="showChair__content">
         <div className="showChair__screen">
           <img
-            
+
             src="https://tix.vn/app/assets/img/icons/screen.png"
             alt="screen-image"
           />
@@ -459,26 +461,26 @@ let arrChair = [];
           {/* show chair  */}
           <div className="showChair__space">
             {__renderChairs()}
-            
+
           </div>
           <div className="showChair__space__note">
-              <div className="">
-                <WeekendIcon className={classes.chairDisable} />
-                <span>: Ghế không được chọn</span>
-              </div>
-              <div className="">
-                <WeekendIcon className={classes.Choose} />
-                <span>: Ghế đã chọn</span>
-              </div>
-              <div className="">
-                <WeekendIcon className={classes.chairVip} />
-                <span>: Ghế vip</span>
-              </div>
-              <div className="">
-                <WeekendIcon style={{ color: "#3e515d" }} />
-                <span>: Ghế thường</span>
-              </div>
+            <div className="">
+              <WeekendIcon className={classes.chairDisable} />
+              <span>: Ghế không được chọn</span>
             </div>
+            <div className="">
+              <WeekendIcon className={classes.Choose} />
+              <span>: Ghế đã chọn</span>
+            </div>
+            <div className="">
+              <WeekendIcon className={classes.chairVip} />
+              <span>: Ghế vip</span>
+            </div>
+            <div className="">
+              <WeekendIcon style={{ color: "#3e515d" }} />
+              <span>: Ghế thường</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>

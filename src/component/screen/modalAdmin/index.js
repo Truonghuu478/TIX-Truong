@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useCallback} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import *as action from "../../../Redux/action/admin";
@@ -12,14 +12,14 @@ import dateFormat from "dateformat";
 import {
   Button,
   Box,
-  
+
   TextField,
   TextareaAutosize,
   MenuItem,
   FormControl,
   Select,
   InputBase,
-  InputLabel  ,FormHelperText  
+  InputLabel, FormHelperText
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 // css
@@ -73,12 +73,12 @@ const override = css`
 `;
 function ModalAdmin(props) {
   const { maNhom } = useSelector((state) => state.MovieManaGerment);
-  const formatD = useCallback((date)=>  dateFormat(new Date(date),"dd/mm/yyyy h:MM:ss"))
+  const formatD = useCallback((date) => dateFormat(new Date(date), "dd/mm/yyyy h:MM:ss"))
   const { indexSpinner } = useSelector((state) => state.AdminReducer);
-  const { type, onHide, detailMovie,listTheater } = props;
+  const { type, onHide, detailMovie, listTheater } = props;
   const dispatch = useDispatch();
-  const [listMovie ,setListMovie] = useState([]);
-  const [upload ,setUpload] = useState("./img/no-image.png")
+  const [listMovie, setListMovie] = useState([]);
+  const [upload, setUpload] = useState("./img/no-image.png")
   const [state, setState] = useState({
     tenPhim: "",
     hinhAnh: "https://tix.vn/app/assets/img/default-film.webp",
@@ -100,20 +100,22 @@ function ModalAdmin(props) {
       setState(detailMovie)
     }
   }, [detailMovie]);
- 
-// fetch list movie 
-useEffect(() => {
-  
-  actionMovie.fetchListMovie(maNhom).then(res=>{
-   
-    setListMovie(res.data);
-  })
-},[]);
+
+  // fetch list movie 
+  useEffect(() => {
+
+    actionMovie.fetchListMovie(maNhom).then(res => {
+
+      setListMovie(res.data);
+    })
+  }, []);
   const handleChangeInput = (e) => {
     let { name, value } = e.target;
 
-    let newData = { ...state1.data,
-       [name]:name !== "ngayChieuGioChieu"? parseInt(value):formatD(value) };
+    let newData = {
+      ...state1.data,
+      [name]: name !== "ngayChieuGioChieu" ? parseInt(value) : formatD(value)
+    };
     let newError = {
       ...state1.error,
       [name]: validateMovie(name, value) ? validateMovie(name, value) : "",
@@ -134,8 +136,8 @@ useEffect(() => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    
+
+
     if (type === "Add-ShowTimes") {
 
       let isValid = false;
@@ -159,7 +161,7 @@ useEffect(() => {
           // timer: 2000,
         });
       } else dispatch(action.createShowTime(state1.data));
-      setState1({...state1,data:{maPhim: "", ngayChieuGioChieu: formatD("2019-01-01T12:00:00"), maRap: "", giaVe: "" },error:{maPhim: "", ngayChieuGioChieu: "", maRap: "", giaVe: "" }})
+      setState1({ ...state1, data: { maPhim: "", ngayChieuGioChieu: formatD("2019-01-01T12:00:00"), maRap: "", giaVe: "" }, error: { maPhim: "", ngayChieuGioChieu: "", maRap: "", giaVe: "" } })
     } else {
       let formData = new FormData();
       for (let key in state) {
@@ -173,7 +175,8 @@ useEffect(() => {
       })
       dispatch(!detailMovie ? action.addMovie(formData) : action.editMovie(formData));
 
-      setState({...state,
+      setState({
+        ...state,
         tenPhim: "",
         hinhAnh: "https://tix.vn/app/assets/img/default-film.webp",
         maPhim: "",
@@ -181,14 +184,14 @@ useEffect(() => {
         maNhom,
         trailer: "",
       })
-    
+
     }
 
 
 
     if (!indexSpinner) props.onHide();
   };
- 
+
   const renderHTML = () => {
     if (indexSpinner) { return <ScaleLoader color={"#36D7B7"} css={override} /> }
     return <Modal {...props}
@@ -198,20 +201,21 @@ useEffect(() => {
       className={classes.root}
     >
       <Modal.Header className={classes.headerModal}>
-        <Box onClick={()=>{onHide() ;
-        if(type === "Add-Movies" || type === "Edit-Movie"){
-          setState({
-            tenPhim: "",
-            hinhAnh: "https://tix.vn/app/assets/img/default-film.webp",
-            maPhim: "",
-            moTa: "",
-            maNhom,
-            trailer: "",
-          });
-          
-        }
-       }} className="close">
-          
+        <Box onClick={() => {
+          onHide();
+          if (type === "Add-Movies" || type === "Edit-Movie") {
+            setState({
+              tenPhim: "",
+              hinhAnh: "https://tix.vn/app/assets/img/default-film.webp",
+              maPhim: "",
+              moTa: "",
+              maNhom,
+              trailer: "",
+            });
+
+          }
+        }} className="close">
+
           <img src="\img/close/closeFocus.png" alt="close" />
         </Box>
 
@@ -221,35 +225,35 @@ useEffect(() => {
 
         <form
           className={classes.formModal}
-
+          style={{ gridTemplateColumns: `repeat(${type === "Add-ShowTimes" ? 2 : 3}, 1fr) ` }}
           onSubmit={handleSubmit}
         >
-          {type === "Add-ShowTimes"  && renderShowTimes()}
+          {type === "Add-ShowTimes" && renderShowTimes()}
           {(type === "Add-Movies" || type === "Edit-Movie") && renderMovies()}
 
           <Button variant="contained" style={{ fontWeight: "bold" }} type="submit" >{detailMovie ? "UPDATE" : type === "Add-Movies" ? "ADD" : "CREATE SHOWTIME"}</Button>
         </form>
       </Modal.Body>
-      
+
     </Modal>
   }
 
   const renderMovies = React.useCallback(() => {
-    return (<> 
-    
-    <TextField
-      
-      label="Movie's code"
-      multiline
-      name="maPhim"
-      // rowsMax={4}
-      // value={value}
-      onChange={handleChange}
-      value={state.maPhim}
-    />
-    
+    return (<>
+
       <TextField
-        
+
+        label="Movie's code"
+        multiline
+        name="maPhim"
+        // rowsMax={4}
+        // value={value}
+        onChange={handleChange}
+        value={state.maPhim}
+      />
+
+      <TextField
+
         label="Movie's name"
         multiline
         name="tenPhim"
@@ -283,7 +287,7 @@ useEffect(() => {
       </FormControl>
       <TextField
         style={{ gridColumn: "1 / span 2" }}
-        
+
         label="Trailer"
         multiline
         value={state.trailer}
@@ -293,25 +297,25 @@ useEffect(() => {
         onChange={handleChange}
       />
       <div className={classes.groupImg}>
-          <img
-           src={state.hinhAnh}  
+        <img
+          src={state.hinhAnh}
           //  onError={(e)=>{e.target.onerror = null; e.target.src="./img/default-film.webp"}}
 
-          name="upload-image" alt={`img-${state.tenPhim}`}/>
+          name="upload-image" alt={`img-${state.tenPhim}`} />
         <TextField
-        
-        
-        type="file"
-        // rowsMax={4}
-        id="chooseFile"
-        // value={state.hinhAnh}
-        name="hinhAnh"
-        onChange={handleChange}
-        accept={"./img/*"}
-        
-      />
-      <label htmlFor="chooseFile">Choose an image</label>
-      
+
+
+          type="file"
+          // rowsMax={4}
+          id="chooseFile"
+          // value={state.hinhAnh}
+          name="hinhAnh"
+          onChange={handleChange}
+          accept={"./img/*"}
+
+        />
+        <label htmlFor="chooseFile">Choose an image</label>
+
 
       </div>
 
@@ -338,13 +342,13 @@ useEffect(() => {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          {listMovie.length > 0 && listMovie.map((movie,index2)=>{
+          {listMovie.length > 0 && listMovie.map((movie, index2) => {
             return <MenuItem key={index2} value={movie.maPhim} >
               {movie.tenPhim}
             </MenuItem>
           })}
         </Select>
-    <FormHelperText>{state1.error.maPhim}</FormHelperText>
+        <FormHelperText>{state1.error.maPhim}</FormHelperText>
       </FormControl>
 
       <TextField
@@ -356,7 +360,7 @@ useEffect(() => {
         onChange={handleChangeInput}
         helperText={state1.error.giaVe}
       />
-     
+
       <FormControl className={classes.formControl}>
         <InputLabel id="demo-simple-select-movie-code">Theater's code</InputLabel>
         <Select
@@ -368,22 +372,22 @@ useEffect(() => {
           <MenuItem value="">
             <em>None</em>
           </MenuItem>
-          {listTheater.length > 0 && listTheater.map((item1,index2)=>{
+          {listTheater.length > 0 && listTheater.map((item1, index2) => {
             return <MenuItem key={index2} value={item1.maRap} >
               {item1.tenRap}
             </MenuItem>
           })}
         </Select>
-    <FormHelperText>{state1.error.maRap}</FormHelperText>
+        <FormHelperText>{state1.error.maRap}</FormHelperText>
       </FormControl>
-      
+
 
       <TextField
         id="datetime-local"
         label="Show date and time"
         type="datetime-local"
         name="ngayChieuGioChieu"
-        
+
         defaultValue={state1.data.ngayChieuGioChieu}
         className={classes.textField}
         onChange={handleChangeInput}
