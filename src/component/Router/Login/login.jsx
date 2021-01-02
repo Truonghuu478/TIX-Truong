@@ -14,9 +14,9 @@ import { connect } from "react-redux";
 import CloseIcon from "@material-ui/icons/Close";
 import { blue, lightBlue } from "@material-ui/core/colors";
 
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
-import {validate} from "../../../vender/validate"
+import { validate } from "../../../vender/validate"
 
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Visibility from '@material-ui/icons/Visibility';
@@ -80,14 +80,14 @@ const useStyles = makeStyles((theme) => ({
     // marginBottom: "10px",
     marginBottom: "2px",
     height: 80,
-    "& div":{
-      "&:focus":{
-        
+    "& div": {
+      "&:focus": {
+
         borderWidth: 4,
       },
-    "&:hover":{
-      cursor:"none"
-    }
+      "&:hover": {
+        cursor: "none"
+      }
     }
   },
   modalFooter: {
@@ -101,27 +101,27 @@ const useStyles = makeStyles((theme) => ({
     // color: 'white',
     // height: 48,
     // padding: '0 30px',
-    margin:"8px 0",
-    width:"100%",
+    margin: "8px 0",
+    width: "100%",
     "&:focus": {
       outline: "none",
     },
-    
+
   },
-  SaveForm:{
-    width:"100%",
-    "& span":{
-      "& input":{
-        "&:after":{
-          display:"block",
+  SaveForm: {
+    width: "100%",
+    "& span": {
+      "& input": {
+        "&:after": {
+          display: "block",
 
         }
       }
     }
 
   },
-  CheckboxCss:{
-    color:"#2196f4"
+  CheckboxCss: {
+    color: "#2196f4"
   }
 }));
 const theme = createMuiTheme({
@@ -131,51 +131,51 @@ const theme = createMuiTheme({
   },
 });
 const ValidationTextField = withStyles({
-  
-      
+
+
   root: {
-    "& div":{
+    "& div": {
       paddingRight: 0,
-      
+
       // ,
-      
+
     },
     "& input:valid ,& fieldset": {
       color: "#2196f4",
       borderColor: "#2196f4",
       borderWidth: 4,
-      
+
 
     },
     "& p": {
       color: "red",
       fontSize: 16,
-      margin:0
+      margin: 0
     },
-    
-    "& label":{
+
+    "& label": {
       color: "#2196f4"
     },
     "& input:valid + fieldset": {
       borderColor: "#2196f4",
       borderWidth: 4,
       color: "#2196f4",
-      
+
     },
     "& input:valid:focus + fieldset": {
-      
+
       borderWidth: 4,
 
       color: "#2196f4",
       padding: "4px !important",
     },
     "& input:valid:hover + fieldset": {
-      
+
       color: "#2196f4",
       borderColor: "#2196f4",
     },
     "& input:hover ": {
-      
+
       borderColor: "#2196f4",
     },
   },
@@ -186,189 +186,187 @@ function Login(props) {
   const history = useHistory();
 
   const [checked, setChecked] = React.useState(true);
-  const screenWidth = React.useMemo(()=>window.innerWidth)
+  const screenWidth = React.useMemo(() => window.innerWidth)
   const handleChangeBox = (event) => {
     setChecked(event.target.checked);
   };
-  const [state, setState] = React.useState({  
-          users:{ taiKhoan: "", matKhau: "" },
-          errors:{ taiKhoan: "", matKhau :"" },
-          valid: true,
-          showPassword:false
-      })  
+  const [state, setState] = React.useState({
+    users: { taiKhoan: "", matKhau: "" },
+    errors: { taiKhoan: "", matKhau: "" },
+    valid: true,
+    showPassword: false
+  })
 
-    
-      const handleClickShowPassword = () => {
-        setState({ ...state, showPassword: !state.showPassword });
-      };
-    
-      const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-      };
 
-    
+  const handleClickShowPassword = () => {
+    setState({ ...state, showPassword: !state.showPassword });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+
   //set value user
   const _BoxValue = (e) => {
     let { name, value } = e.target;
-    
-    let newUser = {...state.users,[name]:value};
-    let error ={...state.errors,[name]:   validate(name,value) ? validate(name,value,4,30) :""};
-     let valid = true;
-     for(const [key] of Object.entries(newUser)){
-        if(newUser[key] !== ""){
-            valid = false;
-        }else {
-          valid = true;
-          break;
-        }
-     }
-     if(!valid){
-      for(const [key] of Object.entries(error)){
-        if(error[key] === ""){
-            valid = false;
 
-        }else {
+    let newUser = { ...state.users, [name]: value };
+    let error = { ...state.errors, [name]: validate(name, value) ? validate(name, value, 4, 30) : "" };
+    let valid = true;
+    for (const [key] of Object.entries(newUser)) {
+      if (newUser[key] === "") {
+
+        valid = true;
+        break;
+
+      } else valid = false;
+    }
+    if (!valid) {
+      for (const [key] of Object.entries(error)) {
+        if (error[key] !== "") {
+
+
           valid = true;
-         
           break;
-        }
-     }
-     }
+        } else valid = false;
+      }
+    }
     setState({
-      users:newUser,
-      errors :error ,
+      users: newUser,
+      errors: error,
       valid
     })
   };
   // change  history to home
   const __handleHistory = () => {
-    let {maPhim,status} = props;
-    status === "home"?history.push("") :history.push(`/phim/${maPhim}`)
+    let { maPhim, status } = props;
+    status === "home" ? history.push("") : history.push(`/phim/${maPhim}`)
   };
   // // submit
   const __handleSubmit = (e) => {
-    
+
     e.preventDefault();
-    
-    props._handleGetUser(state.users,checked,history);
+
+    props._handleGetUser(state.users, checked, history);
   };
-  useEffect(()=>{
-    let {formRegister} = props;
-    if(formRegister){
+  useEffect(() => {
+    let { formRegister } = props;
+    if (formRegister) {
 
-   let newUsers = {...state.users,formRegister}
-  setState({...state,newUsers})
+      let newUsers = { ...state.users, formRegister }
+      setState({ ...state, newUsers })
     }
-  
-},[props.formRegister])
+
+  }, [props.formRegister])
   return (
-  
-     
-          <div className="Login__content Login__background">
-            <div className="Login__header">
-              <span
-                onClick={
-                  __handleHistory
-                }
-                className="Login__header--close"
-              >
-                <CloseIcon />
-              </span>
-            </div>
-            <div className={classes.modalHeader}>
-              <img
-                className={classes.imgHeader}
-                src="https://tix.vn/app/assets/img/login/group@2x.png"
-                alt="logo"
-              />
-            </div>
-            <form
-              onSubmit={__handleSubmit}
-              className={classes.root}
-              noValidate
-              autoComplete="off"
-            >
-              <div className={classes.modalBody}>
-                <p className="mt-5">
-                  Đăng nhập để được nhiều ưu đãi, mua vé và bảo mật thông tin!
+
+
+    <div className="Login__content Login__background">
+      <div className="Login__header">
+        <span
+          onClick={
+            __handleHistory
+          }
+          className="Login__header--close"
+        >
+          <CloseIcon />
+        </span>
+      </div>
+      <div className={classes.modalHeader}>
+        <img
+          className={classes.imgHeader}
+          src="https://tix.vn/app/assets/img/login/group@2x.png"
+          alt="logo"
+        />
+      </div>
+      <form
+        onSubmit={__handleSubmit}
+        className={classes.root}
+        noValidate
+        autoComplete="off"
+      >
+        <div className={classes.modalBody}>
+          <p className="mt-5">
+            Đăng nhập để được nhiều ưu đãi, mua vé và bảo mật thông tin!
             </p>
-                <ThemeProvider theme={theme}>
-                  <ValidationTextField
-                    className={classes.input}
-                    name="taiKhoan"
-                    label="Tài khoản"
-                    variant="outlined"
-                    autoComplete="current-password"
-                    onChange={_BoxValue}
-                    value={ state.users.taiKhoan }
-                    helperText={state.errors.taiKhoan }
-                    autoFocus
-                    
-                  />
+          <ThemeProvider theme={theme}>
+            <ValidationTextField
+              className={classes.input}
+              name="taiKhoan"
+              label="Tài khoản"
+              variant="outlined"
+              autoComplete="current-password"
+              onChange={_BoxValue}
+              value={state.users.taiKhoan}
+              helperText={state.errors.taiKhoan}
+              autoFocus
+
+            />
 
 
-                  <ValidationTextField
-                    className={classes.input}
-                    onChange={_BoxValue}
-                    name="matKhau"
-                    id="matKhau"
-                    type={state.showPassword ? "text" :"password"}
-                    label="Mật khẩu"
-                    // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                    variant="outlined"
-                    value={state.users.matKhau}
-                    // required
-                    InputProps={screenWidth > 768 ? false :{
+            <ValidationTextField
+              className={classes.input}
+              onChange={_BoxValue}
+              name="matKhau"
+              id="matKhau"
+              type={state.showPassword ? "text" : "password"}
+              label="Mật khẩu"
+              // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              variant="outlined"
+              value={state.users.matKhau}
+              // required
+              InputProps={screenWidth > 768 ? false : {
 
-                      endAdornment:(
-                      <InputAdornment  position="end">
-                          <IconButton
-                          style={{color:"#2196f4"}}
-                            aria-label="toggle password visibility"
-                            onClick={handleClickShowPassword}
-                            onMouseDown={handleMouseDownPassword}
-                          >
-                            {state.showPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        </InputAdornment>
-                      )
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      style={{ color: "#2196f4" }}
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {state.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                )
 
-                    }}
-                    helperText={state.errors.matKhau}
-                  />
-                  <FormControlLabel
-                  className={classes.SaveForm}
-                   control={
-                    <Checkbox
-                    size={"medium"}
-                      className={classes.CheckboxCss}
-                      onChange={handleChangeBox}
-                      name="checked-ps"
-                      color="default"
-                      required
-                    />
-                  }
-                  label="Remember me "
-                  />
-                </ThemeProvider>
-              </div>
-              <div className={classes.modalFooter}>
-                <MyButton
-                  color="blue"
-                  type="submit"
-                  disabled={state.valid}
-                  className={classes.btn}
-                >
-                  Đăng nhập
+              }}
+              helperText={state.errors.matKhau}
+            />
+            <FormControlLabel
+              className={classes.SaveForm}
+              control={
+                <Checkbox
+                  size={"medium"}
+                  className={classes.CheckboxCss}
+                  onChange={handleChangeBox}
+                  name="checked-ps"
+                  color="default"
+                  required
+                />
+              }
+              label="Remember me "
+            />
+          </ThemeProvider>
+        </div>
+        <div className={classes.modalFooter}>
+          <MyButton
+            color="blue"
+            type="submit"
+            disabled={state.valid}
+            className={classes.btn}
+          >
+            Đăng nhập
             </MyButton>
-            
-                <MyButton onClick={()=>props.handleChangeStatus("register")} className={classes.btn} color="blue">
-                  Đăng ký
+
+          <MyButton onClick={() => props.handleChangeStatus("register")} className={classes.btn} color="blue">
+            Đăng ký
             </MyButton>
-              </div>
-            </form>
-          </div>
-     
+        </div>
+      </form>
+    </div>
+
 
   )
 
@@ -378,16 +376,16 @@ function Login(props) {
 const mapStateToProps = (state) => {
   return {
     userLogin: state.UserReducer.userLogin,
-    scheduleCode:state.UserReducer.scheduleCode,
-    status:state.UserReducer.status,
-    maPhim:state.UserReducer.maPhim,
-    formRegister:state.UserReducer.formRegister,
+    scheduleCode: state.UserReducer.scheduleCode,
+    status: state.UserReducer.status,
+    maPhim: state.UserReducer.maPhim,
+    formRegister: state.UserReducer.formRegister,
   };
 };
 const mapDispatchToProps = (dispatch) => {
   return {
-    _handleGetUser: (user,checked, history) => {
-      dispatch(action._handleGetUser(user,checked, history));
+    _handleGetUser: (user, checked, history) => {
+      dispatch(action._handleGetUser(user, checked, history));
     },
   };
 };

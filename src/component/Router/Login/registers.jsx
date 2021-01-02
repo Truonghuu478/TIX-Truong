@@ -239,7 +239,7 @@ function Registers(props) {
             email :"", 
             hoTen:"", 
             maNhom :"",
-            maLoaiNguoiDung :"",
+            maLoaiNguoiDung :"KhachHang",
             soDT :"",
            },
           errors:{
@@ -249,7 +249,7 @@ function Registers(props) {
             email :"", 
             hoTen:"", 
             maNhom :"",
-            maLoaiNguoiDung :"",
+            
             soDT :"",
           },
           isValid :true
@@ -262,30 +262,30 @@ function Registers(props) {
   const _handleChangeValue = (e) => {
     let { name, value } = e.target;
   
-    let isValid = true;
     let users = {...state.users,[name]:value};
     let errors ={...state.errors,
       [name]: validate(name,value) ? validate(name,value) :""};
-      
+    let isValid = state.isValid;
+        
      for(const [key] of Object.entries(users)){
-        if(users[key] !== ""){
-            isValid = false;
-        }else {
+        if(users[key] === ""){
+          
           isValid = true;
           break;
-        }
+          
+        }else isValid= false;
      }
+     
      if(!isValid){
-      for(const [key] of Object.entries(errors)){
-        if(errors[key] === ""){
-            isValid = false;
-            
 
-        }else {
-          isValid = true;
-         
+      for(const [key] of Object.entries(errors)){
+        if(errors[key] !== ""){
+          
+
+            isValid = true;
           break;
-        }
+        }else  isValid= false;
+    
      }
      }
     setState({
