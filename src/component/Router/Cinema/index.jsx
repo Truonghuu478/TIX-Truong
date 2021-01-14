@@ -12,9 +12,9 @@ import ModalTrailer from "../../screen/modal-video";
 import Footer from "../../Page/Footer";
 import TiXLoading from "../../Layout/Loading";
 
-// header 
+// header
 import Header from "../../Page/Header";
-// star 
+// star
 import BackToTop from "../../mixin/backtotop/backtotop";
 DetailMovie.propTypes = {
   infoMovie: PropTypes.object,
@@ -57,12 +57,12 @@ const useStyles = makeStyles((theme) => ({
     //   transform: " scale(0.8)",
     // },
   },
-  banner16:{
+  banner16: {
     backgroundColor: "#fb4226",
-
-},bannerP:{
-  backgroundColor: "#00ac4d",
-},
+  },
+  bannerP: {
+    backgroundColor: "#00ac4d",
+  },
 }));
 function DetailMovie(props) {
   const classes = useStyles();
@@ -70,28 +70,32 @@ function DetailMovie(props) {
   const [sultModal, setSultModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [trailer, setTrailer] = useState("");
-  
 
-  // check width  
-  let screenWidth = React.useMemo(()=>window.innerWidth)
+  // check width
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const screenWidth = React.useMemo(() => window.innerWidth, [
+    window.innerWidth,
+  ]);
   useEffect(() => {
- window.scroll({
+    window.scroll({
       top: 0,
-  left: 0,
-  behavior: 'smooth'
-    })
+      left: 0,
+      behavior: "smooth",
+    });
 
- let setCLear=   setTimeout(() => {
+    let setCLear = setTimeout(() => {
       if (props.infoMovie) setLoading(false);
-
     }, 2000);
-  
-         return () => clearTimeout(setCLear)
+
+    return () => clearTimeout(setCLear);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // get id movie
   useEffect(() => {
     const id = props.match.params.id;
     props.getDetailMovieToCode(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // handleTrailer
   const _handleSetTrailer = (trailer) => {
@@ -103,8 +107,9 @@ function DetailMovie(props) {
     const id = props.match.params.id;
 
     props.GetAPIDetailMovieToTheater(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const _renderMovie = React.useCallback( () => {
+  const _renderMovie = React.useCallback(() => {
     // if (props.infoMovie) {
     let movie = props.infoMovie || {};
 
@@ -120,83 +125,103 @@ function DetailMovie(props) {
             src={movie.hinhAnh}
             className="Section__movie--bg"
             alt={`background-phim ${movie.tenPhim}`}
-            onError={(e)=>{e.target.onerror = null; e.target.src="\img/default-film.webp"}} 
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "img/default-film.webp";
+            }}
           />
-          {screenWidth < 768 && <div
-                    onClick={() => {
-                      _handleSetTrailer(movie.trailer);
-                    }}
-                    className="DetailMovie__mobile--overPlay"
-                  >
-                    <img style={{width:75,height:75}} src="https://tix.vn/app/assets/img/icons/play-video.png" 
-                    />
-                  </div>}
+          {screenWidth < 768 && (
+            <div
+              onClick={() => {
+                _handleSetTrailer(movie.trailer);
+              }}
+              className="DetailMovie__mobile--overPlay"
+            >
+              <img
+                style={{ width: 75, height: 75 }}
+                src="https://tix.vn/app/assets/img/icons/play-video.png"
+                alt="play"
+              />
+            </div>
+          )}
           <div className="over-dark"></div>
           {/* start info movie  */}
-          { screenWidth > 768 ? <div className="Section__movie--DetailMovie">
-            <Container maxWidth="lg">
-              <div className="DetailMovie__Section row ">
-                <div className="p-0 col-md-3   ">
-                  <div className="DetailMovie__Section__card">
-                    
-                  <img src={movie.hinhAnh} alt={`image-${movie.tenPhim}`} />
-                  <div
-                    onClick={() => {
-                      _handleSetTrailer(movie.trailer);
-                    }}
-                    className="DetailMovie__Section__card--overPlay"
-                  >
-                    <img style={{width:75,height:75}} src="https://tix.vn/app/assets/img/icons/play-video.png" 
-                    />
+          {screenWidth > 768 ? (
+            <div className="Section__movie--DetailMovie">
+              <Container maxWidth="lg">
+                <div className="DetailMovie__Section row ">
+                  <div className="p-0 col-md-3   ">
+                    <div className="DetailMovie__Section__card">
+                      <img src={movie.hinhAnh} alt={"image" + movie.tenPhim} />
+                      <div
+                        onClick={() => {
+                          _handleSetTrailer(movie.trailer);
+                        }}
+                        className="DetailMovie__Section__card--overPlay"
+                      >
+                        <img
+                          style={{ width: 75, height: 75 }}
+                          alt="play"
+                          src="https://tix.vn/app/assets/img/icons/play-video.png"
+                        />
+                      </div>
+                    </div>
                   </div>
-                  </div>
-                </div>
-                <div className=" col-md-4">
-                  <div className="DetailMovie__Section--detail">
-                    <p className="mb-0 setTime">
-                      {setDay < 10 ? "0" + setDay : setDay}.
-                      {month < 10 ? "0" + month : month}.{year}
-                    </p>
-                   {
-                    <p className="DetailMovie__Section--detail--nameMovie ">
-                      <span 
-                      className={`setRoom ${props.room  ===1 ? classes.banner16 : classes.bannerP}`}>
-                        {props.room === 1? "C16" :"P"}</span>
-                      <span className="setNameMovie">{movie.tenPhim}</span>
-                    </p>}
+                  <div className=" col-md-4">
+                    <div className="DetailMovie__Section--detail">
+                      <p className="mb-0 setTime">
+                        {setDay < 10 ? "0" + setDay : setDay}.
+                        {month < 10 ? "0" + month : month}.{year}
+                      </p>
+                      {
+                        <p className="DetailMovie__Section--detail--nameMovie ">
+                          <span
+                            className={`setRoom ${
+                              props.room === 1
+                                ? classes.banner16
+                                : classes.bannerP
+                            }`}
+                          >
+                            {props.room === 1 ? "C16" : "P"}
+                          </span>
+                          <span className="setNameMovie">{movie.tenPhim}</span>
+                        </p>
+                      }
 
-                    <p className="setinfoPhim">
-                      100 phút - 0 IMDb - 2D/Digital
-                    </p>
-                    <Button
-                      onClick={()=>{
-                         window.scrollTo({top: 500,behavior: 'smooth'});
-                      }}
-                      className={classes.btn_check}
-                      variant="contained"
-                    >
-                      Mua Vé
-                    </Button>
+                      <p className="setinfoPhim">
+                        100 phút - 0 IMDb - 2D/Digital
+                      </p>
+                      <Button
+                        onClick={() => {
+                          window.scrollTo({ top: 500, behavior: "smooth" });
+                        }}
+                        className={classes.btn_check}
+                        variant="contained"
+                      >
+                        Mua Vé
+                      </Button>
+                    </div>
                   </div>
+                  <MovieTop danhGia={movie.danhGia} />
                 </div>
-                <MovieTop danhGia={movie.danhGia} />
-              </div>
-            </Container>
-          </div> :  <div className="DetailMovie__mobile">
-                    <p className="mb-0 setTime">
-                      {setDay < 10 ? "0" + setDay : setDay}.
-                      {month < 10 ? "0" + month : month}.{year}
-                    </p>
-                   {
-                    <p className="DetailMovie__mobile--nameMovie ">
-                      
-                      <span className="setNameMovie">{movie.tenPhim}({props.room === 1? "C16" :"P"})</span>
-                    </p>}
+              </Container>
+            </div>
+          ) : (
+            <div className="DetailMovie__mobile">
+              <p className="mb-0 setTime">
+                {setDay < 10 ? "0" + setDay : setDay}.
+                {month < 10 ? "0" + month : month}.{year}
+              </p>
+              {
+                <p className="DetailMovie__mobile--nameMovie ">
+                  <span className="setNameMovie">
+                    {movie.tenPhim}({props.room === 1 ? "C16" : "P"})
+                  </span>
+                </p>
+              }
 
-                    <p className="setinfoPhim">
-                      100 phút - 0 IMDb - 2D/Digital
-                    </p>
-                    {/* <Button
+              <p className="setinfoPhim">100 phút - 0 IMDb - 2D/Digital</p>
+              {/* <Button
                       onClick={()=>{
                          window.scrollTo({top: 500,behavior: 'smooth'});
                       }}
@@ -205,31 +230,32 @@ function DetailMovie(props) {
                     >
                       Mua Vé
                     </Button> */}
-                  </div>}
+            </div>
+          )}
 
-
-        {/* end info movie  */}
-       
+          {/* end info movie  */}
         </div>
       );
     }
     // }
-  },[props.infoMovie]);
-  const _renderHTML = React.useCallback( () => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.infoMovie]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const _renderHTML = React.useCallback(() => {
     return (
       <Fragment>
         {loading ? (
           <>
-                <Header/>
-          <TiXLoading  />
+            <Header />
+            <TiXLoading />
           </>
         ) : (
           <div id="detail-movie">
-            <Header/>
-            <div  className="Section">
+            <Header />
+            <div className="Section">
               {/* <div className="over-play"></div> */}
               {_renderMovie()}
-              <MovieSection  screenWidth={screenWidth}  />
+              <MovieSection screenWidth={screenWidth} />
               <ModalTrailer
                 onHide={() => {
                   setSultModal(false);
@@ -238,21 +264,19 @@ function DetailMovie(props) {
                 show={sultModal}
               />
             </div>
-            <Footer/>
-            <BackToTop/>
+            <Footer />
+            <BackToTop />
           </div>
         )}
       </Fragment>
     );
   });
-  return <>
-  
-  {_renderHTML()}</>;
+  return <>{_renderHTML()}</>;
 }
 const mapStateToProps = (state) => {
   return {
     infoMovie: state.MovieManaGerment.infoMovie,
-    room :state.UserReducer.room
+    room: state.UserReducer.room,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -267,8 +291,3 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(DetailMovie);
-
-
-
-
-

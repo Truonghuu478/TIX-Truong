@@ -5,15 +5,16 @@ const initialMovie = {
   cinemaMovies: [],
   listMovieOnSystemTheater: null,
   maHeThongRap: "BHDStar",
-  detailCinemaToTheater: null,
+  detailCinemaToTheater: {},
   lstPhim: [],
   lstPhimFist: null,
   infoMovie: {},
   chonTheoNgayChieu: "2019-01-01",
   maNhom: "GP01",
   indexHome: 0,
+
   toDay: "2019-01-01",
-  detailCinemaToTheater: [],
+
   listUser: [
     // {
     // name: "Thúy Hằng",
@@ -63,7 +64,7 @@ const initialMovie = {
     //   status: 0, //0 :face,   1:normal,
     //   id: "nhu-01",
     // }
-  ]
+  ],
 };
 const MovieManaGerment = (state = initialMovie, action) => {
   switch (action.type) {
@@ -83,10 +84,9 @@ const MovieManaGerment = (state = initialMovie, action) => {
       return { ...state, cinemaMovies };
     }
     case tyAction.GET_API_SYSTEM_MOVIE_SHOW: {
-      return { ...state, cinemaMoviesShow: action.lstShowMovie }
+      return { ...state, cinemaMoviesShow: action.lstShowMovie };
     }
     case "GET_LIST_MOVIE": {
-
       state.lstPhim = action.data.danhSachPhim;
       state.indexHome = action.index;
       return { ...state };
@@ -94,20 +94,20 @@ const MovieManaGerment = (state = initialMovie, action) => {
     case "GET_FIST_MOVIE": {
       state.lstPhimFist = action.data.danhSachPhim;
 
-      return { ...state }
+      return { ...state };
     }
     case tyAction.GETAPIDETAILMOVIE: {
       state.infoMovie = action.infoMovie;
       return { ...state };
     }
     case tyAction.GET_DETAIL_MOVIE_TO_THEATER: {
-
-
-
       return { ...state, detailCinemaToTheater: action.detailCinemaToTheater };
     }
     case tyAction.FETCH_ALL_LIST_SYSTEM_THEATER: {
-      return { ...state, listMovieOnSystemTheater: action.listMovieOnSystemTheater }
+      return {
+        ...state,
+        listMovieOnSystemTheater: action.listMovieOnSystemTheater,
+      };
     }
     case tyAction.GETPICKBYDAYMOVIE: {
       state.chonTheoNgayChieu = action.PickByDay;
@@ -117,12 +117,10 @@ const MovieManaGerment = (state = initialMovie, action) => {
     }
     case "ADD_LIST_USER": {
       let newListUser = [...state.listUser, action.data];
-      return { ...state, listUser: newListUser }
+      return { ...state, listUser: newListUser };
     }
     case "EDIT_LIKE_USER": {
-
-      return { ...state, listUser: action.data }
-
+      return { ...state, listUser: action.data };
     }
     case "RESTART__ALL": {
       state.listMovieTheater = [];
@@ -136,17 +134,15 @@ const MovieManaGerment = (state = initialMovie, action) => {
       state.chonTheoNgayChieu = "2019-01-01";
       state.indexHome = 0;
 
-      return { ...state }
+      return { ...state };
     }
     case "RESTART__MOVIE": {
       return { ...state };
-
     }
     case tyAction.FETCH_LIST_DETAIL_THEATER: {
-      return { ...state, detailCinemaToTheater: action.detailTheaters }
+      return { ...state, detailCinemaToTheater: action.detailTheaters };
     }
     default: {
-
       return { ...state };
     }
   }

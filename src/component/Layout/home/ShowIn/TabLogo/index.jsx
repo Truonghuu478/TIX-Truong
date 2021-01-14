@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState } from "react";
 // import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Tabs from "@material-ui/core/Tabs";
@@ -30,17 +30,14 @@ const useStyles = makeStyles((theme) => ({
   tabs: {
     borderRight: `1px solid ${theme.palette.divider}`,
     width: "25%",
-  
-    "& .MuiTabs-scroller":{
 
-      "& .MuiTabs-flexContainer":{
-
+    "& .MuiTabs-scroller": {
+      "& .MuiTabs-flexContainer": {
         height: "100%",
-        margin:" 0 auto",
-        justifyContent: "center"
-      } 
-    }
-
+        margin: " 0 auto",
+        justifyContent: "center",
+      },
+    },
   },
   tab: {
     // position:"relative",
@@ -65,27 +62,24 @@ const useStyles = makeStyles((theme) => ({
 function TabLogo(props) {
   const classes = useStyles();
   const [valueTab, setValue] = useState("BHDStar");
-  
-  const handleChange = (event, newValue) => {
-    setValue(newValue)
-    props.getAPISyStemTheaterClusters(newValue, 0 );
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+    props.getAPISyStemTheaterClusters(newValue, 0);
   };
   //set render logo
   useEffect(() => {
     setValue("BHDStar");
-  }, [props.chonTheoNgayChieu])
+  }, [props.chonTheoNgayChieu]);
   // get API he thong rap
   useEffect(() => {
-    
     props.GetMovieTheater(0);
+    props.getAPISystemTheaterClustersFist(valueTab, 0);
     setValue("BHDStar");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // get API danh sach he thong rap
-  useEffect(() => {
-    
-    props.getAPISystemTheaterClustersFist(valueTab,0);
-  }, []);
+
   // setChagnemaHeThongRap
 
   //render ListmovieTheater
@@ -94,43 +88,46 @@ function TabLogo(props) {
     return listMovieTheater.map((theater, index) => {
       return (
         <Tab
-        key={index}
-            value={theater.maHeThongRap}
-            // style={{opacity:valueTab !== theater.maHeThongRap ?"0.4":1}}
+          key={index}
+          value={theater.maHeThongRap}
+          // style={{opacity:valueTab !== theater.maHeThongRap ?"0.4":1}}
           className={classes.tab}
           label={<img className={classes.img} src={theater.logo} alt="logo" />}
           {...a11yProps(theater.maHeThongRap)}
         />
       );
     });
-  },[props.listMovieTheater])
-// handle change color Tab 
- const changeColorTab = React.useCallback(()=>{
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.listMovieTheater]);
+  // handle change color Tab
+  const changeColorTab = () => {
+    // eslint-disable-next-line default-case
     switch (valueTab) {
       case "BHDStar":
-        
         return "#74bf44";
-    case "CGV" :
-      return "red";
-    case "CineStar" :return "#e04e7e";
-    case "Galaxy" :return "#fa6838";
-    case "LotteCinima" :return "#cc483f";
-    case "MegaGS" :return "#e9b537"
-      
+      case "CGV":
+        return "red";
+      case "CineStar":
+        return "#e04e7e";
+      case "Galaxy":
+        return "#fa6838";
+      case "LotteCinima":
+        return "#cc483f";
+      case "MegaGS":
+        return "#e9b537";
     }
- },)
+  };
   return (
     <Tabs
       orientation="vertical"
       onChange={handleChange}
       variant="scrollable"
-      value={valueTab }
+      value={valueTab}
       aria-label="Vertical tabs example"
       className={classes.tabs}
       // textColor="secondary"
-      style={{color : changeColorTab()}}
+      style={{ color: changeColorTab() }}
       // indicatorColor="secondary"
-
     >
       {renderTabMovieTheater()}
     </Tabs>
@@ -140,8 +137,7 @@ const mapStateToProps = (state) => {
   return {
     listMovieTheater: state.MovieManaGerment.listMovieTheater,
     cinemaMovies: state.MovieManaGerment.cinemaMovies,
-    chonTheoNgayChieu :state.MovieManaGerment.chonTheoNgayChieu
-    
+    chonTheoNgayChieu: state.MovieManaGerment.chonTheoNgayChieu,
   };
 };
 const mapDispatchToProps = (dispatch) => {
@@ -149,11 +145,11 @@ const mapDispatchToProps = (dispatch) => {
     GetMovieTheater: (index) => {
       dispatch(action.getHostAPIMovieTheater(index));
     },
-    getAPISystemTheaterClustersFist: (id,index) => {
-      dispatch(action.getAPISyStemTheaterClusters(id,index));
+    getAPISystemTheaterClustersFist: (id, index) => {
+      dispatch(action.getAPISyStemTheaterClusters(id, index));
     },
-    getAPISyStemTheaterClusters: (id,index) => {
-      dispatch(action.getAPISyStemTheaterClusters(id,index));
+    getAPISyStemTheaterClusters: (id, index) => {
+      dispatch(action.getAPISyStemTheaterClusters(id, index));
     },
     // getdetailsystemTheater: (id) => {
     //   dispatch(action.getdetailsystemTheater(id));

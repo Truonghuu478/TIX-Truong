@@ -4,6 +4,7 @@ const useStyles = makeStyles({
     root: {
 
         "& .modal-content": {
+            
             backgroundColor: "#f1ecec",
             "& .modal-header": {
                 marginBottom: "3rem",

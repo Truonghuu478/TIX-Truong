@@ -13,15 +13,13 @@ import Update from "@material-ui/icons/Update";
 import ArrowUpward from "@material-ui/icons/ArrowUpward";
 import AccessTime from "@material-ui/icons/AccessTime";
 import Accessibility from "@material-ui/icons/Accessibility";
-import BugReport from "@material-ui/icons/BugReport";
-import Code from "@material-ui/icons/Code";
-import Cloud from "@material-ui/icons/Cloud";
+import MovieIcon from '@material-ui/icons/Movie';
 // core components
 import GridItem from "../../../Layout/admin/Grid/GridItem.js";
 import GridContainer from "../../../Layout/admin/Grid/GridContainer.js";
-import Table from "../../../Layout/admin/Table/Table.js";
-import Tasks from "../../../Layout/admin/Tasks/Tasks.js";
-import CustomTabs from "../../../Layout/admin/CustomTabs/CustomTabs.js";
+// import Table from "../../../Layout/admin/Table/Table.js";
+// import Tasks from "../../../Layout/admin/Tasks/Tasks.js";
+// import CustomTabs from "../../../Layout/admin/CustomTabs/CustomTabs.js";
 import Danger from "../../../Layout/admin/Typography/Danger.js";
 import Card from "../../../Layout/admin/Card/Card.js";
 import CardHeader from "../../../Layout/admin/Card/CardHeader.js";
@@ -29,7 +27,7 @@ import CardIcon from "../../../Layout/admin/Card/CardIcon.js";
 import CardBody from "../../../Layout/admin/Card/CardBody.js";
 import CardFooter from "../../../Layout/admin/Card/CardFooter.js";
 
-import { bugs, website, server } from "../../../variables/general.js";
+// import { bugs, website, server } from "../../../variables/general.js";
 
 import {
   dailySalesChart,
@@ -37,12 +35,29 @@ import {
   completedTasksChart
 } from "../../../variables/charts.js";
 
-import  styles from "../../../assets/jss/views/dashboardStyle";
+//services
+import * as action from "../../../../Redux/action/admin";
+import { useSelector, useDispatch } from "react-redux";
+import styles from "../../../assets/jss/views/dashboardStyle";
 
 const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
+  const { listMovies, listUsers } = useSelector(state => state.AdminReducer);
+  const dispatch = useDispatch();
   const classes = useStyles();
+  const lengthLstMovie = React.useMemo(() => listMovies.length, [listMovies]);
+  const lengthLstUser = React.useMemo(() => listUsers.length, [listUsers]);
+
+  React.useEffect(() => {
+
+    dispatch(action.getListMovies());
+    dispatch(action.getListUsers());
+
+
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <div>
       <GridContainer>
@@ -90,10 +105,11 @@ export default function Dashboard() {
           <Card>
             <CardHeader color="danger" stats icon>
               <CardIcon color="danger">
-                <Icon>info_outline</Icon>
+                <MovieIcon />
               </CardIcon>
-              <p className={classes.cardCategory}>Fixed Issues</p>
-              <h3 className={classes.cardTitle}>75</h3>
+              <p className={classes.cardCategory}>
+                Movies</p>
+              <h3 className={classes.cardTitle}>{lengthLstMovie}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -109,8 +125,8 @@ export default function Dashboard() {
               <CardIcon color="info">
                 <Accessibility />
               </CardIcon>
-              <p className={classes.cardCategory}>Followers</p>
-              <h3 className={classes.cardTitle}>+245</h3>
+              <p className={classes.cardCategory}>Users</p>
+              <h3 className={classes.cardTitle}>+{lengthLstUser}</h3>
             </CardHeader>
             <CardFooter stats>
               <div className={classes.stats}>
@@ -195,7 +211,7 @@ export default function Dashboard() {
           </Card>
         </GridItem>
       </GridContainer>
-      
+
     </div>
   );
 }

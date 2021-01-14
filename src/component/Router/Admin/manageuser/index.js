@@ -4,7 +4,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 
 import {
-  LinearProgress,
+
   TableHead,
   IconButton,
   Tooltip,
@@ -26,6 +26,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import DoneIcon from "@material-ui/icons/Done";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";
+import AddIcon from '@material-ui/icons/Add';
 // request
 // import request from "../../../../configs/request";
 // action
@@ -33,11 +34,12 @@ import * as action from "../../../../Redux/action/admin";
 // constant 
 import *as tyAction from "../../../../Redux/constanst";
 
+// modal admin 
+import ModalAdmin from "../../../screen/modalAdmin/index";
 
-
-import { useSelector ,useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 // *css loading 
-import loadingStyle  from "../../../assets/jss/components/LoadingStyle";
+import loadingStyle from "../../../assets/jss/components/LoadingStyle";
 // react router dom
 import { useLocation } from "react-router-dom";
 import classes1 from "classnames";
@@ -86,8 +88,8 @@ function TablePaginationActions(props) {
         {theme.direction === "rtl" ? (
           <KeyboardArrowRight />
         ) : (
-          <KeyboardArrowLeft />
-        )}
+            <KeyboardArrowLeft />
+          )}
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
@@ -97,8 +99,8 @@ function TablePaginationActions(props) {
         {theme.direction === "rtl" ? (
           <KeyboardArrowLeft />
         ) : (
-          <KeyboardArrowRight />
-        )}
+            <KeyboardArrowRight />
+          )}
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
@@ -125,17 +127,17 @@ const useStyles2 = makeStyles({
     boxShadow: "1px 1px 6px 3px grey",
     background: "#e4e4e4",
   },
-  tableCell:{
-    display:"flex",
-    justifyContent:"space-between",
-    alignItems:"center",
-    "& button":{
+  tableCell: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    "& button": {
 
-      "&:hover":{
-        outline:"none "
+      "&:hover": {
+        outline: "none "
       },
-      "&:focus":{
-        outline:"none "
+      "&:focus": {
+        outline: "none "
       }
     }
   }
@@ -147,14 +149,15 @@ export default function ManagerUser() {
 
   const dispatch = useDispatch();
   const { maNhom } = useSelector((state) => state.MovieManaGerment);
-  const { indexSpinner,globalSearch,listUsers } = useSelector((state) => state.AdminReducer);
+  const { indexSpinner, globalSearch, listUsers } = useSelector((state) => state.AdminReducer);
   const [refIndex, setRefIndex] = useState(null);
   const userRef = useRef(null);
   const classes = useStyles2();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [checkClose, setCheckClose] = useState(true);
-  
+  const [typeModal, setTypeModal] = useState(null);
+
   const [formUser, setFormUer] = useState({
     taiKhoan: "",
     matKhau: "",
@@ -163,16 +166,20 @@ export default function ManagerUser() {
     maNhom,
     maLoaiNguoiDung: "",
     hoTen: "",
-   
+
   });
+  const [showModal, setShowModal] = useState(false);
   let emptyRows = null;
   useEffect(() => {
-    emptyRows =
-      rowsPerPage - Math.min(rowsPerPage, listUsers.length - page * rowsPerPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    emptyRows = rowsPerPage - Math.min(rowsPerPage, listUsers.length - page * rowsPerPage);
   }, [listUsers]);
 
   //  rows?.sort((a, b) => (a.calories < b.calories ? -1 : 1));
-
+  const handleOpenModal = () => {
+    setTypeModal("Add-users");
+    setShowModal(true);
+  }
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -192,192 +199,181 @@ export default function ManagerUser() {
   // setList user search
   useEffect(() => {
     if (location.pathname === "/admin/user") {
-     
-     if (globalSearch === "") {
+
+      if (globalSearch === "") {
         dispatch(action.getListUsers());
-        
-      } 
+
+      }
     }
     // return () => {
     //   cleanup
     // }
+    // eslint-disable-next-line
   }, [globalSearch]);
-useEffect(() => {
-  dispatch({
-    type:tyAction.CHANGE_STATUS_LOCATION,
-    payload :location.pathname
-  })
-  
-}, [])
+  useEffect(() => {
+    dispatch({
+      type: tyAction.CHANGE_STATUS_LOCATION,
+      payload: location.pathname
+    })
+    // eslint-disable-next-line
+  }, [])
   //
   const renderHTML = () => {
-// if(indexSpinner){
-//   return  <TableRow>
-//       <TableCell
-//       colSpan="9"
-//     style={{ color: "red", textAlign: "center" }}
-    
-//   >
-//     <LinearProgress />
-//   </TableCell>
-//     </TableRow>
-  
-// }else  
+    if (listUsers.length > 0) {
+      return (<>{(rowsPerPage > 0
+        ? listUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        : listUsers
+      ).map((row, index) => (
+        <TableRow
+          ref={index === refIndex ? userRef : null}
+          key={index}
+          className={
+            index === refIndex ? classes1(classes.focusUser) : null
+          }
+        >
+          <TableCell>{index + 1}</TableCell>
+          <TableCell>
+            <Input
+              placeholder="Họ tên"
+              name={"hoTen"}
+              type="text"
+              value={index !== refIndex ? row.hoTen : formUser.hoTen}
+              inputProps={{ "aria-label": "description" }}
+              onChange={index === refIndex ? handleChangeFormUser : null}
 
-if(listUsers.length > 0) {
-    return (<TableBody>{(rowsPerPage > 0
-            ? listUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : listUsers
-          ).map((row, index) => (
-            <TableRow
-              ref={index === refIndex ? userRef : null}
-              key={index}
-              className={
-                index === refIndex ? classes1(classes.focusUser) : null
-              }
-            >
-              <TableCell>{index + 1}</TableCell>
-              <TableCell>
-                <Input
-                  placeholder="Họ tên"
-                  name={"hoTen"}
-                  type="text"
-                  value={index !== refIndex ?row.hoTen:formUser.hoTen}
-                  inputProps={{ "aria-label": "description" }}
-                  onChange={index === refIndex ?handleChangeFormUser:null}
-    
-                />
-              </TableCell>
-              <TableCell component="th" scope="row">
-                <Input
-                
-                  placeholder="Tài khoản"
-                  type="text"
-                  name={"taiKhoan"}
-                  value={index !== refIndex ?row.taiKhoan:formUser.taiKhoan}
-                  inputProps={{ "aria-label": "description" }}
-                  onChange={index === refIndex ?handleChangeFormUser:null}
-    
-                />
-              </TableCell>
-              <TableCell>
-                <Input
-                type="text"
-                  placeholder="Mật khẩu"
-                  name={"matKhau"}
-                  value={index !== refIndex ?row.matKhau:formUser.matKhau}
-                  onChange={index === refIndex ?handleChangeFormUser:null}
-                  inputProps={{ "aria-label": "description" }}
-                />
-              </TableCell>
-              <TableCell>
-                <Input
-                name={"email"}
-                  placeholder="email"
-                  value={index !== refIndex ?row.email:formUser.email}
-                  inputProps={{ "aria-label": "description" }}
-                   onChange={index === refIndex ?handleChangeFormUser:null}
-                  type="text"
-              
-    
-                />
-              </TableCell>
-              <TableCell>
-                <Input
-                  name="soDt"
-                  placeholder="số DT"
-                  type="text"
-                  value={index !== refIndex ?row.soDt:formUser.soDt}
-                  inputProps={{ "aria-label": "description" }}
-    
-                  onChange={index === refIndex ?handleChangeFormUser:null}
-                />
-              </TableCell>
-              <TableCell>
-                <Input
-                name={"maLoaiNguoiDung"}
-                onChange={index === refIndex ?handleChangeFormUser:null}
-                
-                type="text"
-                  placeholder="Mã người dùng"
-                  value={index !== refIndex ?row.maLoaiNguoiDung:formUser.maLoaiNguoiDung}
-                  inputProps={{ "aria-label": "description" }}
-    
-    
-                />
-              </TableCell>
-              <TableCell className={classes.tableCell} style={{ cursor: "pointer" }}>
-              {/* done  */}
-                {!checkClose && index === refIndex && (
-                  <Tooltip
-                    onClick={handleDoneUser}
-                    title="Done"
-                  >
-                    <IconButton
-                      
-                      aria-label="Done"
-                    >
-                      <DoneIcon />
-                    </IconButton>
-                  </Tooltip>
-                )}
-                  {/* delete  */}
-                {checkClose && (
-                  <Tooltip title="Delete">
-                    <IconButton
-                      onClick={() => handleRemoveUser(row.taiKhoan)}
-                      aria-label="Delete"
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
-                )}
-                  {/* Close  */}
-                {!checkClose && index === refIndex && (
-                  <Tooltip title="Close">
-                    <IconButton
-                      onClick={handleCloseUser}
-                      aria-label="Close"
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  </Tooltip>
-                )}
-                {/* edit  */}
-                {checkClose && (
-                  <Tooltip title="Edit">
-                    <IconButton
-                      onClick={() => handleEditUser(row, index)}
-                      aria-label="Edit"
-                    >
-                      <EditRoundedIcon />
-                    </IconButton>
-                  </Tooltip>
-                )}
-              </TableCell>
-            </TableRow>
-          ))}
-    
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
-          )}
-        </TableBody>
-        
-    )
-} else return(  <TableRow>
-  <TableCell
-  colSpan="7"
-style={{ color: "red", textAlign: "center" }}
+            />
+          </TableCell>
+          <TableCell component="th" scope="row">
+            <Input
+              disabled={index === refIndex ? true : false}
+              placeholder="Tài khoản"
+              type="text"
+              name={"taiKhoan"}
+              value={index !== refIndex ? row.taiKhoan : formUser.taiKhoan}
+              inputProps={{ "aria-label": "description" }}
+              onChange={index === refIndex ? handleChangeFormUser : null}
 
->
-Can't find the users!
+            />
+          </TableCell>
+          <TableCell>
+            <Input
+              type="text"
+              placeholder="Mật khẩu"
+              name={"matKhau"}
+              value={index !== refIndex ? row.matKhau : formUser.matKhau}
+              onChange={index === refIndex ? handleChangeFormUser : null}
+              inputProps={{ "aria-label": "description" }}
+            />
+          </TableCell>
+          <TableCell>
+            <Input
+              name={"email"}
+              placeholder="email"
+              value={index !== refIndex ? row.email : formUser.email}
+              inputProps={{ "aria-label": "description" }}
+              onChange={index === refIndex ? handleChangeFormUser : null}
+              type="text"
+
+
+            />
+          </TableCell>
+          <TableCell>
+            <Input
+              name="soDt"
+              placeholder="số DT"
+              type="text"
+              value={index !== refIndex ? row.soDt : formUser.soDt}
+              inputProps={{ "aria-label": "description" }}
+
+              onChange={index === refIndex ? handleChangeFormUser : null}
+            />
+          </TableCell>
+          <TableCell>
+            <Input
+              name={"maLoaiNguoiDung"}
+              onChange={index === refIndex ? handleChangeFormUser : null}
+              disabled={index === refIndex ? true : false}
+
+              type="text"
+              placeholder="Mã người dùng"
+              value={index !== refIndex ? row.maLoaiNguoiDung : formUser.maLoaiNguoiDung}
+              inputProps={{ "aria-label": "description" }}
+
+
+            />
+          </TableCell>
+          <TableCell className={classes.tableCell} style={{ cursor: "pointer" }}>
+            {/* done  */}
+            {!checkClose && index === refIndex && (
+              <Tooltip
+                onClick={handleDoneUser}
+                title="Done"
+              >
+                <IconButton
+
+                  aria-label="Done"
+                >
+                  <DoneIcon />
+                </IconButton>
+              </Tooltip>
+            )}
+            {/* delete  */}
+            {checkClose && (
+              <Tooltip title="Delete">
+                <IconButton
+                  onClick={() => handleRemoveUser(row.taiKhoan)}
+                  aria-label="Delete"
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Tooltip>
+            )}
+            {/* Close  */}
+            {!checkClose && index === refIndex && (
+              <Tooltip title="Close">
+                <IconButton
+                  onClick={handleCloseUser}
+                  aria-label="Close"
+                >
+                  <CloseIcon />
+                </IconButton>
+              </Tooltip>
+            )}
+            {/* edit  */}
+            {checkClose && (
+              <Tooltip title="Edit">
+                <IconButton
+                  onClick={() => handleEditUser(row, index)}
+                  aria-label="Edit"
+                >
+                  <EditRoundedIcon />
+                </IconButton>
+              </Tooltip>
+            )}
+          </TableCell>
+        </TableRow>
+      ))}
+
+        {emptyRows > 0 && (
+          <TableRow style={{ height: 53 * emptyRows }}>
+            <TableCell colSpan={6} />
+          </TableRow>
+        )}
+      </>
+
+      )
+    } else return (<TableRow>
+      <TableCell
+        colSpan="7"
+        style={{ color: "red", textAlign: "center" }}
+
+      >
+        Can't find the users!
 </TableCell>
-</TableRow>
-);
+    </TableRow>
+    );
 
-   
+
   };
   // handle Change formUser 
   const handleChangeFormUser = (e) => {
@@ -385,52 +381,53 @@ Can't find the users!
     setFormUer({ ...formUser, [name]: value });
   };
   // handle close
-   const handleDoneUser = ()=>{
-    dispatch({type:tyAction.CHANGE_STATUS_INDEX,
-      statusIndex:true})
-      setRefIndex(null);
-      dispatch(action.handleUpdateUser(formUser));
+  const handleDoneUser = () => {
+    dispatch({
+      type: tyAction.CHANGE_STATUS_INDEX,
+      statusIndex: true
+    })
+    setRefIndex(null);
+
+    dispatch(action.handleUpdateUser(formUser));
     setCheckClose(!checkClose);
 
-    
-   }
+
+  }
   // handle done user 
-  const handleCloseUser = ()=>{
-    
+  const handleCloseUser = () => {
+
     setCheckClose(!checkClose);
     setRefIndex(null);
-    setFormUer({ taiKhoan: "",
-    matKhau: "",
-    email: "",
-    soDt: "",
-    maNhom,
-    maLoaiNguoiDung: "",
-    hoTen: ""})
+    setFormUer({
+      taiKhoan: "",
+      matKhau: "",
+      email: "",
+      soDt: "",
+      maNhom,
+      maLoaiNguoiDung: "",
+      hoTen: ""
+    })
   }
-  
+
   // remove user
   const handleRemoveUser = (user) => {
     action.RemoveUserAdmin(user);
-    // action.fetchListUser().then((res)=>{
-    //     console.log(res)
-    // }).catch((err)=>{console.log(err.message)})
-  };
-  // useEffect(() => {
-  //   if(userRef.current){
-  //     userRef.current.style.boxShadow = "1px 1px 6px 3px grey"  ;
 
-  //   }
-  // }, [refIndex])
+  };
+
   // edit user
   const handleEditUser = (user, index) => {
-    setFormUer({ ...user,maNhom});
+    setFormUer({ ...user, maNhom });
     setRefIndex(index);
     setCheckClose(!checkClose);
   };
 
-  return indexSpinner?<ScaleLoader color={"#1769AA"} css={loadingStyle} /> :<TableContainer component={Paper}>
-    
-    <Table className={classes.table} aria-label="custom pagination table">
+  return indexSpinner ?
+
+    <ScaleLoader color={"#1769AA"} css={loadingStyle} /> :
+    <><TableContainer component={Paper}>
+
+      <Table className={classes.table} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
             <TableCell style={{ fontWeight: "bold" }}>Order </TableCell>
@@ -440,12 +437,26 @@ Can't find the users!
             <TableCell style={{ fontWeight: "bold" }}>Email</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>Phone</TableCell>
             <TableCell style={{ fontWeight: "bold" }}>User type </TableCell>
+            <TableCell style={{ fontWeight: "bold" }}>
+              <Tooltip title="Add" >
+                <IconButton
+
+                  onClick={handleOpenModal}
+                  aria-label="Add"
+                >
+                  <AddIcon style={{ fontSize: 40, color: 'blue' }} />
+                </IconButton>
+              </Tooltip>
+            </TableCell>
             <TableCell style={{ fontWeight: "bold" }}></TableCell>
-            <TableCell style={{ fontWeight: "bold" }}></TableCell>
+
           </TableRow>
         </TableHead>
-    {renderHTML()}
-    <TableFooter>
+        <TableBody>
+
+          {renderHTML()}
+        </TableBody>
+        <TableFooter>
           <TableRow>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
@@ -463,7 +474,13 @@ Can't find the users!
             />
           </TableRow>
         </TableFooter>
-        </Table>
-    </TableContainer>;
+      </Table>
+    </TableContainer>
+      <ModalAdmin
+        types={typeModal}
+        show={showModal}
+        onHide={() => setShowModal(false)}
+      />
+    </>
 }
 

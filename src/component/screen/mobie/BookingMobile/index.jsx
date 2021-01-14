@@ -92,6 +92,7 @@ export default function BookingMobile(props) {
                 )
             }
             
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         },[step === 1 ,listTicketRoom]
     )
     return (

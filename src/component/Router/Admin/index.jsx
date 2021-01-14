@@ -35,7 +35,6 @@ const switchRoutes = (
       return null;
     })}
     <Redirect from="/admin" to="/admin/dashboard-page" />
-    
   </Switch>
 );
 
@@ -47,33 +46,17 @@ export default function Admin({ ...rest }) {
   // ref to help us initialize PerfectScrollbar on windows devices
   const mainPanel = React.createRef();
   // states and functions
-  const [image, setImage] = React.useState(bgImage);
-  const [color, setColor] = React.useState("blue");
-  const [fixedClasses, setFixedClasses] = React.useState("dropdown show");
+  const [image] = React.useState(bgImage);
+  const [color] = React.useState("blue");
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  // const handleImageClick = image => {
-  //   setImage(image);
-  // };
-  // const handleColorClick = color => {
-  //   setColor(color);
-  // };
-  // const handleFixedClick = () => {
-  //   if (fixedClasses === "dropdown") {
-  //     setFixedClasses("dropdown show");
-  //   } else {
-  //     setFixedClasses("dropdown");
-  //   }
-  // };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
   const getRoute = () => {
     return window.location.pathname !== "/admin/maps";
   };
-  // handleChangeSearch 
-  const handleFindUsers = (search)=>{
-    console.log(search);
-  }
+
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
       setMobileOpen(false);
@@ -84,7 +67,7 @@ export default function Admin({ ...rest }) {
     if (navigator.platform.indexOf("Win") > -1) {
       ps = new PerfectScrollbar(mainPanel.current, {
         suppressScrollX: true,
-        suppressScrollY: false
+        suppressScrollY: false,
       });
       document.body.style.overflow = "hidden";
     }
@@ -98,8 +81,6 @@ export default function Admin({ ...rest }) {
     };
   }, [mainPanel]);
   return (
-
-
     <div className={classes.wrapper}>
       <Sidebar
         routes={routes}
@@ -114,7 +95,6 @@ export default function Admin({ ...rest }) {
       <div className={classes.mainPanel} ref={mainPanel}>
         <Navbar
           routes={routes}
-          
           handleDrawerToggle={handleDrawerToggle}
           {...rest}
         />
@@ -137,5 +117,5 @@ export default function Admin({ ...rest }) {
         /> */}
       </div>
     </div>
-  )
+  );
 }

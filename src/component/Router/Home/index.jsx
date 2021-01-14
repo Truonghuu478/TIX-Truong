@@ -1,8 +1,4 @@
-// import  Header  from "./component/Page/Header";
-// import Carousel from './component/Layout/Carousel';
 
-// import NewIn from './component/Layout/Newin';
-// import ShowIn from './component/Layout/ShowIn';
 
 import React, { useState, useEffect, Fragment } from "react";
 import * as Action from "../../../Redux/action/moive";
@@ -16,105 +12,95 @@ import Footer from "../../Page/Footer";
 import { connect } from "react-redux";
 import FastTicket from "../../Layout/home/fastTicket/FastTicket";
 import Pack from "../../Layout/home/pack";
-import {useLocation} from "react-router-dom";
-import TiXLoading from "../../Layout/Loading"
-
+// import {useLocation} from "react-router-dom";
+import TiXLoading from "../../Layout/Loading";
 
 function Home(props) {
   const [loading, setLoading] = useState(true);
-  const location = useLocation();
-  const screenWidth = React.useMemo(()=>window.innerWidth)
-  //   console.log(loading);
-  // && props.detailCinemaToTheater
-  //
-  // useEffect(() => {
-  //   if (props.infoMovie) setLoading(false);
-  //   else setLoading(true);
-  //   props.getHostAPIMovieTheater();
-  // }, []);
-
-
-
+  // const location = useLocation();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const screenWidth = React.useMemo(() => window.innerWidth, [
+    window.innerWidth,
+  ]);
 
   useEffect(() => {
-  
-      let GetMovieFist = async () => {
-        try {
-          const result = await fetch(
-            `https://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maHeThongRap=${props.maHeThongRap}&maNhom=GP01`
-          );
-  
-          const json = await result.json();
-          props.handleGetMovieFist(
-            json[0].lstCumRap.find((cinemaFist, index) => {
-              if (index === 0)
-                return cinemaFist;
-            })
-          );
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      GetMovieFist();
-  
-   
-  },[])
-  useEffect(() => {
-    let a =null;
-    props.getHostAPIMovieTheater(0);
-      if (props.listMovieTheater ) {
-        a = setTimeout(()=>{
-          setLoading(false);
-        },1500)
+    let GetMovieFist = async () => {
+      try {
+        const result = await fetch(
+          `https://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maHeThongRap=${props.maHeThongRap}&maNhom=GP01`
+        );
+
+        const json = await result.json();
+        props.handleGetMovieFist(
+          // eslint-disable-next-line array-callback-return
+          json[0].lstCumRap.find((cinemaFist, index) => {
+            if (index === 0) return cinemaFist;
+          })
+        );
+      } catch (error) {
+        console.log(error);
       }
-      window.scrollTo({top: "500px", behavior: 'smooth'});
-        return ()=>clearTimeout(a);
+    };
+    GetMovieFist();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
- 
+  useEffect(() => {
+    let a = null;
+    props.getHostAPIMovieTheater(0);
+    if (props.listMovieTheater) {
+      a = setTimeout(() => {
+        setLoading(false);
+      }, 1500);
+    }
+    window.scrollTo({ top: "500px", behavior: "smooth" });
+    return () => clearTimeout(a);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       {loading ? (
         <div className="sweet-loading">
-          <Header/>
-          <TiXLoading  />
+          <Header />
+          <TiXLoading />
         </div>
       ) : (
-          <Fragment>
-          <Header/>
+        <Fragment>
+          <Header />
 
-            <Carousel />
-            <FastTicket/>
-            <NewIn loading={loading} />
-           { screenWidth >1024 && < Pack/>}
-            <ShowIn  />
-            <Pack/>
-            <News />
-            <About />
-            <Footer/>
-            
-          </Fragment>
-        )}
+          <Carousel />
+          <FastTicket />
+          <NewIn loading={loading} />
+          {screenWidth > 1024 && <Pack />}
+          <ShowIn />
+          <Pack />
+          <News />
+          <About />
+          <Footer />
+        </Fragment>
+      )}
     </>
   );
 }
 const mapStateToProps = (state) => {
   return {
     listMovieTheater: state.MovieManaGerment.listMovieTheater,
-  cinemaMovies:state.MovieManaGerment.cinemaMovies,
-  maHeThongRap:state.MovieManaGerment.maHeThongRap,
+    cinemaMovies: state.MovieManaGerment.cinemaMovies,
+    maHeThongRap: state.MovieManaGerment.maHeThongRap,
   };
 };
 const mapDisPatchToProps = (dispatch) => {
   return {
     getHostAPIMovieTheater: (index) => {
-      dispatch(Action.getHostAPIMovieTheater(index))
-    },handleGetMovieFist: (data) => {
+      dispatch(Action.getHostAPIMovieTheater(index));
+    },
+    handleGetMovieFist: (data) => {
       const action = {
         type: "GET_FIST_MOVIE",
         data: data,
       };
       dispatch(action);
     },
+  };
 };
-}
 export default connect(mapStateToProps, mapDisPatchToProps)(Home);

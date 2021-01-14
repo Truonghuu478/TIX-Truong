@@ -1,4 +1,5 @@
-import React, { useMemo, useEffect } from "react";
+/* eslint-disable jsx-a11y/img-redundant-alt */
+import React, { useEffect } from "react";
 import * as action from "../../../../Redux/action/bookingAction";
 import nameMovie from "../../../../json/nameMovie.json";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,18 +12,29 @@ import UseStyles from "./style";
 function ShowChair(props) {
   const classes = UseStyles();
 
-  const { listTicketRoom, stt, step, listChairs, chooseChair, sttNormal, sttVip } = useSelector(
-    (state) => state.BookingReducer
-  );
+  const {
+    listTicketRoom,
+    stt,
+    step,
+    listChairs,
+    sttNormal,
+    sttVip,
+  } = useSelector((state) => state.BookingReducer);
   const { listMovieTheater } = useSelector((state) => state.MovieManaGerment);
-  const [movieTimes, setMovieTimes] = React.useState("5:00");
+  const [, setMovieTimes] = React.useState("5:00");
   let { danhSachGhe } = listTicketRoom;
-  let times = React.useMemo(() => null);
-  let screenWidth = React.useMemo(() => window.innerWidth)
+  let times = React.useMemo(() => null, []);
+  let screenWidth = React.useMemo(
+    () => window.innerWidth,
+    // eslint-disable-next-line
+
+    []
+  );
   // const {userLogin} =useSelector((state)=>state.UserReducer);
   let arrChair = [];
   const dispatch = useDispatch();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getDetailChair = (chair, name) => {
     if (!chair.daDat) {
       chair.daDat = true;
@@ -95,18 +107,22 @@ function ShowChair(props) {
           </div>
           <div className="theaterInfo__text">
             <p>
-              <span style={{ color: `${newTenCumRap.color}`, fontWeight: "bold" }}>
+              <span
+                style={{ color: `${newTenCumRap.color}`, fontWeight: "bold" }}
+              >
                 {newTenCumRap.name}
               </span>
               -{thongTinPhim.tenCumRap.split("-")[1]}
             </p>
             <span>
-              {thongTinPhim.ngayChieu} - {thongTinPhim.gioChieu} - {thongTinPhim.tenRap}
+              {thongTinPhim.ngayChieu} - {thongTinPhim.gioChieu} -{" "}
+              {thongTinPhim.tenRap}
             </span>
           </div>
         </React.Fragment>
       );
     }
+    // eslint-disable-next-line
   }, []);
   const __renderTimeOut = React.useCallback(() => {
     let minutes = 5;
@@ -116,6 +132,7 @@ function ShowChair(props) {
 
     // }
     let stepTimes = document.getElementById("count-time");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     times = setInterval(() => {
       seconds--;
 
@@ -123,12 +140,12 @@ function ShowChair(props) {
         minutes -= 1;
         seconds = 59;
         if (seconds <= 9) {
-          stepTimes.innerHTML = "0" + minutes + ":" + "0" + seconds;
+          stepTimes.innerHTML = "0" + minutes + ":0" + seconds;
           // setMovieTimes("0" + minutes + ":" + "0" + seconds)
         } else stepTimes.innerHTML = "0" + minutes + ":" + seconds;
       } else if (minutes === 0 && seconds === 0) {
         if (seconds <= 9) {
-          setMovieTimes("0" + minutes + ":" + "0" + seconds);
+          setMovieTimes("0" + minutes + ":0" + seconds);
         } else setMovieTimes("0" + minutes + ":" + seconds);
         clearInterval(times);
 
@@ -147,11 +164,10 @@ function ShowChair(props) {
           }
         });
       } else if (seconds <= 9) {
-        stepTimes.innerHTML = "0" + minutes + ":" + "0" + seconds;
+        stepTimes.innerHTML = "0" + minutes + ":0" + seconds;
         // setMovieTimes("0" + minutes + ":" + "0" + seconds)
       } else stepTimes.innerHTML = "0" + minutes + ":" + seconds;
     }, 1000);
-
   }, [step]);
 
   // run times and clear time and reset arrChair
@@ -160,45 +176,43 @@ function ShowChair(props) {
     __renderTimeOut();
 
     return () => {
-      clearInterval(times)
-      danhSachGhe.forEach(item => {
+      clearInterval(times);
+      danhSachGhe.forEach((item) => {
         item.daDat = false;
       });
     };
+    // eslint-disable-next-line
   }, []);
 
   // changeColor
   useEffect(() => {
-    arrChair.forEach(item => {
-      item.arr.forEach(chair => {
-
-        let index = listChairs.findIndex(itemC => itemC.stt === chair.stt);
-        if (index === -1) {
-          chair.daDat = false;
-          if (listChairs.length > 0) {
-            if (chair.taiKhoanNguoiDat || chair.taiKhoanNguoiDat === "") {
-              document.getElementById(chair.maGhe).style.color = "#DFDFDF";
-
-
-            } else if (chair.loaiGhe === "Vip" && sttVip !== 0) {
-              document.getElementById(chair.maGhe).style.color = "#e08411";
-            } else if (chair.loaiGhe === "Thuong" && sttNormal !== 0) {
-              document.getElementById(chair.maGhe).style.color = "#3e515d";
+    arrChair.forEach(
+      (item) => {
+        item.arr.forEach((chair) => {
+          let index = listChairs.findIndex((itemC) => itemC.stt === chair.stt);
+          if (index === -1) {
+            chair.daDat = false;
+            if (listChairs.length > 0) {
+              if (chair.taiKhoanNguoiDat || chair.taiKhoanNguoiDat === "") {
+                document.getElementById(chair.maGhe).style.color = "#DFDFDF";
+              } else if (chair.loaiGhe === "Vip" && sttVip !== 0) {
+                document.getElementById(chair.maGhe).style.color = "#e08411";
+              } else if (chair.loaiGhe === "Thuong" && sttNormal !== 0) {
+                document.getElementById(chair.maGhe).style.color = "#3e515d";
+              }
             }
-
           }
-        }
-      });
-
-    }, [stt, listChairs])
-  })
+        });
+      },
+      [stt, listChairs]
+    );
+  });
   const __renderChairs = React.useCallback(() => {
-
     let arrChairsVip = danhSachGhe.filter((chair) => chair.loaiGhe === "Vip");
     let arrChairsNormal = danhSachGhe.filter(
       (chair) => chair.loaiGhe === "Thuong"
     );
-    let ListColNine = ["A", "B", "C", "D", "E", "F", "G", "H"];
+    // let ListColNine = ["A", "B", "C", "D", "E", "F", "G", "H"];
     let totalChairRadom = 2;
     let totalChair = 16;
     let totalChairBetween = 12;
@@ -304,9 +318,9 @@ function ShowChair(props) {
         }
       });
       return arr;
-    }
+    };
 
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     arrChair = [
       { col: "A", arr: colA },
       { col: "B", arr: colB },
@@ -335,17 +349,45 @@ function ShowChair(props) {
                     component="div"
                   >
                     {/* index <= 1  */}
-                    <Box component="div" style={{ width: screenWidth > 1024 ? "13%" : null }} className={classes.colListNext}>
-                      {renderColChair(col.arr, col.col, totalChair - (totalChair + 1), totalChair - (totalChair - 1))}
+                    <Box
+                      component="div"
+                      style={{ width: screenWidth > 1024 ? "13%" : null }}
+                      className={classes.colListNext}
+                    >
+                      {renderColChair(
+                        col.arr,
+                        col.col,
+                        totalChair - (totalChair + 1),
+                        totalChair - (totalChair - 1)
+                      )}
                     </Box>
 
-                    <Box component="div" style={{ width: screenWidth > 1024 ? "74%" : null }} className={classes.colListBetween}>
-                      {renderColChair(col.arr, col.col, totalChair - (totalChair - 1), totalChair - 3)}
+                    <Box
+                      component="div"
+                      style={{ width: screenWidth > 1024 ? "74%" : null }}
+                      className={classes.colListBetween}
+                    >
+                      {renderColChair(
+                        col.arr,
+                        col.col,
+                        totalChair - (totalChair - 1),
+                        totalChair - 3
+                      )}
                     </Box>
-                    <Box style={{ textAlign: "right" }} component="div" style={{ width: screenWidth > 786 ? "13%" : null }} className={classes.colListNext}>
-                      {renderColChair(col.arr, col.col, totalChair - 3, totalChair - 1)}
+                    <Box
+                      style={{ textAlign: "right" }}
+                      component="div"
+                      // eslint-disable-next-line react/jsx-no-duplicate-props
+                      style={{ width: screenWidth > 786 ? "13%" : null }}
+                      className={classes.colListNext}
+                    >
+                      {renderColChair(
+                        col.arr,
+                        col.col,
+                        totalChair - 3,
+                        totalChair - 1
+                      )}
                     </Box>
-
                   </Box>
                 </Box>
               );
@@ -356,16 +398,14 @@ function ShowChair(props) {
     );
   }, [listChairs, stt]);
 
-
-
   // renderHTML ROw a
   const renderColChair = React.useCallback(
     (arr, name, min, max) => {
       return arr.map((chair, indexChair) => {
         if (indexChair > min && indexChair <= max) {
-          return !chair.taiKhoanNguoiDat && chair.taiKhoanNguoiDat !== "" ?
+          return !chair.taiKhoanNguoiDat && chair.taiKhoanNguoiDat !== "" ? (
             chair.loaiGhe === "Vip" ? (
-              sttVip !== 0 ?
+              sttVip !== 0 ? (
                 <WeekendIcon
                   id={chair.maGhe}
                   key={indexChair}
@@ -375,56 +415,66 @@ function ShowChair(props) {
                   style={{
                     color: chair.daDat ? "#44c020" : "#e08411",
                     cursor: "pointer",
-
-                  }}
-                /> : <WeekendIcon
-                  id={chair.maGhe}
-                  key={indexChair}
-                  style={{
-                    color: "#DFDFDF",
-
                   }}
                 />
-            ) : sttNormal !== 0 ?
+              ) : (
                 <WeekendIcon
                   id={chair.maGhe}
                   key={indexChair}
-                  onClick={() => {
-                    getDetailChair(chair, name + (indexChair + 1));
-                  }}
-                  style={{
-                    color: chair.daDat ? "#44c020" : "#3e515d",
-                    cursor: "pointer",
-
-                  }}
-                /> : <WeekendIcon
-                  id={chair.maGhe}
-                  key={indexChair}
                   style={{
                     color: "#DFDFDF",
-
                   }}
-                /> : <WeekendIcon
+                />
+              )
+            ) : sttNormal !== 0 ? (
+              <WeekendIcon
+                id={chair.maGhe}
+                key={indexChair}
+                onClick={() => {
+                  getDetailChair(chair, name + (indexChair + 1));
+                }}
+                style={{
+                  color: chair.daDat ? "#44c020" : "#3e515d",
+                  cursor: "pointer",
+                }}
+              />
+            ) : (
+              <WeekendIcon
+                id={chair.maGhe}
+                key={indexChair}
+                style={{
+                  color: "#DFDFDF",
+                }}
+              />
+            )
+          ) : (
+            <WeekendIcon
               id={chair.maGhe}
               key={indexChair}
               style={{
                 color: "#DFDFDF",
-
               }}
             />
-
-
-        } return;
-      })
-    }, []
-  )
+          );
+        }
+        // eslint-disable-next-line array-callback-return
+        return;
+      });
+    },
+    [getDetailChair, sttNormal, sttVip]
+  );
   // render content
   return (
     <div className=" showChair ">
       <div className="showChair__title ">
         <div className="showChair__title--info  ">{__renderTheater()}</div>
         <div className="showChair__title--chairs">
-          <span style={{ fontWeight: "bold" }} className="countTicket__chair__count--red">Ghế :</span>
+          <span
+            style={{ fontWeight: "bold" }}
+            className="countTicket__chair__count--red"
+          >
+            Ghế :
+          </span>
           {listChairs.map((chair, index) => {
             if (listChairs.length === index + 1) {
               return (
@@ -449,20 +499,19 @@ function ShowChair(props) {
       <div className="showChair__content">
         <div className="showChair__screen">
           <img
-
             src="https://tix.vn/app/assets/img/icons/screen.png"
             alt="screen-image"
           />
         </div>
         <div className="showChair__res">
           <div className="showChair__out">
-            <img src="https://tix.vn/app/assets/img/icons/exit.png" />
+            <img
+              src="https://tix.vn/app/assets/img/icons/exit.png"
+              alt="screen-image"
+            />
           </div>
           {/* show chair  */}
-          <div className="showChair__space">
-            {__renderChairs()}
-
-          </div>
+          <div className="showChair__space">{__renderChairs()}</div>
           <div className="showChair__space__note">
             <div className="">
               <WeekendIcon className={classes.chairDisable} />

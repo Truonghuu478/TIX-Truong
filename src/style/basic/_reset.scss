@@ -8,12 +8,17 @@
     
 }
 
+
 body{
 
     padding: 0 !important;
     overflow: auto !important;
 }
-
+button{
+    &:hover,&:focus{
+        outline:none !important;
+    }
+}
 
 input[type="file"]{
     display:none;

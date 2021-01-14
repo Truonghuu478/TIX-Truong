@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 // import clsx from 'clsx';
 import {
   makeStyles,
-  useTheme,
   createMuiTheme,
   ThemeProvider,
 } from "@material-ui/core/styles";
@@ -16,8 +15,6 @@ import Select from "@material-ui/core/Select";
 
 // action
 import * as Action from "../../../../Redux/action/moive";
-// axios
-import axios from "axios";
 import { NavLink } from "react-router-dom";
 // redux
 import { useSelector, useDispatch } from "react-redux";
@@ -64,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "500",
     color: "#676767",
     transition: "all .2s",
-    
+
     "& span": {
       color: "#a99c9c",
     },
@@ -131,7 +128,7 @@ export default function FastTicket() {
       toDay: "Ngày chiếu",
       suatChieu: "Suất chiếu",
     };
-  });
+  }, []);
 
   //renderRap
   const handleRenderRap = React.useCallback(() => {
@@ -146,6 +143,7 @@ export default function FastTicket() {
     }
 
     return <p>Vui lòng chọn phim</p>;
+    // eslint-disable-next-line
   }, [theaters]);
   // handle times rap chieu
   const handleAfterTimes = () => {
@@ -187,6 +185,7 @@ export default function FastTicket() {
 
     switch (name) {
       case "phim":
+        // eslint-disable-next-line
         {
           setOb({
             ...ob,
@@ -199,12 +198,14 @@ export default function FastTicket() {
         }
         break;
       case "rapChieu":
+        // eslint-disable-next-line
         {
           setOb({ ...ob, rapChieu: value, thoiGianChieu: "", suatChieu: "" });
         }
         break;
 
       case "thoiGianChieu":
+        // eslint-disable-next-line
         {
           setOb({ ...ob, thoiGianChieu: value, suatChieu: "" });
           // console.log(theaters);
@@ -225,17 +226,24 @@ export default function FastTicket() {
   };
 
   useEffect(() => {
-    Action.fetchListMovie(maNhom).then((res) => {
-        setNameVal(res.data);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    const a = () => {
+      return Action.fetchListMovie(maNhom)
+
+        .then((res) => {
+          setNameVal(res.data);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    };
+    a();
+    // eslint-disable-next-line
   }, []);
   useEffect(() => {
     if (listMovieOnSystemTheater) {
       handleAfterTimes();
     }
+    // eslint-disable-next-line
   }, [listMovieOnSystemTheater]);
   // check button disable
   useEffect(() => {
@@ -247,6 +255,7 @@ export default function FastTicket() {
         return;
       }
     }
+    // eslint-disable-next-line
   }, [ob.suatChieu]);
   // render thoi gian chieu
   const renderTimesChieu = React.useCallback(() => {
@@ -279,13 +288,11 @@ export default function FastTicket() {
           <MenuItem
             key={index}
             value={charTime}
-            key={index}
             className={classes.col}
             style={{
               display: "block",
               justifyContent: "center",
               textCenter: "center",
-           
             }}
           >
             <p style={{ fontSize: "15px", marginBottom: "2px" }}>{item}</p>
@@ -298,6 +305,7 @@ export default function FastTicket() {
     }
     return <span>Vui lòng chọn phim và rạp</span>;
     // console.log(detailCinemaToTheater.heThongRapChieu);
+    // eslint-disable-next-line
   }, [ob.phim, ob.rapChieu]);
   //render suat chieu
   const renderScreenings = React.useCallback(() => {
@@ -309,6 +317,7 @@ export default function FastTicket() {
       ));
     }
     return <span>Không có suất chiếu</span>;
+    // eslint-disable-next-line
   }, [ob.phim, ob.rapChieu, ob.thoiGianChieu]);
   //check login
   const handleCheckLogin = () => {
@@ -398,33 +407,31 @@ export default function FastTicket() {
         </FormControl>
 
         <div className="fast--button">
-        <ThemeProvider theme={themes}>
-          <Button
-            onClick={handleCheckLogin}
-            style={{
-              background: isValid
-                ? "gray"
-                : "linear-gradient(45deg, rgb(243 33 33) 30%, rgb(236 88 88) 90%)",
-          
-            }}
-            disabled={isValid}
-          >
-            <NavLink
+          <ThemeProvider theme={themes}>
+            <Button
+              onClick={handleCheckLogin}
               style={{
-                textDecoration: "none",
-                color: "white",
-                fontWeight: "500",
-                letterSpacing: "2px",
-                fontSize: "20px",
-                width: "100%",
+                background: isValid
+                  ? "gray"
+                  : "linear-gradient(45deg, rgb(243 33 33) 30%, rgb(236 88 88) 90%)",
               }}
-             
-              to={userLogin ? `/checkout/${ob.suatChieu}` : "/login"}
+              disabled={isValid}
             >
-              MUA VÉ NGAY
-            </NavLink>
-          </Button>
-        </ThemeProvider>
+              <NavLink
+                style={{
+                  textDecoration: "none",
+                  color: "white",
+                  fontWeight: "500",
+                  letterSpacing: "2px",
+                  fontSize: "20px",
+                  width: "100%",
+                }}
+                to={userLogin ? `/checkout/${ob.suatChieu}` : "/login"}
+              >
+                MUA VÉ NGAY
+              </NavLink>
+            </Button>
+          </ThemeProvider>
         </div>
       </div>
     </div>

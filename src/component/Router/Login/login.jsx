@@ -16,17 +16,17 @@ import { blue, lightBlue } from "@material-ui/core/colors";
 
 import { useHistory } from "react-router-dom";
 
-import { validate } from "../../../vender/validate"
+import { validate } from "../../../vender/validate";
 
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import IconButton from '@material-ui/core/IconButton';
+// import InputAdornment from "@material-ui/core/InputAdornment";
+// import Visibility from "@material-ui/icons/Visibility";
+// import VisibilityOff from "@material-ui/icons/VisibilityOff";
+// import IconButton from "@material-ui/core/IconButton";
 
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from "@material-ui/core/Checkbox";
 
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { TrendingUpRounded } from "@material-ui/icons";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import { TrendingUpRounded } from "@material-ui/icons";
 
 // import PropTypes from 'prop-types';
 
@@ -82,13 +82,12 @@ const useStyles = makeStyles((theme) => ({
     height: 80,
     "& div": {
       "&:focus": {
-
         borderWidth: 4,
       },
       "&:hover": {
-        cursor: "none"
-      }
-    }
+        cursor: "none",
+      },
+    },
   },
   modalFooter: {
     // height:"50%",
@@ -106,7 +105,6 @@ const useStyles = makeStyles((theme) => ({
     "&:focus": {
       outline: "none",
     },
-
   },
   SaveForm: {
     width: "100%",
@@ -114,15 +112,13 @@ const useStyles = makeStyles((theme) => ({
       "& input": {
         "&:after": {
           display: "block",
-
-        }
-      }
-    }
-
+        },
+      },
+    },
   },
   CheckboxCss: {
-    color: "#2196f4"
-  }
+    color: "#2196f4",
+  },
 }));
 const theme = createMuiTheme({
   palette: {
@@ -131,51 +127,42 @@ const theme = createMuiTheme({
   },
 });
 const ValidationTextField = withStyles({
-
-
   root: {
     "& div": {
       paddingRight: 0,
 
       // ,
-
     },
     "& input:valid ,& fieldset": {
       color: "#2196f4",
       borderColor: "#2196f4",
       borderWidth: 4,
-
-
     },
     "& p": {
       color: "red",
       fontSize: 16,
-      margin: 0
+      margin: 0,
     },
 
     "& label": {
-      color: "#2196f4"
+      color: "#2196f4",
     },
     "& input:valid + fieldset": {
       borderColor: "#2196f4",
       borderWidth: 4,
       color: "#2196f4",
-
     },
     "& input:valid:focus + fieldset": {
-
       borderWidth: 4,
 
       color: "#2196f4",
       padding: "4px !important",
     },
     "& input:valid:hover + fieldset": {
-
       color: "#2196f4",
       borderColor: "#2196f4",
     },
     "& input:hover ": {
-
       borderColor: "#2196f4",
     },
   },
@@ -186,7 +173,10 @@ function Login(props) {
   const history = useHistory();
 
   const [checked, setChecked] = React.useState(true);
-  const screenWidth = React.useMemo(() => window.innerWidth)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const screenWidth = React.useMemo(() => window.innerWidth, [
+  //   window.innerWidth,
+  // ]);
   const handleChangeBox = (event) => {
     setChecked(event.target.checked);
   };
@@ -194,39 +184,36 @@ function Login(props) {
     users: { taiKhoan: "", matKhau: "" },
     errors: { taiKhoan: "", matKhau: "" },
     valid: true,
-    showPassword: false
-  })
+    showPassword: false,
+  });
 
+  // const handleClickShowPassword = () => {
+  //   setState({ ...state, showPassword: !state.showPassword });
+  // };
 
-  const handleClickShowPassword = () => {
-    setState({ ...state, showPassword: !state.showPassword });
-  };
-
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
-
+  // const handleMouseDownPassword = (event) => {
+  //   event.preventDefault();
+  // };
 
   //set value user
   const _BoxValue = (e) => {
     let { name, value } = e.target;
 
     let newUser = { ...state.users, [name]: value };
-    let error = { ...state.errors, [name]: validate(name, value) ? validate(name, value, 4, 30) : "" };
+    let error = {
+      ...state.errors,
+      [name]: validate(name, value) ? validate(name, value, 4, 30) : "",
+    };
     let valid = true;
     for (const [key] of Object.entries(newUser)) {
       if (newUser[key] === "") {
-
         valid = true;
         break;
-
       } else valid = false;
     }
     if (!valid) {
       for (const [key] of Object.entries(error)) {
         if (error[key] !== "") {
-
-
           valid = true;
           break;
         } else valid = false;
@@ -235,17 +222,16 @@ function Login(props) {
     setState({
       users: newUser,
       errors: error,
-      valid
-    })
+      valid,
+    });
   };
   // change  history to home
   const __handleHistory = () => {
     let { maPhim, status } = props;
-    status === "home" ? history.push("") : history.push(`/phim/${maPhim}`)
+    status === "home" ? history.push("") : history.push(`/phim/${maPhim}`);
   };
   // // submit
   const __handleSubmit = (e) => {
-
     e.preventDefault();
 
     props._handleGetUser(state.users, checked, history);
@@ -253,23 +239,15 @@ function Login(props) {
   useEffect(() => {
     let { formRegister } = props;
     if (formRegister) {
-
-      let newUsers = { ...state.users, formRegister }
-      setState({ ...state, newUsers })
+      let newUsers = { ...state.users, formRegister };
+      setState({ ...state, newUsers });
     }
-
-  }, [props.formRegister])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.formRegister]);
   return (
-
-
     <div className="Login__content Login__background">
       <div className="Login__header">
-        <span
-          onClick={
-            __handleHistory
-          }
-          className="Login__header--close"
-        >
+        <span onClick={__handleHistory} className="Login__header--close">
           <CloseIcon />
         </span>
       </div>
@@ -289,7 +267,7 @@ function Login(props) {
         <div className={classes.modalBody}>
           <p className="mt-5">
             Đăng nhập để được nhiều ưu đãi, mua vé và bảo mật thông tin!
-            </p>
+          </p>
           <ThemeProvider theme={theme}>
             <ValidationTextField
               className={classes.input}
@@ -301,9 +279,7 @@ function Login(props) {
               value={state.users.taiKhoan}
               helperText={state.errors.taiKhoan}
               autoFocus
-
             />
-
 
             <ValidationTextField
               className={classes.input}
@@ -316,22 +292,28 @@ function Login(props) {
               variant="outlined"
               value={state.users.matKhau}
               // required
-              InputProps={screenWidth > 768 ? false : {
-
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      style={{ color: "#2196f4" }}
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                    >
-                      {state.showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                )
-
-              }}
+              // InputProps={
+              //   screenWidth > 768
+              //     ? false
+              //     : {
+              //         endAdornment: (
+              //           <InputAdornment position="end">
+              //             <IconButton
+              //               style={{ color: "#2196f4" }}
+              //               aria-label="toggle password visibility"
+              //               onClick={handleClickShowPassword}
+              //               onMouseDown={handleMouseDownPassword}
+              //             >
+              //               {state.showPassword ? (
+              //                 <Visibility />
+              //               ) : (
+              //                 <VisibilityOff />
+              //               )}
+              //             </IconButton>
+              //           </InputAdornment>
+              //         ),
+              //       }
+              // }
               helperText={state.errors.matKhau}
             />
             <FormControlLabel
@@ -354,23 +336,23 @@ function Login(props) {
           <MyButton
             color="blue"
             type="submit"
-            disabled={state.valid}
+            // disabled={state.valid}
             className={classes.btn}
           >
             Đăng nhập
-            </MyButton>
+          </MyButton>
 
-          <MyButton onClick={() => props.handleChangeStatus("register")} className={classes.btn} color="blue">
+          <MyButton
+            onClick={() => props.handleChangeStatus("register")}
+            className={classes.btn}
+            color="blue"
+          >
             Đăng ký
-            </MyButton>
+          </MyButton>
         </div>
       </form>
     </div>
-
-
-  )
-
-
+  );
 }
 
 const mapStateToProps = (state) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from "react";
+import React, { useEffect, useCallback } from "react";
 import SpringModal from "../../../screen/modal-video/star/index";
 
 import {
@@ -25,7 +25,7 @@ import RenderStar from "../../../../vender/star";
 // index.propTypes = {
 
 // };
-import { useSelector ,useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 // const StyledBadge = withStyles((theme) => ({
 //   badge: {
@@ -66,8 +66,7 @@ const SmallAvatar = withStyles((theme) => ({
 const useStyles = makeStyles({
   iconHeart: {
     color: "red",
-    width:18
-
+    width: 18,
   },
   Card: {
     margin: "10px 0",
@@ -113,48 +112,46 @@ const useStyles = makeStyles({
       color: "#fda193 !important",
     },
   },
-  btnMoreCard:{
-    fontSize: 14, 
-    color:" #949494",        
-    fontFamily: "SF Regular",              
-    border: "1px solid #949494",            
+  btnMoreCard: {
+    fontSize: 14,
+    color: " #949494",
+    fontFamily: "SF Regular",
+    border: "1px solid #949494",
     borderRadius: 4,
     textAlign: "center",
     background: "0 0",
     padding: "7px 25px",
-    transition:" all .2s",
+    transition: " all .2s",
     margin: "auto",
     marginTop: 35,
     marginBottom: 20,
     display: "block",
-    "&:hover":{
+    "&:hover": {
       backgroundColor: "#fb4226",
       borderColor: "#fb4226",
-      color: "#fff!important"
-    }
+      color: "#fff!important",
+    },
   },
-  Avatar:{
-    textTransform:"uppercase",
-    
-  }
+  Avatar: {
+    textTransform: "uppercase",
+  },
 });
 function Evaluate(props) {
   const classes = useStyles();
   const history = useHistory();
   // const { infoMovie } = useSelector((state) => state.UserReducer);
   const { userLogin } = useSelector((state) => state.UserReducer);
-  const {listUser} = useSelector((state) => state.MovieManaGerment);
+  const { listUser } = useSelector((state) => state.MovieManaGerment);
   const dispatch = useDispatch();
-    const [seeMore,setSeeMore] = React.useState(false)
+  const [seeMore, setSeeMore] = React.useState(false);
   const [open, setOpen] = React.useState(false);
-    
-  const renderHeart = (total) => {
-   return [...Array(total)].map((item,index) => 
-    <React.Fragment key={index}>
 
-      <FavoriteIcon  className={classes.iconHeart} />
-    </React.Fragment> 
-    );
+  const renderHeart = (total) => {
+    return [...Array(total)].map((item, index) => (
+      <React.Fragment key={index}>
+        <FavoriteIcon className={classes.iconHeart} />
+      </React.Fragment>
+    ));
   };
 
   // check user
@@ -173,60 +170,53 @@ function Evaluate(props) {
       setOpen(true);
     }
   };
- 
+
   // handleAddComment
   const handleAddComment = (text, numStar) => {
-    let { hoTen,taiKhoan } = userLogin;
+    let { hoTen, taiKhoan } = userLogin;
 
     let card = {
       name: hoTen,
-      hinhAnh: taiKhoan === "letruong" ?"/img/avatar/huutruong.jpg" : null,
+      hinhAnh: taiKhoan === "letruong" ? "/img/avatar/huutruong.jpg" : null,
       activeTimes: "Vừa xong",
       text: text,
       appendHeart: 0,
       evaluate: numStar,
       like: 0,
       activeLike: false,
-      status:taiKhoan === "letruong" ?0: 1, //0 :face,   1:normal,
-      id: hoTen +'_' + Math.random().toString(36).substr(2, 9),
+      status: taiKhoan === "letruong" ? 0 : 1, //0 :face,   1:normal,
+      id: hoTen + "_" + Math.random().toString(36).substr(2, 9),
     };
-  
- 
-    
-    dispatch({ type:"ADD_LIST_USER",data:card})
-  
+
+    dispatch({ type: "ADD_LIST_USER", data: card });
   };
 
-
-  // handleAddCMT 
-  const handleAddCMT = (text, numStar)=>{
-    let { hoTen,taiKhoan } = userLogin;
+  // handleAddCMT
+  const handleAddCMT = (text, numStar) => {
+    let { hoTen, taiKhoan } = userLogin;
 
     let card = {
       name: hoTen,
-      hinhAnh: taiKhoan === "letruong" ?"/img/avatar/huutruong.jpg" : null,
+      hinhAnh: taiKhoan === "letruong" ? "/img/avatar/huutruong.jpg" : null,
       activeTimes: "Vừa xong",
       text: text,
       appendHeart: 0,
       evaluate: numStar,
       like: 0,
       activeLike: false,
-      status:taiKhoan === "letruong" ?0: 1, //0 :face,   1:normal,
-      id: hoTen +'_' + Math.random().toString(36).substr(2, 9),
+      status: taiKhoan === "letruong" ? 0 : 1, //0 :face,   1:normal,
+      id: hoTen + "_" + Math.random().toString(36).substr(2, 9),
     };
-  
- 
-    
-    dispatch({ type:"ADD_LIST_USER",data:card})
-  }
-  
-  // like 
-  const handleLike = (card,status) => {
-    let newUsers = [...listUser];
-   
-    let index = newUsers.findIndex((item) => item.id === card.id);
-    if(index !== -1){
 
+    dispatch({ type: "ADD_LIST_USER", data: card });
+  };
+
+  // like
+  const handleLike = (card, status) => {
+    let newUsers = [...listUser];
+
+    let index = newUsers.findIndex((item) => item.id === card.id);
+    if (index !== -1) {
       if (card.activeLike) {
         card.activeLike = false;
         document.getElementById(`${card.id}`).style.color = "gray";
@@ -236,206 +226,223 @@ function Evaluate(props) {
         card.activeLike = true;
         document.getElementById(`${card.id}`).style.color = "#fb4226";
       }
-      dispatch({ type:"EDIT_LIKE_USER",data:newUsers})
+      dispatch({ type: "EDIT_LIKE_USER", data: newUsers });
     }
-
-    
   };
-  const replayCards =useCallback(()=>{
+  const replayCards = useCallback(() => {
     setSeeMore(true);
     renderCard(listUser.reverse());
-  },[listUser.length ])
-  // restart seeMore 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listUser]);
+  // restart seeMore
   useEffect(() => {
-        if(listUser.length >5 ){
-          document.querySelector("#hide-btn").style.cssText  = "opacity:1;display:block";
-        }
-        if(seeMore || listUser.length < 5 ){
-          document.querySelector("#hide-btn").style.cssText = "opacity:0;display:none";
-
-        }
-        
-  }, [listUser.length,seeMore])
-  const renderCard = useCallback((arr = seeMore ? listUser : listUser.slice(0,6) || []) => {
-    return arr.reverse().map((card, index) => {
-      return (
-        <Card key={index} className={classes.Card}>
-          <CardHeader
-            className={classes.CardHeader}
-            avatar={userLogin  ?
-              
-              card.status === 1 ? (
-                <Avatar className={classes.Avatar} src="/broken-image.jpg" alt={"logo-man"}>
-                  {userLogin.hoTen.slice(0, 1)}
-                </Avatar>
-              ) : (
-                <Badge
-                  overlap="circle"
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "right",
-                  }}
-                  badgeContent={
-                    <SmallAvatar
-                      alt="Remy Sharp"
-                      src="/img/icon/avatar/facebook.svg"
-                    />
-                  }
-                >
-                  <Avatar alt="Travis Howard" src={card.hinhAnh} />
-                </Badge>
-              )
-              : card.status === 1 ? (
-                <Avatar className={classes.Avatar} src="/broken-image.jpg" alt={"logo-man"}>
-                  {userLogin.hoTen.slice(0, 1)}
-                </Avatar>
-              ) : (
-                <Badge
-                  overlap="circle"
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "right",
-                  }}
-                  badgeContent={
-                    <SmallAvatar
-                      alt="Remy Sharp"
-                      src="/img/icon/avatar/facebook.svg"
-                    />
-                  }
-                >
-                  <Avatar alt="Travis Howard" src={card.hinhAnh} />
-                </Badge>
-              ) }
-            action={
+    if (listUser.length > 5) {
+      document.querySelector("#hide-btn").style.cssText =
+        "opacity:1;display:block";
+    }
+    if (seeMore || listUser.length < 5) {
+      document.querySelector("#hide-btn").style.cssText =
+        "opacity:0;display:none";
+    }
+  }, [listUser.length, seeMore]);
+  const renderCard = useCallback(
+    (arr = seeMore ? listUser : listUser.slice(0, 6) || []) => {
+      return arr.reverse().map((card, index) => {
+        return (
+          <Card key={index} className={classes.Card}>
+            <CardHeader
+              className={classes.CardHeader}
+              avatar={
+                userLogin ? (
+                  card.status === 1 ? (
+                    <Avatar
+                      className={classes.Avatar}
+                      src="/broken-image.jpg"
+                      alt={"logo-man"}
+                    >
+                      {userLogin.hoTen.slice(0, 1)}
+                    </Avatar>
+                  ) : (
+                    <Badge
+                      overlap="circle"
+                      anchorOrigin={{
+                        vertical: "bottom",
+                        horizontal: "right",
+                      }}
+                      badgeContent={
+                        <SmallAvatar
+                          alt="Remy Sharp"
+                          src="/img/icon/avatar/facebook.svg"
+                        />
+                      }
+                    >
+                      <Avatar alt="Travis Howard" src={card.hinhAnh} />
+                    </Badge>
+                  )
+                ) : card.status === 1 ? (
+                  <Avatar
+                    className={classes.Avatar}
+                    src="/broken-image.jpg"
+                    alt={"logo-man"}
+                  >
+                    {userLogin.hoTen.slice(0, 1)}
+                  </Avatar>
+                ) : (
+                  <Badge
+                    overlap="circle"
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "right",
+                    }}
+                    badgeContent={
+                      <SmallAvatar
+                        alt="Remy Sharp"
+                        src="/img/icon/avatar/facebook.svg"
+                      />
+                    }
+                  >
+                    <Avatar alt="Travis Howard" src={card.hinhAnh} />
+                  </Badge>
+                )
+              }
+              action={
+                <Typography style={{ textAlign: "center" }} component={"div"}>
+                  <span style={{ color: "#91d25a", fontWeight: "500" }}>
+                    {card.evaluate}
+                  </span>
+                  <Typography component={"div"}>
+                    {RenderStar(card.evaluate, "newIns")}
+                  </Typography>
+                </Typography>
+              }
+              title={card.name}
+              subheader={card.activeTimes}
+            />
+            {/* content
+             */}
+            <CardContent className={classes.CardContent}>
               <Typography
-                style={{ textAlign: "center" }}
-                component={"div"}
-                
+                style={{ textAlign: "justify" }}
+                color={"textSecondary"}
+                component="div"
               >
-                <span style={{ color: "#91d25a", fontWeight: "500" }}>
-                  {card.evaluate}
-                </span>
-                <Typography component={"div"}>{RenderStar(card.evaluate,"newIns")}</Typography>
+                {card.text}
+                {renderHeart(card.appendHeart)}
               </Typography>
-            }
-            title={card.name}
-            subheader={card.activeTimes}
-          />
-          {/* content
-           */}
-          <CardContent className={classes.CardContent}>
-            <Typography 
-             style={{textAlign: "justify"}} color={"textSecondary"} component="div">
-              {card.text}
-              {renderHeart(card.appendHeart)}
-            </Typography>
-            <hr style={{ margin: "5px 0 0 0" }} width={"100%"} />
-          </CardContent>
+              <hr style={{ margin: "5px 0 0 0" }} width={"100%"} />
+            </CardContent>
 
-          <CardActions className={classes.cardActions} disableSpacing>
-            <IconButton
-              onClick={() => handleLike(card,"list")}
-              id={card.id}
-              style={{ color: card.activeLike ? "#fb4226" :"gray"}}
-              aria-label="add to favorites"
+            <CardActions className={classes.cardActions} disableSpacing>
+              <IconButton
+                onClick={() => handleLike(card, "list")}
+                id={card.id}
+                style={{ color: card.activeLike ? "#fb4226" : "gray" }}
+                aria-label="add to favorites"
+              >
+                <ThumbUpAltIcon />
+              </IconButton>
+              <span style={{ color: "gray", fontSize: 15 }}>
+                {card.like} Thích
+              </span>
+            </CardActions>
+          </Card>
+        );
+      });
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [listUser]
+  );
+  const renderHTML = () => {
+    return (
+      <Typography component="div">
+        <Typography component="div">
+          {userLogin && (
+            <Card
+              data-toggle="modal"
+              data-target="#modal-combo"
+              id="countTicket-combo"
+              onClick={handleCheckUser}
+              className={classes.Card}
+              style={{ cursor: "pointer" }}
             >
-              <ThumbUpAltIcon />
-            </IconButton>
-            <span style={{ color: "gray", fontSize: 15 }}>
-              {card.like} Thích
-            </span>
-          </CardActions>
-        </Card>
-      );
-    });
-  },[listUser.length]);
-  const renderHTML = useCallback(()=>{
-    return <Typography component="div">
-    <Typography  component="div">
-      {userLogin && (
-        <Card
-          data-toggle="modal"
-          data-target="#modal-combo"
-          id="countTicket-combo"
-          onClick={handleCheckUser}
-          className={classes.Card}
-          style={{ cursor: "pointer" }}
-        >
-          <CardHeader
-            className={classes.HeaderCheck}
-            avatar={
-              userLogin.taiKhoan !== "letruong" ? (
-                <Avatar style={{textTransform:"uppercase"}} src="/broken-image.jpg" alt={"logo-man"}>
-                  {userLogin.hoTen.slice(0, 1)}
-                </Avatar>
-              ) : (
-                <Avatar
-                  src={"/img/avatar/huutruong.jpg"}
-                  alt={"logo-man"}
-                />
-              )
-            }
-            action={
-              <Typography
-                style={{ textAlign: "center" }}
-                component={"div"}
-                
-                className={classes.rootStar}
-              >
-                <img src={"/img/icon/listStar.png"} />
-              </Typography>
-            }
-            title={"Bạn nghĩ gì về phim này ?"}
-            // subheader={card.activeTimes}
-          />
-          {/* content
-           */}
-        </Card>
-      )}
-      {!userLogin && (
-        <Card
-          onClick={handleCheckUser}
-          className={classes.Card}
-          style={{ cursor: "pointer" }}
-        >
-          <CardHeader
-            className={classes.HeaderCheck}
-            avatar={<Avatar src="/broken-image.jpg" />}
-            action={
-              <Typography
-                style={{ textAlign: "center" }}
-                component={"div"}
-                
-                className={classes.rootStar}
-              >
-                {RenderStar(5, "newIns")}
-              </Typography>
-            }
-            title={"Bạn nghĩ gì về phim này ?"}
-            // subheader={card.activeTimes}
-          />
-          {/* content
-           */}
-        </Card>
-      )}
-    </Typography>
-    <Typography  component="div">
-      {renderCard()}
-      {/* {renderFistCard()} */}
-      
-       <button
-       id="hide-btn"
-       onClick={replayCards}
-       className={classes.btnMoreCard}
-       >Xem Thêm</button>
-    </Typography>
-  </Typography>
-  })
+              <CardHeader
+                className={classes.HeaderCheck}
+                avatar={
+                  userLogin.taiKhoan !== "letruong" ? (
+                    <Avatar
+                      style={{ textTransform: "uppercase" }}
+                      src="/broken-image.jpg"
+                      alt={"logo-man"}
+                    >
+                      {userLogin.hoTen.slice(0, 1)}
+                    </Avatar>
+                  ) : (
+                    <Avatar
+                      src={"/img/avatar/huutruong.jpg"}
+                      alt={"logo-man"}
+                    />
+                  )
+                }
+                action={
+                  <Typography
+                    style={{ textAlign: "center" }}
+                    component={"div"}
+                    className={classes.rootStar}
+                  >
+                    <img src={"/img/icon/listStar.png"} alt="List"/>
+                  </Typography>
+                }
+                title={"Bạn nghĩ gì về phim này ?"}
+                // subheader={card.activeTimes}
+              />
+              {/* content
+               */}
+            </Card>
+          )}
+          {!userLogin && (
+            <Card
+              onClick={handleCheckUser}
+              className={classes.Card}
+              style={{ cursor: "pointer" }}
+            >
+              <CardHeader
+                className={classes.HeaderCheck}
+                avatar={<Avatar src="/broken-image.jpg" />}
+                action={
+                  <Typography
+                    style={{ textAlign: "center" }}
+                    component={"div"}
+                    className={classes.rootStar}
+                  >
+                    {RenderStar(5, "newIns")}
+                  </Typography>
+                }
+                title={"Bạn nghĩ gì về phim này ?"}
+                // subheader={card.activeTimes}
+              />
+              {/* content
+               */}
+            </Card>
+          )}
+        </Typography>
+        <Typography component="div">
+          {renderCard()}
+          {/* {renderFistCard()} */}
+
+          <button
+            id="hide-btn"
+            onClick={replayCards}
+            className={classes.btnMoreCard}
+          >
+            Xem Thêm
+          </button>
+        </Typography>
+      </Typography>
+    );
+  };
   return (
     <div className="Evaluate">
-      <Container maxWidth="lg">
-        {renderHTML()}
-      </Container>
+      <Container maxWidth="lg">{renderHTML()}</Container>
       <SpringModal
         show={open}
         handleAdd={handleAddCMT}

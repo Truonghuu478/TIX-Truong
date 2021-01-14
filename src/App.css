@@ -12,13 +12,15 @@ body {
   padding: 0 !important;
   overflow: auto !important; }
 
+button:hover, button:focus {
+  outline: none !important; }
+
 input[type="file"] {
   display: none; }
 
 .modal-content {
   margin-top: 110px;
-  border: 7px solid #0d0d0d;
-  height: 500px; }
+  border: 7px solid #0d0d0d; }
   .modal-content .modal-header {
     height: 100%;
     padding: 0;

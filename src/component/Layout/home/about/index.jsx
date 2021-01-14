@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
@@ -6,23 +6,21 @@ import Button from "@material-ui/core/Button";
 import red from "@material-ui/core/colors/red";
 import data from "./dataSlide.json";
 
-// swiper 
+// swiper
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, {  Scrollbar ,Autoplay} from 'swiper';
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Scrollbar, Autoplay } from "swiper";
 
 // Import Swiper styles
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
-import 'swiper/components/scrollbar/scrollbar.scss';
-// end swiper 
+import "swiper/swiper.scss";
+import "swiper/components/navigation/navigation.scss";
+import "swiper/components/pagination/pagination.scss";
+import "swiper/components/scrollbar/scrollbar.scss";
+// end swiper
 
-// router 
-import {Link} from "react-router-dom"
+// router
+// import {Link} from "react-router-dom"
 // install Swiper components
-
 
 import {
   makeStyles,
@@ -30,7 +28,7 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 // import PropTypes from 'prop-types';
-SwiperCore.use([ Scrollbar,Autoplay]);
+SwiperCore.use([Scrollbar, Autoplay]);
 // index.propTypes = {
 
 // };
@@ -55,12 +53,12 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     // textAlign: "center",
-    color: theme.palette.text.secondary,
+    // color: theme.palette.text.secondary,
     background: "transparent !important",
     color: "white",
     width: "100%",
 
-    height:"100%"
+    height: "100%",
   },
   titleOne: {
     fontWeight: "bold",
@@ -80,17 +78,16 @@ const useStyles = makeStyles((theme) => ({
       outline: "none",
     },
   },
-  slideItem:{
-    '& img':{
-      width:"100%",
-      height:"100%",
-      objectFit:"cover"
-      }
-    
+  slideItem: {
+    "& img": {
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+    },
   },
-  swiperItem:{
-    width:"100%"
-  }
+  swiperItem: {
+    width: "100%",
+  },
 }));
 
 function About(props) {
@@ -107,7 +104,7 @@ function About(props) {
         >
           <Grid item sm={12} xs={12} md={6} lg={6}>
             <Paper className={classes.paper}>
-              <h2 className={classes.titleOne} >
+              <h2 className={classes.titleOne}>
                 Ứng dụng tiện lợi dành cho người yêu điện ảnh
               </h2>
               <p className={classes.titleTwo}>
@@ -115,8 +112,11 @@ function About(props) {
                 và đổi quà hấp dẫn.
               </p>
               <ThemeProvider theme={theme}>
-                <a target="_blank" href="https://apps.apple.com/us/app/123phim-mua-ve-lien-tay-chon/id615186197">
-              
+                <a
+                  // eslint-disable-next-line react/jsx-no-target-blank
+                  target="_blank"
+                  href="https://apps.apple.com/us/app/123phim-mua-ve-lien-tay-chon/id615186197"
+                >
                   <Button
                     className={classes.btnDownload}
                     variant="contained"
@@ -129,13 +129,12 @@ function About(props) {
 
               <p>
                 TIX có hai phiên bản
+                {/*  eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a className="text-danger font-weight-bold" href="#">
-                
                   iOS
                 </a>
-                
+                {/*  eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 <a className="text-success font-weight-bold" href="#">
-                
                   Android
                 </a>
               </p>
@@ -143,42 +142,39 @@ function About(props) {
           </Grid>
           <Grid item sm={12} xs={12} md={6} lg={6}>
             <Paper className={classes.paper}>
-                <div className="right">
-                  
-                   <div className="about__right">
+              <div className="right">
+                <div className="about__right">
+                  <div className="about__right--phone">
+                    <img
+                      src="https://tix.vn/app/assets/img/icons/mobile.png"
+                      alt="mobile"
+                    />
+                  </div>
 
-                  
-                   <div className="about__right--phone">
-                     <img
-                            src="https://tix.vn/app/assets/img/icons/mobile.png"
-                            alt="mobile"
-                        />
-                        </div>
-                
-                            <Swiper
-                              loop={true}
-                              effect="slide"
-                              speed={1000}
-                              autoplay={{
-                                  delay: 2500,
-                                  
-                                  disableOnInteraction: false
-                              }}
-                              spaceBetween={0}
-                              slidesPerView={1}
-                             className="about__right--slider"  >
-                            {data.map((item,index) => {
-                              return <SwiperSlide key={index}>
+                  <Swiper
+                    loop={true}
+                    effect="slide"
+                    speed={1000}
+                    autoplay={{
+                      delay: 2500,
 
-                                 <img  src={item.image} alt={`slide`}
-                                  alt={`slide-app${index+1}`} />;
-                              </SwiperSlide>
-                                })}
-                                
-                            </Swiper>
-                        
-                   </div>
+                      disableOnInteraction: false,
+                    }}
+                    spaceBetween={0}
+                    slidesPerView={1}
+                    className="about__right--slider"
+                  >
+                    {data.map((item, index) => {
+                      return (
+                        <SwiperSlide key={index}>
+                          <img src={item.image} alt={`slide-app${index + 1}`} />
+                          ;
+                        </SwiperSlide>
+                      );
+                    })}
+                  </Swiper>
                 </div>
+              </div>
             </Paper>
           </Grid>
         </Grid>

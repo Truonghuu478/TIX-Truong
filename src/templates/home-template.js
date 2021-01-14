@@ -1,32 +1,19 @@
-import React, {Component ,Fragment  } from "react";
+import React, { Fragment } from "react";
 import { Route } from "react-router-dom";
 
-
-const HomeLayout = props => {
-  return (
-    <Fragment>
-      
-      {props.children}
-  
-    </Fragment>
-  );
+const HomeLayout = (props) => {
+  return <Fragment>{props.children}</Fragment>;
 };
 
 export default function HomeTemplate({ Component, ...props }) {
   return (
     <Route
       {...props}
-      render={propsComponent => (
-       
-
+      render={(propsComponent) => (
         <HomeLayout>
           <Component {...propsComponent} />
-      
         </HomeLayout>
-     
       )}
     />
   );
 }
-
-

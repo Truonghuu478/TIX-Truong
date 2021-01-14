@@ -1,11 +1,11 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import BackToTop from '../../mixin/backtotop/backtotop';
+import BackToTop from "../../mixin/backtotop/backtotop";
 import data from "../../../json/license.json";
-import { Clearfix } from "react-bootstrap";
+
 // index.propTypes = {
 
 // };
-
 
 const _renderPartner = () => {
   let dem = 0;
@@ -33,7 +33,6 @@ const _renderPartner = () => {
   });
 };
 function Footer(props) {
-
   return (
     <>
       <footer className="Footer">
@@ -43,16 +42,17 @@ function Footer(props) {
               <p className="title">TIX</p>
               <div className="row">
                 <div className="col-md-6">
-                  <a href="">FAQ</a>
+                  {/*// eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                  <a href="#">FAQ</a>
                 </div>
                 <div className="col-md-6">
-                  <a href="">Thỏa thuận sử dụng</a>
+                  <a href="#">Thỏa thuận sử dụng</a>
                 </div>
                 <div className="col-md-6">
                   <a href="">Brand Guidelines</a>
                 </div>
                 <div className="col-md-6">
-                  <a href="">Chính sách bảo mật</a>
+                  <a href="#">Chính sách bảo mật</a>
                 </div>
               </div>
             </div>
@@ -83,7 +83,10 @@ function Footer(props) {
                   src="https://tix.vn/app/assets/img/icons/facebook-logo.png"
                   alt="apple-logo"
                 />
-                <img src="https://tix.vn/app/assets/img/icons/zalo-logo.png" />
+                <img
+                  src="https://tix.vn/app/assets/img/icons/zalo-logo.png"
+                  alt="zalo-logo"
+                />
               </div>
             </div>
           </div>
@@ -97,9 +100,7 @@ function Footer(props) {
             <div className="Footer__license-detail  col-md-6 ">
               <p>TIX –Dự án cuối khóa Lập trình Frontend [CYBERSOFT-ACADEMY]</p>
 
-              <p>
-                Người thực hiện : LÊ HỮU TRƯỜNG
-            </p>
+              <p>Người thực hiện : LÊ HỮU TRƯỜNG</p>
               {/* <p>
               Giấy chứng nhận đăng ký kinh doanh số: 0101659783, đăng ký thay
               đổi lần thứ 30, ngày 22 tháng 01 năm 2020 do Sở kế hoạch và đầu tư
@@ -108,18 +109,19 @@ function Footer(props) {
               <p>Số Điện Thoại (Hotline): 0867837427</p>
               <p>
                 Email:
-              <a
+                <a
                   target="_black"
                   className="email-tool"
                   href="https://mail.google.com/mail/u/0/#inbox"
                 >
                   {" "}
-                truonghuu478@gmail.com
-              </a>
+                  truonghuu478@gmail.com
+                </a>
               </p>
             </div>
             <div className="col-md-3 Footer__license-chick   ">
               <a
+                // eslint-disable-next-line react/jsx-no-target-blank
                 target="_blank"
                 href="http://online.gov.vn/Home/WebDetails/62782?AspxAutoDetectCookieSupport=1
               "

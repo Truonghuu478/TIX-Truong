@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 // import * as action from "../../../../../Redux/action/moive";
 // import Box from "@material-ui/core/Box";

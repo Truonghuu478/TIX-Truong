@@ -1,0 +1,9 @@
+.showTicket {
+  width: 100%;
+  background: linear-gradient(to top, #0a2029, transparent 100%);
+  min-height: calc(100vh - 80px);
+  height: 500px; }
+  .showTicket .MuiGrid-container .MuiGrid-item {
+    width: 100%; }
+
+/*# sourceMappingURL=showTicket.css.map */
