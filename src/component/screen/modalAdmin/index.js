@@ -29,10 +29,15 @@ import { withStyles } from "@material-ui/core/styles";
 import useStyles from "./modalAdminStyle";
 import { useSelector, useDispatch } from "react-redux";
 ModalAdmin.propTypes = {
-  type: PropTypes.number.isRequired,
+  types: PropTypes.string.isRequired,
   onHide: PropTypes.func.isRequired,
 
   detailMovie: PropTypes.object.isRequired,
+};
+
+ModalAdmin.defaultProps = {
+  detailMovie: {},
+  types: "",
 };
 
 const BootstrapInput = withStyles((theme) => ({
@@ -78,7 +83,7 @@ const urlPublic = process.env.PUBLIC_URL;
 function ModalAdmin(props) {
   let location = useLocation();
   const { maNhom } = useSelector((state) => state.MovieManaGerment);
-  const formatD = (date) => dateFormat(new Date(date));
+  const formatD = (date) => dateFormat(new Date(date),"dd/mm/yyyy h:MM:ss");
   const { indexSpinner } = useSelector((state) => state.AdminReducer);
   const { types, onHide, detailMovie, listTheater } = props;
   const dispatch = useDispatch();
@@ -95,7 +100,7 @@ function ModalAdmin(props) {
   const [state1, setState1] = useState({
     data: {
       maPhim: "",
-      ngayChieuGioChieu: "2019-01-01T12:00",
+      ngayChieuGioChieu: "",
       maRap: "",
       giaVe: "",
     },
@@ -122,11 +127,7 @@ function ModalAdmin(props) {
     },
   });
   const classes = useStyles();
-  useEffect(() => {
-    if (detailMovie) {
-      setState(detailMovie);
-    }
-  }, [detailMovie]);
+    
 
   // fetch list movie
   useEffect(() => {
@@ -135,19 +136,25 @@ function ModalAdmin(props) {
     });
     // eslint-disable-next-line
   }, []);
+  useEffect(() => {
+      if(Object.entries(detailMovie).length >0){
+        setState(detailMovie);
+      }
+    
+  }, [detailMovie])
   const handleChangeInput = (e) => {
     let { name, value } = e.target;
-
+      
     let newData = {
       ...state1.data,
       [name]: name !== "ngayChieuGioChieu" ? parseInt(value) : formatD(value),
     };
     let newError = {
       ...state1.error,
-      [name]: validateMovie(name, value) ? validateMovie(name, value) : "",
+      [name]: validateMovie(name, ""+value) ? validateMovie(name, value) : "",
     };
 
-    setState1({ ...state, data: newData, error: newError });
+    setState1({ ...state1, data: newData, error: newError });
   };
   const handleChange = (e) => {
     let { name, value, files } = e.target;
@@ -159,24 +166,39 @@ function ModalAdmin(props) {
 
     if (types === "Add-ShowTimes") {
       let isValid = false;
-      for (let key in state.error) {
-        if (state.error[key] !== "") {
+      for (const [key] of Object.entries(state1.data)) {
+       
+        
+        if (state1.data[key] === "") {
           isValid = true;
+          break;
         }
       }
+      for (const [key] of Object.entries(state1.error)) {
+       
+        
+        if (state1.error[key] !== "") {
+          isValid = true;
+          break;
+        }
+      }
+      console.log(state1.data);
       if (isValid) {
+        dispatch({ type: tyAction.CHANGE_STATUS_INDEX, statusIndex: false })
+
         Swal.fire({
           icon: "error",
           title: "successful showtimes failed",
           text: "Not performed because of error",
           // footer: '<a href>Why do I have this issue?</a>',
           timerProgressBar: false,
-          showConfirmButton: true,
+          showConfirmButton: false,
 
-          // timer: 2000,
+          timer: 2000,
         });
-      } else dispatch(action.createShowTime(state1.data));
-      setState1({
+      } else {
+        dispatch(action.createShowTime(state1.data));
+        setState1({
         ...state1,
         data: {
           maPhim: "",
@@ -186,6 +208,8 @@ function ModalAdmin(props) {
         },
         error: { maPhim: "", ngayChieuGioChieu: "", maRap: "", giaVe: "" },
       });
+      } ;
+      
     } else if (types === "Add-users") {
       let isCheck = true;
       for (const [key] of Object.entries(formUser.data)) {
@@ -225,7 +249,7 @@ function ModalAdmin(props) {
         statusIndex: true,
       });
       dispatch(
-        !detailMovie ? action.addMovie(formData) : action.editMovie(formData)
+        Object.entries(detailMovie).length >0 ?  action.editMovie(formData):action.addMovie(formData) 
       );
 
       setState({
@@ -239,9 +263,9 @@ function ModalAdmin(props) {
       });
     }
 
-    // if (!indexSpinner) props.onHide();
+   if(indexSpinner) props.onHide();
   };
-
+  
   const renderHTML = () => {
     if (indexSpinner) {
       return <ScaleLoader color={"#36D7B7"} css={override} />;
@@ -296,7 +320,7 @@ function ModalAdmin(props) {
               style={{ fontWeight: "bold" }}
               type="submit"
             >
-              {detailMovie
+              {Object.entries(detailMovie).length >0
                 ? "UPDATE"
                 : types === "Add-Movies" || types === "Add-users"
                 ? "ADD"
@@ -433,7 +457,7 @@ function ModalAdmin(props) {
     return (
       <>
         <TextField
-          disabled
+          disabled={types !== "Add-Movies"}
           label="Movie's code"
           multiline
           name="maPhim"
@@ -444,7 +468,7 @@ function ModalAdmin(props) {
         />
 
         <TextField
-          disabled
+          disabled={types !== "Add-Movies"}
           label="Movie's name"
           multiline
           name="tenPhim"
@@ -462,7 +486,7 @@ function ModalAdmin(props) {
             onChange={handleChange}
             input={<BootstrapInput />}
           >
-            <MenuItem value="">None</MenuItem>
+            
             {[...Array(10)].map((item, index) => (
               <MenuItem
                 value={"GP" + (index + 1 < 9 ? "0" + (index + 1) : index + 1)}
@@ -477,14 +501,15 @@ function ModalAdmin(props) {
           label="Trailer"
           multiline
           value={state.trailer}
-          // rowsMax={4}
-
+          type={"text"}
           name="trailer"
           onChange={handleChange}
         />
         <div className={classes.groupImg}>
           <img
             src={state.hinhAnh}
+              width={202}
+              height={245}
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = urlPublic + "/img/default-film.webp";
@@ -542,8 +567,9 @@ function ModalAdmin(props) {
                 );
               })}
           </Select>
-          <FormHelperText>{state1.error.maPhim}</FormHelperText>
+          <FormHelperText error>{state1.error.maPhim}</FormHelperText>
         </FormControl>
+    <FormControl>
 
         <TextField
           className={classes.TextField}
@@ -552,8 +578,10 @@ function ModalAdmin(props) {
           value={state1.data.giaVe}
           label="Fare"
           onChange={handleChangeInput}
-          helperText={state1.error.giaVe}
+       
         />
+        <FormHelperText error>{state1.error.giaVe}</FormHelperText>
+    </FormControl>
 
         <FormControl className={classes.formControl}>
           <InputLabel id="demo-simple-select-movie-code">
@@ -577,21 +605,25 @@ function ModalAdmin(props) {
                 );
               })}
           </Select>
-          <FormHelperText>{state1.error.maRap}</FormHelperText>
+          <FormHelperText error>{state1.error.maRap}</FormHelperText>
         </FormControl>
+  <FormControl>
 
         <TextField
           id="datetime-local"
           label="Show date and time"
           type="datetime-local"
           name="ngayChieuGioChieu"
-          defaultValue={state1.data.ngayChieuGioChieu}
+          // defaultValue={state1.data.c}
           className={classes.TextField}
           onChange={handleChangeInput}
           InputLabelProps={{
             shrink: true,
           }}
         />
+          <FormHelperText error>{state1.error.ngayChieuGioChieu}</FormHelperText>
+
+        </FormControl>
       </>
     );
   };

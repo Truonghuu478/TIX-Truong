@@ -187,6 +187,7 @@ export const addMovie = (data) => {
       })
       dispatch(getListMovies());
     }).catch(err => {
+      dispatch({ type: TyAction.CHANGE_STATUS_INDEX, statusIndex: false })
       Swal.fire({
         icon: "error",
         title: "Movie added failed",
@@ -197,7 +198,7 @@ export const addMovie = (data) => {
 
         // timer: 2000,
       });
-      dispatch({ type: TyAction.CHANGE_STATUS_INDEX, statusIndex: false })
+      
     })
   }
 }
@@ -219,16 +220,13 @@ export const editMovie = (data) => {
           timer: 1500
         })
         dispatch(getListMovies());
-        dispatch({
-          type: TyAction.CHANGE_STATUS_INDEX,
-          statusIndex: false
-        })
+        
       }).catch(err => {
         dispatch({
           type: TyAction.CHANGE_STATUS_INDEX,
           statusIndex: false
         })
-        console.log(err);
+     
         Swal.fire({
           icon: "error",
           title: "Movie update failed",
@@ -247,8 +245,12 @@ export const editMovie = (data) => {
 export const createShowTime = (data) => {
 
   return dispatch => {
+
+
     return request("POST", "https://movie0706.cybersoft.edu.vn/api/QuanLyDatVe/TaoLichChieu", data, "userAdmin")
       .then(res => {
+
+
         Swal.fire({
           icon: "success",
           title: "successful showtimes added!",
@@ -263,6 +265,7 @@ export const createShowTime = (data) => {
       }
 
       ).catch(err => {
+        dispatch({ type: TyAction.CHANGE_STATUS_INDEX, statusIndex: false })
         Swal.fire({
           icon: "error",
           title: "successful showtimes failed",
@@ -273,6 +276,8 @@ export const createShowTime = (data) => {
 
           // timer: 2000,
         });
+        
+
       })
   }
 }

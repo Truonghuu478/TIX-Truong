@@ -42,7 +42,7 @@ const useStyles = makeStyles({
         },
         "& img": {
             width: "100%",
-            height: "75%",
+            // height: "75%",s
             objectFit: "cover"
 
         },

@@ -27,7 +27,10 @@ export const validate = (name, value, min = 4, max = 30) => {
 };
 
 export const validateMovie = (name, value, min = 4, max = 5) => {
-  if (name === "maPhim") {
+  if(value.trim() === ""){
+    return "Must not be empty"
+  }
+  else if (name === "maPhim") {
     if (value.length < min) {
       return `Film code character length must be at least ${min} digits`;
     }
@@ -42,11 +45,11 @@ export const validateMovie = (name, value, min = 4, max = 5) => {
       return `The longest film code character length is ${max - 1}`;
     }
   } else if (name === "giaVe") {
-    if (value > 1000000) {
-      return `Film code character length must be at least 1000000 digits`;
+    if (value >200000) {
+      return `Must be greater than 200000 `;
     }
-    if (value < 1000) {
-      return `The longest film code character length is 1000`;
+    if (value < 75000) {
+      return `Must be less than 75000`;
     }
   }
 };

@@ -137,7 +137,7 @@ export default function ManagerMovie() {
   const location = useLocation();
   const dispatch = useDispatch();
   const classes = useStyles2();
-  const [detailMovie, setDetailMovie] = useState(null);
+  const [detailMovie, setDetailMovie] = useState({});
   const [page, setPage] = useState(0);
 
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -204,7 +204,7 @@ export default function ManagerMovie() {
   };
   // handleOpen modal
   const handleOpenModal = () => {
-    setDetailMovie(null);
+    setDetailMovie({});
     setTypeModal("Add-Movies");
     setShowModal(true);
   };
@@ -216,7 +216,7 @@ export default function ManagerMovie() {
   };
 
   const renderHTML = React.useCallback(() => {
-    if (listMovies.length > 0) {
+    if (listMovies.reverse().length > 0) {
       return (rowsPerPage > 0
         ? listMovies.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
         : listMovies
@@ -244,7 +244,7 @@ export default function ManagerMovie() {
             {row.trailer }
           </TableCell> */}
           <TableCell className={classes.tableCell}>
-            {row.moTa.slice(1, 70) + "..."}
+            {row.moTa !== ""?row.moTa.slice(1, 70) + "...": <span className="text-danger">No info</span>}
           </TableCell>
 
           <TableCell className={classes.tableCell}>
