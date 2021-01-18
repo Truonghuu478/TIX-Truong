@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useMemo } from "react";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -13,7 +13,7 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
-
+import classNames from "classnames";
 import ArrDangChieu from "../../../../json/NewIns/dangChieuData.json";
 import ArrSapChieu from "../../../../json/NewIns/sapChieuData.json";
 
@@ -75,14 +75,14 @@ function a11yProps(index) {
 const urlPublic = process.env.PUBLIC_URL;
 function NewIn(props) {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const [modalTrailer, setModalTrailer] = useState(false);
   //  const {groupMovie}  = useSelector(state=>state.MovieManaGerment)
   const [trailer, setTrailer] = useState("");
-  const [dangChieuData, setDangChieuData] = useState([]);
-  const [sapChieuData, setSapChieuData] = useState([]);
+  const [dangChieuData] = useState(ArrDangChieu);
+  const [sapChieuData] = useState(ArrSapChieu);
 
-  let screenWidth = React.useMemo(
+  let screenWidth = useMemo(
     () => window.innerWidth,
     //eslint-disable-next-line
     [window.innerWidth]
@@ -106,21 +106,6 @@ function NewIn(props) {
     });
   };
 
-  useEffect(() => {
-    // const listMovie = async ()=>{
-    //     try{
-
-    //       const result = await fetch('../../../../json/NewIns/dangChieuData.json');
-    //       const data = await result.json();
-    //       setDangChieuData(data);
-    //     }catch(error){
-    //         console.log(error)
-    //     }
-    // }
-    // listMovie();
-    setDangChieuData(ArrDangChieu);
-    setSapChieuData(ArrSapChieu);
-  }, []);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -165,10 +150,10 @@ function NewIn(props) {
                                 e.target.src =
                                   urlPublic + "/img/default-film.webp";
                               }}
-                              className={classes.imgCard}
-                              style={{
-                                height: screenWidth < 768 ? "100%" : "70%",
-                              }}
+                              className={classNames(
+                                classes.imgCard,
+                                classes.imgCardHeight
+                              )}
                               component="img"
                               alt={`phim-${movie.tenPhim}`}
                               height="140"
@@ -184,11 +169,12 @@ function NewIn(props) {
                                 >
                                   <Typography
                                     component="span"
-                                    className={`${classes.banner} ${
+                                    className={classNames(
+                                      classes.banner,
                                       movie.room === 16
                                         ? classes.banner16
                                         : classes.bannerP
-                                    }`}
+                                    )}
                                   >
                                     {movie.room === 16 ? 16 : "P"}
                                   </Typography>
@@ -217,7 +203,7 @@ function NewIn(props) {
                                 }}
                                 component="p"
                               >
-                                {movie.danhGia}
+                                {movie.danhGia - 5 >= 5 ? 5 : movie.danhGia}
                               </Typography>
                               <Typography component="span">
                                 {RenderStart(movie.danhGia, "newIns")}
@@ -297,17 +283,46 @@ function NewIn(props) {
                                   e.target.src =
                                     urlPublic + "img/default-film.webp";
                                 }}
-                                className={classes.imgCard}
+                                className={classNames(classes.imgCard)}
                                 style={{
                                   height: screenWidth < 768 ? "100%" : "70%",
                                 }}
                                 component="img"
                                 image={movie.hinhAnh}
                                 alt={`phim-${movie.tenPhim}`}
-                                height="140"
                                 title={`phim-${movie.tenPhim}`}
                               />
                             </CardActionArea>
+                            <Box
+                              className={classNames(
+                                // classes.boxMovie,
+                                classes.bannerMobile
+                              )}
+                              component="div"
+                              item={"true"}
+                            >
+                              <Typography
+                                component="span"
+                                className={classNames(
+                                  classes.banner,
+                                  movie.room === 16
+                                    ? classes.banner16
+                                    : classes.bannerP
+                                )}
+                              >
+                                {movie.room === 16 ? 16 : "P"}
+                              </Typography>
+                              <Typography style={{ flexGrow: 2 }}>
+                                {movie.tenPhim}
+                                {movie.room === 16 && "- (16)"}
+                              </Typography>
+                              <Typography
+                                component={"span"}
+                                className={classes.btnMovieMobile}
+                              >
+                                Mua vé
+                              </Typography>
+                            </Box>
                             {arraySetups === dangChieuData && (
                               <Box
                                 className={classes.checkStart}
@@ -379,7 +394,6 @@ function NewIn(props) {
             speed={500}
             tag="section"
             id="simple-tab-0"
-            pagination
             spaceBetween={0}
             slidesPerView={1}
             navigation

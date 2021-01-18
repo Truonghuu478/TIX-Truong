@@ -83,7 +83,7 @@ const urlPublic = process.env.PUBLIC_URL;
 function ModalAdmin(props) {
   let location = useLocation();
   const { maNhom } = useSelector((state) => state.MovieManaGerment);
-  const formatD = (date) => dateFormat(new Date(date),"dd/mm/yyyy h:MM:ss");
+  const formatD = (date) => dateFormat(new Date(date), "dd/mm/yyyy h:MM:ss");
   const { indexSpinner } = useSelector((state) => state.AdminReducer);
   const { types, onHide, detailMovie, listTheater } = props;
   const dispatch = useDispatch();
@@ -127,7 +127,6 @@ function ModalAdmin(props) {
     },
   });
   const classes = useStyles();
-    
 
   // fetch list movie
   useEffect(() => {
@@ -137,21 +136,20 @@ function ModalAdmin(props) {
     // eslint-disable-next-line
   }, []);
   useEffect(() => {
-      if(Object.entries(detailMovie).length >0){
-        setState(detailMovie);
-      }
-    
-  }, [detailMovie])
+    if (Object.entries(detailMovie).length > 0) {
+      setState(detailMovie);
+    }
+  }, [detailMovie]);
   const handleChangeInput = (e) => {
     let { name, value } = e.target;
-      
+
     let newData = {
       ...state1.data,
       [name]: name !== "ngayChieuGioChieu" ? parseInt(value) : formatD(value),
     };
     let newError = {
       ...state1.error,
-      [name]: validateMovie(name, ""+value) ? validateMovie(name, value) : "",
+      [name]: validateMovie(name, "" + value) ? validateMovie(name, value) : "",
     };
 
     setState1({ ...state1, data: newData, error: newError });
@@ -167,25 +165,19 @@ function ModalAdmin(props) {
     if (types === "Add-ShowTimes") {
       let isValid = false;
       for (const [key] of Object.entries(state1.data)) {
-       
-        
         if (state1.data[key] === "") {
           isValid = true;
           break;
         }
       }
       for (const [key] of Object.entries(state1.error)) {
-       
-        
         if (state1.error[key] !== "") {
           isValid = true;
           break;
         }
       }
-      console.log(state1.data);
-      if (isValid) {
-        dispatch({ type: tyAction.CHANGE_STATUS_INDEX, statusIndex: false })
 
+      if (isValid) {
         Swal.fire({
           icon: "error",
           title: "successful showtimes failed",
@@ -199,17 +191,16 @@ function ModalAdmin(props) {
       } else {
         dispatch(action.createShowTime(state1.data));
         setState1({
-        ...state1,
-        data: {
-          maPhim: "",
-          ngayChieuGioChieu: formatD("2019-01-01T12:00:00"),
-          maRap: "",
-          giaVe: "",
-        },
-        error: { maPhim: "", ngayChieuGioChieu: "", maRap: "", giaVe: "" },
-      });
-      } ;
-      
+          ...state1,
+          data: {
+            maPhim: "",
+            ngayChieuGioChieu: formatD("2019-01-01T12:00:00"),
+            maRap: "",
+            giaVe: "",
+          },
+          error: { maPhim: "", ngayChieuGioChieu: "", maRap: "", giaVe: "" },
+        });
+      }
     } else if (types === "Add-users") {
       let isCheck = true;
       for (const [key] of Object.entries(formUser.data)) {
@@ -249,7 +240,9 @@ function ModalAdmin(props) {
         statusIndex: true,
       });
       dispatch(
-        Object.entries(detailMovie).length >0 ?  action.editMovie(formData):action.addMovie(formData) 
+        Object.entries(detailMovie).length > 0
+          ? action.editMovie(formData)
+          : action.addMovie(formData)
       );
 
       setState({
@@ -263,9 +256,9 @@ function ModalAdmin(props) {
       });
     }
 
-   if(indexSpinner) props.onHide();
+    if (!indexSpinner) props.onHide();
   };
-  
+
   const renderHTML = () => {
     if (indexSpinner) {
       return <ScaleLoader color={"#36D7B7"} css={override} />;
@@ -320,7 +313,7 @@ function ModalAdmin(props) {
               style={{ fontWeight: "bold" }}
               type="submit"
             >
-              {Object.entries(detailMovie).length >0
+              {Object.entries(detailMovie).length > 0
                 ? "UPDATE"
                 : types === "Add-Movies" || types === "Add-users"
                 ? "ADD"
@@ -486,7 +479,6 @@ function ModalAdmin(props) {
             onChange={handleChange}
             input={<BootstrapInput />}
           >
-            
             {[...Array(10)].map((item, index) => (
               <MenuItem
                 value={"GP" + (index + 1 < 9 ? "0" + (index + 1) : index + 1)}
@@ -508,8 +500,8 @@ function ModalAdmin(props) {
         <div className={classes.groupImg}>
           <img
             src={state.hinhAnh}
-              width={202}
-              height={245}
+            width={202}
+            height={245}
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = urlPublic + "/img/default-film.webp";
@@ -569,19 +561,17 @@ function ModalAdmin(props) {
           </Select>
           <FormHelperText error>{state1.error.maPhim}</FormHelperText>
         </FormControl>
-    <FormControl>
-
-        <TextField
-          className={classes.TextField}
-          type="text"
-          name="giaVe"
-          value={state1.data.giaVe}
-          label="Fare"
-          onChange={handleChangeInput}
-       
-        />
-        <FormHelperText error>{state1.error.giaVe}</FormHelperText>
-    </FormControl>
+        <FormControl>
+          <TextField
+            className={classes.TextField}
+            type="text"
+            name="giaVe"
+            value={state1.data.giaVe}
+            label="Fare"
+            onChange={handleChangeInput}
+          />
+          <FormHelperText error>{state1.error.giaVe}</FormHelperText>
+        </FormControl>
 
         <FormControl className={classes.formControl}>
           <InputLabel id="demo-simple-select-movie-code">
@@ -607,22 +597,22 @@ function ModalAdmin(props) {
           </Select>
           <FormHelperText error>{state1.error.maRap}</FormHelperText>
         </FormControl>
-  <FormControl>
-
-        <TextField
-          id="datetime-local"
-          label="Show date and time"
-          type="datetime-local"
-          name="ngayChieuGioChieu"
-          // defaultValue={state1.data.c}
-          className={classes.TextField}
-          onChange={handleChangeInput}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-          <FormHelperText error>{state1.error.ngayChieuGioChieu}</FormHelperText>
-
+        <FormControl>
+          <TextField
+            id="datetime-local"
+            label="Show date and time"
+            type="datetime-local"
+            name="ngayChieuGioChieu"
+            // defaultValue={state1.data.c}
+            className={classes.TextField}
+            onChange={handleChangeInput}
+            InputLabelProps={{
+              shrink: true,
+            }}
+          />
+          <FormHelperText error>
+            {state1.error.ngayChieuGioChieu}
+          </FormHelperText>
         </FormControl>
       </>
     );

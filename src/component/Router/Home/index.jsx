@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect, Fragment } from "react";
 import * as Action from "../../../Redux/action/moive";
 import Header from "../../Page/Header";
@@ -12,6 +10,9 @@ import Footer from "../../Page/Footer";
 import { connect } from "react-redux";
 import FastTicket from "../../Layout/home/fastTicket/FastTicket";
 import Pack from "../../Layout/home/pack";
+
+// mobile
+import Voucher from "../../screen/mobie/LstVoucher";
 // import {useLocation} from "react-router-dom";
 import TiXLoading from "../../Layout/Loading";
 
@@ -38,11 +39,11 @@ function Home(props) {
           })
         );
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     };
     GetMovieFist();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line
   }, []);
   useEffect(() => {
     let a = null;
@@ -67,7 +68,7 @@ function Home(props) {
       ) : (
         <Fragment>
           <Header />
-
+          {screenWidth < 576 && <Voucher />}
           <Carousel />
           <FastTicket />
           <NewIn loading={loading} />

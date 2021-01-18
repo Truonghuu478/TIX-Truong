@@ -1,0 +1,33 @@
+.pageFound {
+    // background: linear-gradient(45deg, rgb(16, 17, 17) 30%, rgb(17, 18, 19) 90%);
+background: url("https://tix.vn/app/assets/img/icons/bg2.jpg");
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &__content {
+        text-align: center;
+
+        p {
+            color: $color-0-white;
+            font-weight: $font-bold;
+            font-size: $em-1+5;
+            text-transform: uppercase;
+            padding-bottom: $em-1 - 10;
+        }
+
+        button {
+            padding: $em-1 - 6 $em-1 - 11;
+            a{
+                    width:100%;
+                color: $color-0-white;
+                font-weight: $font-bold;
+            }
+
+            background: linear-gradient(45deg, rgb(33, 150, 243) 30%, rgb(33, 203, 243) 90%);
+        }
+    }
+
+
+}

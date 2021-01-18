@@ -399,7 +399,7 @@ export default function ManagerUser() {
   const handleRemoveUser = (user) => {
     action.RemoveUserAdmin(user);
   };
- 
+
   // edit user
   const handleEditUser = (user, index) => {
     setFormUer({ ...user, maNhom });

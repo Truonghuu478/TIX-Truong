@@ -20,7 +20,8 @@ input[type="file"] {
 
 .modal-content {
   margin-top: 110px;
-  border: 7px solid #0d0d0d; }
+  border: 7px solid #0d0d0d;
+  height: 500px; }
   .modal-content .modal-header {
     height: 100%;
     padding: 0;
@@ -338,22 +339,29 @@ input[type="file"] {
   width: 100%;
   z-index: 909;
   height: 100%;
+  background-color: white;
   top: 0;
   left: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
-  background-color: white; }
+  align-items: center; }
+  @media screen and (max-width: 576px) {
+    .loading-spinners {
+      z-index: 999999;
+      background: url("/img/bg/bg2.jpg") repeat center; } }
   .loading-spinners img {
-    transition: all .5s;
-    animation: loading-animate 0.9s infinite 0s linear;
-    -webkit-animation: loading-animate 0.9s infinite 0s linear;
-    width: 130px;
-    max-height: 110px;
-    -webkit-transition: all .5s;
-    -moz-transition: all .5s;
-    -ms-transition: all .5s;
-    -o-transition: all .5s; }
+    width: 330px; }
+    @media screen and (min-width: 576px) {
+      .loading-spinners img {
+        width: 130px;
+        transition: all .5s;
+        animation: loading-animate 0.9s infinite 0s linear;
+        -webkit-animation: loading-animate 0.9s infinite 0s linear;
+        max-height: 110px;
+        -webkit-transition: all .5s;
+        -moz-transition: all .5s;
+        -ms-transition: all .5s;
+        -o-transition: all .5s; } }
 
 @keyframes loading-animate {
   0% {
@@ -1488,9 +1496,6 @@ input[type="file"] {
   .newIn {
     width: 80%;
     margin: 0 auto; } }
-@media screen and (max-width: 1024px) {
-  .newIn {
-    margin-top: 59px; } }
 @media screen and (max-width: 768px) {
   .newIn {
     width: 100%; } }
@@ -1499,6 +1504,9 @@ input[type="file"] {
 @media screen and (max-width: 1024px) {
   .newIn .MuiBox-root {
     padding: 24px 0; } }
+@media screen and (max-width: 576px) {
+  .newIn .MuiBox-root {
+    padding: 5px 0; } }
 .newIn .MuiBox-root .MuiTypography-root .swiper-container .swiper-button-prev, .newIn .MuiBox-root .MuiTypography-root .swiper-container .swiper-button-next {
   color: #c7c7c7;
   transform: scale(1.5);
@@ -1512,8 +1520,6 @@ input[type="file"] {
     max-height: 300px; } }
 .newIn .MuiBox-root .MuiTypography-root .swiper-container .swiper-wrapper .swiper-slide .MuiGrid-container .MuiGrid-item .MuiCard-root {
   overflow: hidden; }
-  .newIn .MuiBox-root .MuiTypography-root .swiper-container .swiper-wrapper .swiper-slide .MuiGrid-container .MuiGrid-item .MuiCard-root .MuiBox-root {
-    padding: 0; }
   @media screen and (max-width: 768px) {
     .newIn .MuiBox-root .MuiTypography-root .swiper-container .swiper-wrapper .swiper-slide .MuiGrid-container .MuiGrid-item .MuiCard-root {
       width: 100%;
@@ -1734,6 +1740,9 @@ input[type="file"] {
     height: 100%;
     margin: 0 auto;
     text-align: center; }
+    @media screen and (max-width: 576px) {
+      .about .right .about__right {
+        width: 100%; } }
     .about .right .about__right--phone {
       overflow: hidden; }
       .about .right .about__right--phone img {
@@ -1852,5 +1861,27 @@ input[type="file"] {
       @media screen and (max-width: 768px) {
         .Footer .Footer__license-chick {
           text-align: center; } }
+
+.pageFound {
+  background: url("https://tix.vn/app/assets/img/icons/bg2.jpg");
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  .pageFound__content {
+    text-align: center; }
+    .pageFound__content p {
+      color: white;
+      font-weight: bold;
+      font-size: 21px;
+      text-transform: uppercase;
+      padding-bottom: 6px; }
+    .pageFound__content button {
+      padding: 10px 5px;
+      background: linear-gradient(45deg, #2196f3 30%, #21cbf3 90%); }
+      .pageFound__content button a {
+        width: 100%;
+        color: white;
+        font-weight: bold; }
 
 /*# sourceMappingURL=App.css.map */

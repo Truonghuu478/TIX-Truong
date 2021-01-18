@@ -34,6 +34,9 @@
   .right{
     
     .about__right {
+      @include max (576px) {
+            width: 100%;
+      }
       width: 56%;
       position: relative;
       height: 100%;

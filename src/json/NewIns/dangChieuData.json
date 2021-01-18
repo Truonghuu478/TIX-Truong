@@ -1,4 +1,17 @@
-[{
+[
+{
+    "maPhim": 4517,
+    "tenPhim": "My shunshine",
+    "biDanh": "my-shunshine",
+    "trailer": "https://www.youtube.com/embed/dyuUk_gMRkc",
+    "hinhAnh": "http://movie0706.cybersoft.edu.vn/hinhanh/my-shunshine_gp01.jpg",
+    "moTa": "here is my dream girls.",
+    "maNhom": "GP01",
+    "ngayKhoiChieu": "2021-01-17T00:32:17.543",
+    "danhGia": 5,
+    "room":"p"
+  }
+  ,{
   "maPhim": 1542,
   "tenPhim": "Avengers: Infinity War ",
   "biDanh": "avengers-infinity-war",

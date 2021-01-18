@@ -4,9 +4,9 @@
         margin:0 auto;
 
     }
-        @include max(1024px){
-            margin-top:59px;
-        }
+        // @include max(1024px){
+        //     margin-top:59px;
+        // }
     @include max(768px){
         width:100%;
     
@@ -18,6 +18,10 @@
     .MuiBox-root {
         @include max(1024px){
             padding: 24px 0;
+        }
+        @include max(576px) {
+            
+            padding: 5px 0;
         }
         .MuiTypography-root{
             .swiper-container {
@@ -43,9 +47,9 @@
                                    }
                                     
                                     .MuiCard-root{
-                                        .MuiBox-root{
-                                            padding:0;
-                                        }
+                                        // .MuiBox-root{
+                                        //     padding:0;
+                                        // }
                                         overflow: hidden;
                                         @include max(768px){
                                         width:100%;

@@ -30,7 +30,9 @@ import loadingStyle from "../../../assets/jss/components/LoadingStyle";
 // *css loading
 // action
 import * as action from "../../../../Redux/action/admin";
+
 // constant
+
 // location
 import { useLocation } from "react-router-dom";
 //redux
@@ -129,9 +131,9 @@ const useStyles2 = makeStyles({
     },
   },
 });
-ManagerMovie.propTypes = {
-  types: PropTypes.string.isRequired,
-};
+// ManagerMovie.propTypes = {
+//   types: PropTypes.string.isRequired,
+// };
 
 export default function ManagerMovie() {
   const location = useLocation();
@@ -145,7 +147,7 @@ export default function ManagerMovie() {
     (state) => state.AdminReducer
   );
   const [showModal, setShowModal] = useState(false);
-  const [typeModal, setTypeModal] = useState(null);
+  const [typeModal, setTypeModal] = useState("");
   const [emptyRows, setEmptyRows] = useState(0);
   useEffect(() => {
     setEmptyRows(
@@ -244,7 +246,11 @@ export default function ManagerMovie() {
             {row.trailer }
           </TableCell> */}
           <TableCell className={classes.tableCell}>
-            {row.moTa !== ""?row.moTa.slice(1, 70) + "...": <span className="text-danger">No info</span>}
+            {row.moTa !== "" ? (
+              row.moTa.slice(1, 70) + "..."
+            ) : (
+              <span className="text-danger">No info</span>
+            )}
           </TableCell>
 
           <TableCell className={classes.tableCell}>

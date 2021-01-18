@@ -90,7 +90,7 @@ export default function ManagerShowtime() {
     (state) => state.MovieManaGerment
   );
   const [showModal, setShowModal] = useState(false);
-  const [typeModal, setTypeModal] = useState(null);
+  const [typeModal, setTypeModal] = useState("");
   const [cinemaCode, setCinemaCode] = useState(null);
   const [listTheater, setListTheater] = useState([]);
 

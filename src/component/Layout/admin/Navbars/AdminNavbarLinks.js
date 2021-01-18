@@ -8,7 +8,7 @@ import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import Hidden from "@material-ui/core/Hidden";
-import Avatar from '@material-ui/core/Avatar';
+import Avatar from "@material-ui/core/Avatar";
 import classes1 from "classnames";
 import Poppers from "@material-ui/core/Popper";
 // import Divider from "@material-ui/core/Divider";
@@ -22,9 +22,9 @@ import CustomInput from "../CustomInput/CustomInput.js";
 import Button from "../CustomButtons/Button.js";
 
 import styles from "../../../assets/jss/components/headerLinksStyle.js";
-// constant  
-import *as tyAction from "../../../../Redux/constanst";
-// redux 
+// constant
+import * as tyAction from "../../../../Redux/constanst";
+// redux
 import { useDispatch, useSelector } from "react-redux";
 
 import { useLocation, Link } from "react-router-dom";
@@ -34,17 +34,16 @@ export default function AdminNavbarLinks(props) {
   const classes = useStyles();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { globalSearch, statusAdmin } = useSelector(state => state.AdminReducer)
+  const { globalSearch, statusAdmin } = useSelector(
+    (state) => state.AdminReducer
+  );
   const [openNotification, setOpenNotification] = React.useState(null);
   const [openProfile, setOpenProfile] = React.useState(null);
-  const handleLocalStorage = React.useCallback(
-    (i = "user") => {
-      return JSON.parse(localStorage.getItem(i))
-    }
-    , [])
+  const handleLocalStorage = React.useCallback((i = "user") => {
+    return JSON.parse(localStorage.getItem(i));
+  }, []);
 
-
-  const handleClickNotification = event => {
+  const handleClickNotification = (event) => {
     if (openNotification && openNotification.contains(event.target)) {
       setOpenNotification(null);
     } else {
@@ -55,7 +54,7 @@ export default function AdminNavbarLinks(props) {
   const handleCloseNotification = () => {
     setOpenNotification(null);
   };
-  const handleClickProfile = event => {
+  const handleClickProfile = (event) => {
     if (openProfile && openProfile.contains(event.target)) {
       setOpenProfile(null);
     } else {
@@ -70,37 +69,46 @@ export default function AdminNavbarLinks(props) {
       dispatch({
         type: tyAction.POST_VALUE_SEARCH,
         payload: "",
-        statusAdmin: location.pathname
-      })
+        statusAdmin: location.pathname,
+      });
     }
     // eslint-disable-next-line
-  }, [location])
+  }, [location]);
+
   return (
     <div>
-      { statusAdmin !== "/admin/maps" &&
+      {statusAdmin !== "/admin/maps" && (
         <div className={classes.searchWrapper}>
           <CustomInput
-            onChange={(e) => dispatch({
-              type: tyAction.POST_VALUE_SEARCH,
-              payload: e.target.value,
-              statusAdmin: location.pathname
-            })}
+            onChange={(e) =>
+              dispatch({
+                type: tyAction.POST_VALUE_SEARCH,
+                payload: e.target.value,
+                statusAdmin: location.pathname,
+              })
+            }
             value={globalSearch}
             formControlProps={{
-              className: classes.margin + " " + classes.search
+              className: classes.margin + " " + classes.search,
             }}
             inputProps={{
               placeholder: "Search",
               inputProps: {
-                "aria-label": "Search"
-              }
+                "aria-label": "Search",
+              },
             }}
           />
-          <Button className={classes.noneOutline} color="white" aria-label="edit" justIcon round>
+          <Button
+            className={classes.noneOutline}
+            color="white"
+            aria-label="edit"
+            justIcon
+            round
+          >
             <Search />
           </Button>
         </div>
-      }
+      )}
       {/* <Button
         color={window.innerWidth > 959 ? "transparent" : "white"}
         justIcon={window.innerWidth > 959}
@@ -148,7 +156,7 @@ export default function AdminNavbarLinks(props) {
               id="notification-menu-list-grow"
               style={{
                 transformOrigin:
-                  placement === "bottom" ? "center top" : "center bottom"
+                  placement === "bottom" ? "center top" : "center bottom",
               }}
             >
               <Paper>
@@ -205,8 +213,12 @@ export default function AdminNavbarLinks(props) {
           <Hidden mdUp implementation="css">
             <p className={classes.linkText}>Profile</p>
           </Hidden> */}
-          <Avatar>{handleLocalStorage() && handleLocalStorage().maLoaiNguoiDung === "QuanTri" ? handleLocalStorage().hoTen.slice(0, 1) : handleLocalStorage("userAdmin")?.hoTen.slice(0, 1)}</Avatar>
-
+          <Avatar>
+            {handleLocalStorage() &&
+            handleLocalStorage().maLoaiNguoiDung === "QuanTri"
+              ? handleLocalStorage().hoTen.slice(0, 1)
+              : handleLocalStorage("userAdmin")?.hoTen.slice(0, 1)}
+          </Avatar>
         </Button>
         <Poppers
           open={Boolean(openProfile)}
@@ -225,29 +237,32 @@ export default function AdminNavbarLinks(props) {
               id="profile-menu-list-grow"
               style={{
                 transformOrigin:
-                  placement === "bottom" ? "center top" : "center bottom"
+                  placement === "bottom" ? "center top" : "center bottom",
               }}
             >
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
-
                     <MenuItem
                       onClick={handleCloseProfile}
                       className={classes.dropdownItem}
                     >
                       <Link style={{ width: "100%" }} to="/">
-
                         Go to website
-                    </Link>
-                    </MenuItem >
-                    <MenuItem className={classes.dropdownItem} onClick={() => {
-                      localStorage.removeItem("userAdmin");
-                      setOpenProfile(null)
-                    }}>
+                      </Link>
+                    </MenuItem>
+                    <MenuItem
+                      className={classes.dropdownItem}
+                      onClick={() => {
+                        localStorage.removeItem("userAdmin");
+                        setOpenProfile(null);
+                      }}
+                    >
                       {/* <Divider light /> */}
-                      <Link style={{ width: "100%" }} to="/admin" > Logout</Link>
-
+                      <Link style={{ width: "100%" }} to="/admin">
+                        {" "}
+                        Logout
+                      </Link>
                     </MenuItem>
                   </MenuList>
                 </ClickAwayListener>

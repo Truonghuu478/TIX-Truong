@@ -1,121 +1,145 @@
-.loading-spinners{
+.loading-spinners {
     position: fixed;
-    width:100%;
+    width: 100%;
     z-index: 909;
     height: 100%;
+background-color: white;
+    @include max(576px) {
+        z-index: 999999;
+        background: url('/img/bg/bg2.jpg') repeat center;
+    }
+
     top:0;
     left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
-    img{
-        transition: all .5s;
-        animation: loading-animate 0.9s infinite 0s linear;
-        -webkit-animation: loading-animate 0.9s infinite 0s linear;
-        width: 130px;
-        max-height:110px;
-        -webkit-transition: all .5s;
-        -moz-transition: all .5s;
-        -ms-transition: all .5s;
-        -o-transition: all .5s;
-}
+    
+
+    img {
+          width: 330px;
+              
+
+        @include min(576px) {
+            width: 130px;
+            transition: all .5s;
+            animation: loading-animate 0.9s infinite 0s linear;
+            -webkit-animation: loading-animate 0.9s infinite 0s linear;
+            max-height: 110px;
+            -webkit-transition: all .5s;
+            -moz-transition: all .5s;
+            -ms-transition: all .5s;
+            -o-transition: all .5s;
+        }
+    }
 }
 
-@keyframes loading-animate{
-    0%{
+@keyframes loading-animate {
+    0% {
         transform: rotate(5deg);
         -webkit-transform: rotate(5deg);
         -moz-transform: rotate(5deg);
         -ms-transform: rotate(5deg);
         -o-transform: rotate(5deg);
-}
-    7%{
+    }
+
+    7% {
         transform: rotate(10deg);
         -webkit-transform: rotate(10deg);
         -moz-transform: rotate(10deg);
         -ms-transform: rotate(10deg);
         -o-transform: rotate(10deg);
-}
-    14%{
+    }
+
+    14% {
         transform: rotate(15deg);
         -webkit-transform: rotate(15deg);
         -moz-transform: rotate(15deg);
         -ms-transform: rotate(15deg);
         -o-transform: rotate(15deg);
-}
-    21%{
+    }
+
+    21% {
         transform: rotate(20deg);
         -webkit-transform: rotate(20deg);
         -moz-transform: rotate(20deg);
         -ms-transform: rotate(20deg);
         -o-transform: rotate(20deg);
-}
-    28%{
+    }
+
+    28% {
         transform: rotate(15deg);
         -webkit-transform: rotate(15deg);
         -moz-transform: rotate(15deg);
         -ms-transform: rotate(15deg);
         -o-transform: rotate(15deg);
-}
-    35%{
+    }
+
+    35% {
         transform: rotate(10deg);
         -webkit-transform: rotate(10deg);
         -moz-transform: rotate(10deg);
         -ms-transform: rotate(10deg);
         -o-transform: rotate(10deg);
-}
-    42%{
+    }
+
+    42% {
         transform: rotate(5deg);
         -webkit-transform: rotate(5deg);
         -moz-transform: rotate(5deg);
         -ms-transform: rotate(5deg);
         -o-transform: rotate(5deg);
-}
-    49%{
+    }
+
+    49% {
         transform: rotate(0deg);
         -webkit-transform: rotate(0deg);
         -moz-transform: rotate(0deg);
         -ms-transform: rotate(0deg);
         -o-transform: rotate(0deg);
-}
-    56%{
+    }
+
+    56% {
         transform: rotate(-5deg);
         -webkit-transform: rotate(-5deg);
         -moz-transform: rotate(-5deg);
         -ms-transform: rotate(-5deg);
         -o-transform: rotate(-5deg);
-}
-    63%{
+    }
+
+    63% {
         transform: rotate(-10deg);
         -webkit-transform: rotate(-10deg);
         -moz-transform: rotate(-10deg);
         -ms-transform: rotate(-10deg);
         -o-transform: rotate(-10deg);
-}
-    70%{
-        transform: rotate(-15deg);
-        -webkit-transform: rotate(-15deg);
-        -moz-transform: rotate(-15deg);
-        -ms-transform: rotate(-15deg);
-        -o-transform: rotate(-15deg);
-        }
-        77%{
-            transform: rotate(-20deg);
-            -webkit-transform: rotate(-20deg);
-            -moz-transform: rotate(-20deg);
-            -ms-transform: rotate(-20deg);
-            -o-transform: rotate(-20deg);
-    }   
+    }
 
-    85%{
+    70% {
         transform: rotate(-15deg);
         -webkit-transform: rotate(-15deg);
         -moz-transform: rotate(-15deg);
         -ms-transform: rotate(-15deg);
         -o-transform: rotate(-15deg);
     }
-    92%{
+
+    77% {
+        transform: rotate(-20deg);
+        -webkit-transform: rotate(-20deg);
+        -moz-transform: rotate(-20deg);
+        -ms-transform: rotate(-20deg);
+        -o-transform: rotate(-20deg);
+    }
+
+    85% {
+        transform: rotate(-15deg);
+        -webkit-transform: rotate(-15deg);
+        -moz-transform: rotate(-15deg);
+        -ms-transform: rotate(-15deg);
+        -o-transform: rotate(-15deg);
+    }
+
+    92% {
         transform: rotate(-10deg);
         -webkit-transform: rotate(-10deg);
         -moz-transform: rotate(-10deg);
@@ -123,7 +147,8 @@
         -o-transform: rotate(-10deg);
         opacity: 0.8;
     }
-    97%{
+
+    97% {
         transform: rotate(-5deg);
         -webkit-transform: rotate(-5deg);
         -moz-transform: rotate(-5deg);
@@ -131,7 +156,8 @@
         -o-transform: rotate(-5deg);
         opacity: 0.5;
     }
-    100%{
+
+    100% {
         transform: rotate(0deg);
         -webkit-transform: rotate(0deg);
         -moz-transform: rotate(0deg);
@@ -139,11 +165,9 @@
         -o-transform: rotate(0deg);
         opacity: 0.3;
 
-}
+    }
 }
 
 
 // 20 0 -20
 //  5 10 15 20 15 10 5 0 -5 -10 -15 -20 -15 -10 -5 0
-
- 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useMemo } from "react";
 import classes from "classnames";
 // import Header from "../../Page/Header";
 import { Grid, Button } from "@material-ui/core";
@@ -89,12 +89,16 @@ export default function DetailUser() {
   const dispatch = useDispatch();
   // const history = useHistory();
   const { loading } = useSelector((state) => state.LoadingReducer);
-  const profileUser = JSON.parse(localStorage.getItem("detail-user"));
+  const profileUser = useMemo(
+    () => JSON.parse(localStorage.getItem("detail-user")) || {},
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [localStorage.getItem("detail-user")]
+  );
   // console.log(profileUser);
   const [user, setUser] = useState({
     showPassword: false,
     isChangePassword: false,
-    data: profileUser,
+    data: profileUser || {},
   });
 
   const [mk, setMK] = useState({
@@ -139,7 +143,7 @@ export default function DetailUser() {
       dispatch({ type: TyAction.DISPLAY_LOADING_FALSE });
     }
     // eslint-disable-next-line
-  }, []);
+  }, [profileUser]);
   useEffect(() => {
     function fetchDetailUser() {
       request(
@@ -155,10 +159,11 @@ export default function DetailUser() {
       // .catch((err) => console.log(err));
     }
     fetchDetailUser();
-  }, [dispatch, userLogin.taiKhoan]); // ✅ OK in this example because we don't use *any* values from component scope
+    // eslint-disable-next-line
+  }, [userLogin.taiKhoan]); // ✅ OK in this example because we don't use *any* values from component scope
   // tính số lần user use for
   const toTalVisit = useCallback(() => {
-    if (user.data.thongTinDatVe.length > 0) {
+    if (Object.entries(user.data).length > 0) {
       return user.data.thongTinDatVe.reduce((toTal) => {
         return (toTal += 1);
       }, 0);
